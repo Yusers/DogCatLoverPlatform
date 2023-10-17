@@ -217,7 +217,6 @@
         </div>
         <!-- Navbar End -->
         <!-- Profile Start -->
-        <c:set var="us" value="${sessionScope.USER}" />
         <div class="container emp-profile">
             <form action="" method="post">
                 <div class="row">
@@ -229,7 +228,7 @@
                     <div class="col-md-6">
                         <div class="profile-head">
                             <h5>
-                                ${us.userid}
+                                ${sessionScope.USER.user_id}
                             </h5>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -245,6 +244,7 @@
                         <input type="button" class="profile-edit-btn btn-primary" name="btnAddMore" value="Edit Profile" onclick="window.location.href = 'editprofile.jsp'" />
                     </div>
                 </div>
+                <c:set var="us" value="${sessionScope.USER}" />
                 <div class="row">
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">

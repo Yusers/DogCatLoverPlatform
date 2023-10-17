@@ -132,6 +132,12 @@
 
         <!-- About Start -->
         <div class="container py-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Giới Thiệu</li>
+                </ol>
+            </nav>
             <div class="row py-5">
                 <div class="col-lg-7 pb-5 pb-lg-0 px-3 px-lg-5">
                     <h4 class="text-secondary mb-3">About Us</h4>
