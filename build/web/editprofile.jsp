@@ -165,7 +165,7 @@
 
                                             <div class="text-center text-sm-right">
                                                 <span class="badge badge-secondary text-white">member</span>
-                                                <div class="text-muted"><small>Joined 02 Oct 2023</small></div>
+                                                <div class="text-muted"><small>Joined ${us.created_at}</small></div>
                                             </div>
                                         </div>
                                     </div>
