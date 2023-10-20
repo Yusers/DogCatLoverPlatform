@@ -228,6 +228,7 @@
                         </div>
                         <p><input placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"></p>
                     </div>
+<<<<<<< HEAD
 =======
 
                     <div class="col-md-12 replies">
@@ -255,6 +256,8 @@
                     </div>
                     
 >>>>>>> c1e958ce0b60ca545d8f78825662a476b1ee7f78
+=======
+>>>>>>> main
                     <!-- Reply 1 -->
                     <div class="comment">
                         <div class="user-info">
