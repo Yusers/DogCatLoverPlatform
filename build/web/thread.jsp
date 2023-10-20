@@ -219,6 +219,7 @@
             <!-- Sidebar with Replies -->
             <div class="row">
                 <!-- Replies Section -->
+<<<<<<< HEAD
                 <div class="col-md-12 replies">
                     <div class="comment">
                         <div class="user-info">
@@ -227,6 +228,33 @@
                         </div>
                         <p><input placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"></p>
                     </div>
+=======
+
+                    <div class="col-md-12 replies">
+                    <div class="comment">
+                        <div class="user-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">${us.fullname}</a></span>
+                        </div>
+                        <p>
+                            <c:set var="us" value="${sessionScope.USER}"/>
+                            <c:choose>
+                                <c:when test="${empty us.role}">
+                                    <input placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <button class="btn btn-primary mt-2" type="button" onclick="showLoginPrompt()">Comment</button>
+                                </c:when>
+                                <c:when test="${us.role eq 'ADMIN' or us.role eq 'STAFF'}">
+                                    <input placeholder="You are not allowed to comment." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+                                </c:when>
+                                <c:otherwise>
+                                    <input id="commentInput" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <button class="btn btn-primary mt-2" type="button" onclick="comment()">Comment</button>
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
+                    </div>
+                    
+>>>>>>> c1e958ce0b60ca545d8f78825662a476b1ee7f78
                     <!-- Reply 1 -->
                     <div class="comment">
                         <div class="user-info">
