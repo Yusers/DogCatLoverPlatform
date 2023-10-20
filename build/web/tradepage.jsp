@@ -129,8 +129,13 @@
             </nav>
         </div>
         <!-- Navbar End -->
-        <div class="container mt-4">
-
+        <div class="container mt-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Trao Đổi Và Mua Bán</li>
+                </ol>
+            </nav>
             <!-- Page Title -->
             <h1>Cat & Dog Trading</h1>
 

@@ -140,6 +140,10 @@
                 text-decoration: none;
                 color: rgb(86 255 251 / 80%);
             }
+            
+            label {
+                color: white;
+            }
         </style>
         
     </head>
@@ -163,13 +167,20 @@
                         <c:choose>
                             <c:when test="${us == null}">
                                 <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                                    <i class="fa fa-user"></i> <br> Log in
+                                    <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                                    <i class="fa fa-user"></i> <br> ${us.user_id}
-                                </a>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> ${us.user_id}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
+                                    </div>
+                                </div>
                             </c:otherwise>
                         </c:choose>
                     </div>
