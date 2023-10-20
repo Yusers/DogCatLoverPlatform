@@ -25,7 +25,7 @@
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        
+
         <style>
 
             .registry {
@@ -74,7 +74,7 @@
             input[type="password"] {
                 font-family: 'Montserrat', sans-serif;
                 color: #fff;
-                 color: #fff;
+                color: #fff;
                 width: 100%;
                 padding: 10px 20px;
                 display: block;
@@ -141,14 +141,19 @@
                 color: rgb(86 255 251 / 80%);
             }
             
+<<<<<<< HEAD
+            .error {
+                margin-left: 40%;
+=======
             label {
                 color: white;
+>>>>>>> 6692761760f830d446260268810a908072d60ec8
             }
         </style>
-        
+
     </head>
     <body>
-          <!-- Topbar Start -->
+        <!-- Topbar Start -->
         <div class="container-fluid">
             <div class="row bg-secondary py-2 px-lg-5">
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -278,11 +283,14 @@
                     <input type="password" id="password" class="text" name="password" required>
                 </div>
                 <br>
+                <label class="error">${requestScope.ERROR}</label>
+                <br>
                 <hr>
                 <div>
                     <input class="signup" type="submit" value="Đăng Ký">
                 </div>
                 <br>
+                <a class="a-login col-md-6 mx-auto" href="login.jsp">Đăng nhập</a>
             </form>
         </div>
     </body>

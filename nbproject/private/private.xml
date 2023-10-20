@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/adminstaff.jsp</file>
 <<<<<<< HEAD
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/studenthome.jsp</file>
@@ -38,6 +39,15 @@
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/forums.jsp</file>
 >>>>>>> main
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/controllers/DispatcherController.java</file>
+=======
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/myutils/DBUtils.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/LoginController.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/dbaccess/AccountDAO.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/web/viewprofile.jsp</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/model/Account.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/RegisterController.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/DispatcherController.java</file>
+>>>>>>> ce9328c65f926ffec33f10e0a00ed27d7c38bd81
         </group>
     </open-files>
 </project-private>
