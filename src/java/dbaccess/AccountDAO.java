@@ -64,9 +64,9 @@ public class AccountDAO {
             pst.setString(3, acc.getEmail());
             pst.setString(4, acc.getPassword());
             pst.setString(5, acc.getPhone_number());
-            pst.setString(6, "do not have bio yet");
+            pst.setString(6, "Không có mô tả");
             pst.setString(7, "MEMBER");
-            pst.setString(8, "active");
+            pst.setString(8, "Active");
             rs = pst.executeUpdate();
             cn.close();
         }

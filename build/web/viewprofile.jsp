@@ -251,7 +251,7 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>User Id</label>
+                                        <label>Full Name</label>
                                     </div>
                                     <div class="col-md-6">
                                         <p>${us.fullname}</p>
@@ -275,10 +275,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Description</label>
+                                        <label>Created at</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>${us.description}</p>
+                                        <p>${us.created_at}</p>
                                     </div>
                                 </div>
                             </div>
