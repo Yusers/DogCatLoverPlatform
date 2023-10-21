@@ -67,3 +67,22 @@
     
 })(jQuery);
 
+// Khi role empty muon comment yeu cau login
+function showLoginPrompt() {
+    var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
+    if (confirmation) {
+        window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+    }
+}
+
+// Xu li comment
+function comment() {
+    // Thực hiện xử lý bình luận ở đây
+    var commentInput = document.getElementById("commentInput");
+    if (commentInput.value.trim() !== '') {
+        alert("Comment submitted");
+        commentInput.value = ''; // Xóa nội dung comment trong trường nhập
+    } else {
+        alert("Please enter a comment before submitting.");
+    }
+}
