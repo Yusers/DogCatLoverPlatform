@@ -221,4 +221,25 @@ public class AccountDAO {
         }
         return list;
     }
+
+    public static int updateProfile(String user_name, String fullname, String email, String description, String password, String phone) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "UPDATE [dbo].[Account]\n"
+                    + "SET [user_id] = ?, [fullname] = ?, [email] = ?, [description] = ?, [password] = ?, [phone_number] = ?\n"
+                    + "WHERE [user_id] LIKE ? ";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, user_name);
+            pst.setString(2, fullname);
+            pst.setString(3, email);
+            pst.setString(4, description);
+            pst.setString(5, password);
+            pst.setString(6, phone);
+            pst.setString(7, user_name);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
 }

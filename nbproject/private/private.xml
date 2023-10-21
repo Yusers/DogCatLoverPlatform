@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/myutils/DBUtils.java</file>
-            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/LoginController.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/EditProfileController.java</file>
             <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/dbaccess/AccountDAO.java</file>
             <file>file:/D:/SWP391/DogCatLoverPlatform/web/viewprofile.jsp</file>
-            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/model/Account.java</file>
             <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/RegisterController.java</file>
-            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/DispatcherController.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/web/editprofile.jsp</file>
         </group>
     </open-files>
 </project-private>
