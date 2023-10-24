@@ -174,7 +174,8 @@
                                     </ul>
                                     <div class="tab-content pt-3">
                                         <div class="tab-pane active">
-                                            <form class="form" novalidate>
+                                            <form action="EditProfileController" class="form" novalidate>
+                                                <input type="hidden" value="${us.user_id}" name="username"/>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
@@ -186,8 +187,8 @@
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
-                                                                    <label>Username</label>
-                                                                    <input class="form-control" type="text" name="username" placeholder="${us.user_id}" value="${us.user_id}">
+                                                                    <label>Phone number</label>
+                                                                    <input class="form-control" type="text" name="phone" placeholder="${us.phone_number}" value="${us.phone_number}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -195,7 +196,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Email</label>
-                                                                    <input class="form-control" type="text" placeholder="${us.email}" value="${us.email}">
+                                                                    <input class="form-control" type="text" name="email" placeholder="${us.email}" value="${us.email}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -203,7 +204,7 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label>About</label>
-                                                                    <textarea class="form-control" rows="5" placeholder="${us.description == "" ? us.description : "My bio"}"></textarea>
+                                                                    <textarea class="form-control" rows="5" name="description" placeholder="${us.description}"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -216,7 +217,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Current Password</label>
-                                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                                    <input class="form-control" type="password" name="current_password" placeholder="••••••">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -224,7 +225,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>New Password</label>
-                                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                                    <input class="form-control" type="password" name="new_password" placeholder="••••••">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -232,7 +233,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                    <input class="form-control" type="password" placeholder="••••••"></div>
+                                                                    <input class="form-control" type="password" name="confirm_password" placeholder="••••••"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -255,6 +256,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <br>
+                                                <label class="error">${requestScope.ERROR}</label>
+                                                <br>
                                                 <div class="row">
                                                     <div class="col d-flex justify-content-end">
                                                         <button class="btn btn-primary" type="submit">Save Changes</button>

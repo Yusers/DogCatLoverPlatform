@@ -47,7 +47,7 @@ public class RegisterController extends HttpServlet {
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 
             //Check valid fullname
-            else if (!Pattern.matches("^[a-zA-Z\\s]+$", fullname)) {
+            else if (!Pattern.matches("^[\\p{L}\\p{M} ']+$", fullname)) {
                 request.setAttribute("ERROR", "Invalid fullname!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 

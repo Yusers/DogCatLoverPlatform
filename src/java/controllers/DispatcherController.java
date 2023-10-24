@@ -21,6 +21,7 @@ public class DispatcherController extends HttpServlet {
     final String ADMIN_PAGE = "adminpage.jsp";
     final String LOGIN_PAGE = "login.jsp";
     final String REGISTER_PAGE = "signup.jsp";
+    final String VIEW_PROFILE_PAGE = "viewprofile.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,7 +49,7 @@ public class DispatcherController extends HttpServlet {
                 url = "RegisterController";
             } else if(action.equals("register-page")) {
                 url = REGISTER_PAGE;
-            }
+            } 
             // Chuyển hướng đến trang tương ứng với chức năng đã chọn
             request.getRequestDispatcher(url).forward(request, response);
         }

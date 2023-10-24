@@ -145,6 +145,7 @@
             .error {
                 margin-left: 40%;
 =======
+
             label {
                 color: white;
 >>>>>>> 6692761760f830d446260268810a908072d60ec8
