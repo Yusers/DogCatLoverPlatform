@@ -62,6 +62,9 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
+                                        </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
@@ -110,7 +113,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link active">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">

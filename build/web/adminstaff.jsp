@@ -125,6 +125,7 @@
         <!-- Navbar End -->
 
         <!-- Admin Start -->
+        <c:set var="listOfStaffs" value="${requestScope.STAFFS}"/>
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-3">
@@ -143,19 +144,11 @@
                 <div class="col-md-9">
                     <h1>Dashboard</h1>
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total Members</h5>
-                                    <p class="card-text">3</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Total Staff</h5>
-                                    <p class="card-text">2</p>
+                                    <p class="card-text">${listOfStaffs.size()}</p>
                                 </div>
                             </div>
                         </div>
@@ -175,10 +168,11 @@
                                 </thead>
                                 <tbody>
                                     <!-- Rows for members go here -->
+                                    <c:forEach var="s" items="${listOfStaffs}">
                                     <tr>
-                                        <td>1</td>
-                                        <td><a href="viewprofile.jsp?username=Tan&email=tan@gmail.com">Kiet</a></td>
-                                        <td>kiet@gmail.com</td>
+                                        <td>${s.user_id}</td>
+                                        <td><a href="viewprofile.jsp?username=Tan&email=tan@gmail.com">${s.fullname}</a></td>
+                                        <td>${s.email}</td>
                                         <td class="text-center">
                                             <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
                                             <button class="btn btn-danger">Delete</button>
@@ -187,19 +181,7 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><a href="viewprofile.jsp?username=An&email=an@gmail.com">Thang</a></td>
-                                        <td>thang@gmail.com</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-
-                                        </td>
-                                    </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

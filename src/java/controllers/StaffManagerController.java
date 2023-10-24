@@ -37,8 +37,8 @@ public class StaffManagerController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ArrayList<Account> accounts = AccountDAO.getAllStaff();
             if (accounts != null && !accounts.isEmpty()) {
-                request.setAttribute("staffs", accounts);
-                request.getRequestDispatcher("staffmanager.jsp").forward(request, response);
+                request.setAttribute("STAFFS", accounts);
+                request.getRequestDispatcher("adminstaff.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

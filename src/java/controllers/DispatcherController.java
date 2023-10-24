@@ -21,6 +21,7 @@ public class DispatcherController extends HttpServlet {
     final String ADMIN_PAGE = "adminpage.jsp";
     final String LOGIN_PAGE = "login.jsp";
     final String REGISTER_PAGE = "signup.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,19 +39,32 @@ public class DispatcherController extends HttpServlet {
             String action = request.getParameter("action");
             if (action == null || action.isEmpty()) {
                 url = HOME_PAGE;
-            } else if(action.equals("login")) {
+            } else if (action.equals("login")) {
                 url = "LoginController";
-            } else if(action.equals("login-page")) {
+            } else if (action.equals("login-page")) {
                 url = LOGIN_PAGE;
-            } else if(action.equals("logout")) {
+            } else if (action.equals("logout")) {
                 url = "LogoutController";
-            } else if(action.equals("register")) {
+            } else if (action.equals("register")) {
                 url = "RegisterController";
-            } else if(action.equals("register-page")) {
+            } else if (action.equals("register-page")) {
                 url = REGISTER_PAGE;
+            } else if (action.equals("manage")) {
+                String usid = request.getParameter("usname");
+                if (usid == null || usid.isEmpty()) {
+                    url = "LoadAllUserController?actions=getAll";
+                } else {
+                    url = "LoadAllUserController";
+                }
+            } else if (action.equals("forums")) {
+                url = "LoadAllPostController";
+            } else if (action.equals("thread")) {
+                url = "LoadPostController";
             }
             // Chuyển hướng đến trang tương ứng với chức năng đã chọn
             request.getRequestDispatcher(url).forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

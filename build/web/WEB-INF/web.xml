@@ -36,6 +36,18 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controllers.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadAllUserController</servlet-name>
+        <servlet-class>controllers.LoadAllUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAllPostController</servlet-name>
+        <servlet-class>controllers.LoadAllPostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadPostController</servlet-name>
+        <servlet-class>controllers.LoadPostController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -71,5 +83,17 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/RegisterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllUserController</servlet-name>
+        <url-pattern>/LoadAllUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllPostController</servlet-name>
+        <url-pattern>/LoadAllPostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPostController</servlet-name>
+        <url-pattern>/LoadPostController</url-pattern>
     </servlet-mapping>
 </web-app>

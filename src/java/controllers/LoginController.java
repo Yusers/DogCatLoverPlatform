@@ -33,10 +33,10 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String userid = request.getParameter("userid").toString();
-            String password = request.getParameter("password").toString();
+            String userid = request.getParameter("userid");
+            String password = request.getParameter("password");
             String url = "DispatcherController?action=";
-            Account a = AccountDAO.checkLogin(userid, password);
+            Account a = AccountDAO.checkLogin(userid.trim(), password.trim());
             if (a != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("USER", a);
@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("ERROR", "UserName or Password incorrect!!");
                 url += "login-page";
             }
-                request.getRequestDispatcher(url + "").forward(request, response);
+                request.getRequestDispatcher(url).forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -63,6 +63,9 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
@@ -111,7 +114,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link active">Forums</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
                         <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
@@ -141,52 +144,38 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Categories</h5>
+                            <h5 class="card-title">Mục Lục</h5>
                             <ul class="list-group">
-                                <li class="list-group-item"><a href="#thread-1">Health and Wellness</a></li>
-                                <li class="list-group-item"><a href="#thread-2">Pet Parenthood</a></li>
-                                <li class="list-group-item"><a href="#thread-3">Behavior and Training</a></li>
+                                <c:forEach var="c" items="${requestScope.CATEGORYS}">
+                                    <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-9">
-                    <!-- Thread cate 1 -->
-                    <div id="thread-1" class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Health and Wellness</h5>
-                            <ul class="list-group">
-                                <li class="list-group-item"><a href="thread.jsp">Optimizing Feline Wellness: Health Tips for Cats and Dogs</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Feline Fitness: Exercise and Diet for Cats and Their Canine Companions</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Preventive Care: Building a Foundation for Cat and Dog Health</a></li>
-                            </ul>
+                    <c:forEach var="c" items="${requestScope.CATEGORYS}">
+                        <!-- Thread cate 1 -->
+                        <div id="thread-${c.id}" class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${c.name}</h5>
+                                <ul class="list-group">
+                                    <c:set var="hasPosts" value="false" />
+                                    <c:forEach var="p" items="${requestScope.POSTS}">
+                                    <c:if test="${p.cate_id eq c.id}">
+                                        <c:set var="hasPosts" value="true" />
+                                            <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title}</a></li>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:if test="${not hasPosts}">
+                                    <li class="list-group-item disabled">Chưa có bài viết</li>
+                                    </c:if>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <!-- Thread cate 2 -->
-                    <div id="thread-2" class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Pet Parenthood</h5>
-                            <ul class="list-group">
-                                <li class="list-group-item"><a href="thread.jsp">Welcoming a New Fur Baby: Tips for First-Time Pet Owners</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Pet Routines and Schedules: Finding Balance in Daily Life</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Kitten Chronicles: Adventures in Raising a Playful Purr-ball</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <br/>
-                    <!-- Thread cate 3 -->
-                    <div id="thread-3" class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Behavior and Training</h5>
-                            <ul class="list-group">
-                                <li class="list-group-item"><a href="thread.jsp">Social Butterflies: Nurturing Healthy Pet Interactions</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Barking, Meowing, and Beyond: Decoding Pet Communication</a></li>
-                                <li class="list-group-item"><a href="thread.jsp">Crate Training Success Stories and Strategies</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                        <br/>
+                    </c:forEach>
                 </div>
             </div>
         </div>

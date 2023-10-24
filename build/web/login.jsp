@@ -212,7 +212,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">

@@ -12,6 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Thêm liên kết đến Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
         <style>
             .user-profile {
                 width: 30px; /* Độ rộng của hình tròn */
@@ -72,7 +74,37 @@
                 </ul>
             </div>
         </nav>
+        
         <div class="container mt-5">
+            <form>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="search" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" id="input1" placeholder="Input 1...">
+                    <select class="form-control mt-2" id="option1">
+                        <option value="option1_value1">Option 1 Value 1</option>
+                        <option value="option1_value2">Option 1 Value 2</option>
+                        <option value="option1_value3">Option 1 Value 3</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" id="input2" placeholder="Input 2...">
+                    <select class="form-control mt-2" id="option2">
+                        <option value="option2_value1">Option 2 Value 1</option>
+                        <option value="option2_value2">Option 2 Value 2</option>
+                        <option value="option2_value3">Option 2 Value 3</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
             <div class="row justify-content-center">
                 <div class="col-md-4">
                     <div class="card" style="width: 260px; height: 240px; border-radius: 5%;">

@@ -20,7 +20,7 @@ public class DBUtils {
         String port = "1433";
         String uid = "sa";
         String pwd = "12345";
-        String db = "DogCatLoverFlatform";
+        String db = "DogCatLoverPlatform";
         String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String url = "jdbc:sqlserver://" + IP + "\\" + instanceName + ":" + port
                 + ";databasename=" + db + ";user=" + uid + ";password=" + pwd + ";encrypt=true" + ";trustServerCertificate=true";

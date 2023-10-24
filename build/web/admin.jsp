@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,9 +47,30 @@
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-white pl-3" href="login.jsp">
-                            <i class="fa fa-user"></i> <br> Log in
-                        </a>
+                        <!-- GET SESSION -->
+                        <c:set var="us" value="${sessionScope.USER}" />
+                        <c:choose>
+                            <c:when test="${us == null}">
+                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                    <i class="fa fa-user"></i> Log in
+                                </a>
+                            </c:when>
+                            <c:when test="${us != null}">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> ${us.user_id}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage-staff">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
+                                    </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -90,8 +112,8 @@
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link active">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
+                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
@@ -112,32 +134,18 @@
         <!-- Navbar End -->
 
         <!-- Admin Start -->
-        <div class="container mt-5">
+        <c:set var="listOfMember" value="${requestScope.MEMBERS}" />
+        <c:set var="listOfStaff" value="${requestScope.STAFFS}" />
+        <div class="container-lg mt-3">
             <div class="row">
-                <div class="col-md-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="admin.jsp">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Add Staff</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Manage Members</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="StaffManagerController">Manage Staff</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <h1>Dashboard</h1>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Total Members</h5>
-                                    <p class="card-text">3</p>
+                                    <p class="card-text">${listOfMember.size()}</p>
                                 </div>
                             </div>
                         </div>
@@ -145,9 +153,44 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Total Staff</h5>
-                                    <p class="card-text">2</p>
+                                    <p class="card-text">${listOfStaff.size()}</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Staffs</h5>
+                            <input type="text" class="form-control mb-3" placeholder="Search Members">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Staff ID</th>
+                                        <th>Staff Name</th>
+                                        <th>Staff Email</th>
+                                        <th>Staff Phone</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Rows for members go here -->
+                                    <c:forEach var="s" items="${listOfStaff}">
+                                        <tr>
+                                            <td>${s.user_id}</td>
+                                            <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
+                                            <td>${s.email}</td>
+                                            <td>${s.phone_number}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
+                                                <button class="btn btn-danger">Delete</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                    Ban
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="card">
@@ -160,15 +203,18 @@
                                         <th>Member ID</th>
                                         <th>Member Name</th>
                                         <th>Member Email</th>
+                                        <th>Member Phone</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- Rows for members go here -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td><a href="viewprofile.jsp?username=Tan&email=tan@gmail.com">Tân</a></td>
-                                        <td>tan@gmail.com</td>
+                                    <c:forEach var="m" items="${listOfMember}">
+                                        <tr>
+                                        <td>${m.user_id}</td>
+                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${m.fullname}</a></td>
+                                        <td>${m.email}</td>
+                                        <td>${m.phone_number}</td>
                                         <td class="text-center">
                                             <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
                                             <button class="btn btn-danger">Delete</button>
@@ -177,31 +223,7 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><a href="viewprofile.jsp?username=An&email=an@gmail.com">An</a></td>
-                                        <td>an@gmail.com</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">Nguyên</a></td>
-                                        <td>nguyen@gmail.com</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

@@ -2,10 +2,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
+<c:set var="post" value="${requestScope.POST}" />
+<c:set var="cate" value="${requestScope.CATE}" />
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>${post.title}</title>
     </head>
 
     <!-- Favicon -->
@@ -60,6 +62,9 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
@@ -133,24 +138,23 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a href="forums.jsp">Diễn Đàn</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Bài Đăng</li>
+                    <li class="breadcrumb-item"><a href="DispatcherController?action=forums">Diễn Đàn</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Bài Đăng Về -> ${cate.name}</li>
                 </ol>
             </nav>
             <!-- Thread Title -->
-            <h1>Optimizing Feline Wellness: Health Tips for Cats and Dogs</h1>
+            <h1>${post.title}</h1>
 
             <!-- Thread Author -->
             <div class="row align-items-center mb-4">
                 <div class="col-md-12">
                     <div class="alert alert-info">
-                        <h4 class="alert-heading"><a href="#">Health and Wellness</a></h4>
                         <div class="author">
                             <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                             <div class="author-container">
                                 <div class="author-info">
-                                    <h6><a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">Nguyên</a></h6>
-                                    <p>3/10/2023 11:21</p>
+                                    <h6><a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">${post.author_id}</a></h6>
+                                    <p>${post.created_at}</p>
                                 </div>
                                 <div class="post-action">
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="1.8em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"/></svg></a>
@@ -175,43 +179,10 @@
                             </div>
                             <!-- Thread img -->
                             <img src="./assets/img/blog-1.jpg" class="card-img-top thread-img" alt="blog-1"><br>
-                            <!-- Tip 1: Balanced Diet -->
-                            <h3>Tip 1: Balanced Diet</h3>
-                            <p>A well-balanced diet is the cornerstone of good health for your pets. Make sure to provide them with high-quality commercial pet food that meets their specific dietary needs. Consider consulting your veterinarian for personalized feeding recommendations.</p>
-
-                            <!-- Tip 2: Regular Exercise -->
-                            <h3>Tip 2: Regular Exercise</h3>
-                            <p>Just like humans, cats and dogs need regular exercise to maintain a healthy weight and keep their muscles strong. Engage in playtime, walks, or even consider agility training to keep them active and mentally stimulated.</p>
-
-                            <!-- Tip 3: Proper Grooming -->
-                            <h3>Tip 3: Proper Grooming</h3>
-                            <p>Regular grooming not only keeps your pets looking their best but also helps to prevent skin issues, matting, and other health problems. Brush their fur regularly, trim their nails, and clean their ears as needed.</p>
-
-                            <!-- Tip 4: Vet Check-Ups -->
-                            <h3>Tip 4: Vet Check-Ups</h3>
-                            <p>Regular veterinary check-ups are crucial for early detection of any potential health issues. Schedule annual or bi-annual visits for vaccinations, wellness exams, and dental check-ups.</p>
-
-                            <!-- Tip 5: Hydration -->
-                            <h3>Tip 5: Hydration</h3>
-                            <p>Ensure your pets have access to fresh, clean water at all times. Proper hydration is essential for their overall well-being and can prevent a range of health issues.</p>
-
+                            <p>
+                                ${post.content}
+                            </p>
                             <img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>
-
-                            <!-- Tip 6: Mental Stimulation -->
-                            <h3>Tip 6: Mental Stimulation</h3>
-                            <p>Provide toys, puzzles, and interactive play to keep your pets mentally engaged. This helps prevent boredom and can reduce stress or behavioral issues.</p>
-
-                            <!-- Tip 7: Flea and Tick Prevention -->
-                            <h3>Tip 7: Flea and Tick Prevention</h3>
-                            <p>Regularly treat your pets for fleas and ticks, especially if they spend time outdoors. Consult your vet for the most effective and safe prevention methods.</p>
-
-                            <!-- Tip 8: Avoid Toxic Substances -->
-                            <h3>Tip 8: Avoid Toxic Substances</h3>
-                            <p>Keep harmful substances like certain plants, foods, and chemicals out of reach. Common items like chocolate, grapes, and some household plants can be toxic to pets.</p>
-
-                            <p>Remember, every pet is unique, and it's essential to tailor these tips to your individual furry friend's needs and lifestyle. Always consult with a veterinarian for specific advice and guidance on your pet's health and well-being.</p>
-
-                            <p>Feel free to share your own tips or ask any questions related to feline and canine health in this thread!</p>
                         </div>
                     </div>
                 </div>
@@ -219,29 +190,17 @@
             <!-- Sidebar with Replies -->
             <div class="row">
                 <!-- Replies Section -->
-<<<<<<< HEAD
+                <c:set var="us" value="${sessionScope.USER}"/>
                 <div class="col-md-12 replies">
                     <div class="comment">
                         <div class="user-info">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">Me</a></span>
-                        </div>
-                        <p><input placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"></p>
-                    </div>
-<<<<<<< HEAD
-=======
-
-                    <div class="col-md-12 replies">
-                    <div class="comment">
-                        <div class="user-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">${us.fullname}</a></span>
+                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">${us.fullname != null ? us.fullname : "Guess"}</a></span>
                         </div>
                         <p>
-                            <c:set var="us" value="${sessionScope.USER}"/>
                             <c:choose>
                                 <c:when test="${empty us.role}">
-                                    <input placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                    <input placeholder="Write a comment..." value="" type="text" class="form-control" aria-label="Sizing example input" disabled aria-describedby="inputGroup-sizing-sm">
                                     <button class="btn btn-primary mt-2" type="button" onclick="showLoginPrompt()">Comment</button>
                                 </c:when>
                                 <c:when test="${us.role eq 'ADMIN' or us.role eq 'STAFF'}">
@@ -254,10 +213,6 @@
                             </c:choose>
                         </p>
                     </div>
-                    
->>>>>>> c1e958ce0b60ca545d8f78825662a476b1ee7f78
-=======
->>>>>>> main
                     <!-- Reply 1 -->
                     <div class="comment">
                         <div class="user-info">
@@ -281,6 +236,26 @@
             </div>
         </div>
         <!-- end Threads -->
+
+        <script>
+            function showLoginPrompt() {
+                var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
+                if (confirmation) {
+                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                }
+            }
+
+            function comment() {
+                // Thực hiện xử lý bình luận ở đây
+                var commentInput = document.getElementById("commentInput");
+                if (commentInput.value.trim() !== '') {
+                    alert("Comment submitted");
+                    commentInput.value = ''; // Xóa nội dung comment trong trường nhập
+                } else {
+                    alert("Please enter a comment before submitting.");
+                }
+            }
+        </script>
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

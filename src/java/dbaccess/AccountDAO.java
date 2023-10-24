@@ -26,7 +26,7 @@ public class AccountDAO {
             //b2: viet sql va exec
             String sql = "SELECT [user_id],[fullname],[email],[password],[phone_number],[description],[role],[status],[created_at],[updated_at]\n"
                     + "FROM [dbo].[Account]\n"
-                    + "WHERE [user_id] LIKE ? AND [password] LIKE ?";
+                    + "WHERE [user_id] = ? AND [password] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, id);
             pst.setString(2, password);
@@ -136,7 +136,7 @@ public class AccountDAO {
         if (cn != null) {
             String sql = "SELECT *\n"
                     + "FROM [dbo].[Account]\n"
-                    + "WHERE [user_id] LIKE ?";
+                    + "WHERE [user_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, userid);
             ResultSet rs = pst.executeQuery();

@@ -49,19 +49,30 @@
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
-                        <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                            <i class="fa fa-user"></i> <br> KietNT
-                        </a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-white dropdown-toggle active" data-toggle="dropdown">
-                                <i class="fa fa-fw fa-cog mr-1"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right rounded-0 m-0">
-                                <a href="profile.jsp" class="dropdown-item">View Profile</a>
-                                <a href="editprofile.jsp" class="dropdown-item">Edit Profile</a>
-                                <a href="#" class="dropdown-item">Log out</a>
-                            </div>
-                        </div>
+                        <!-- GET SESSION -->
+                        <c:set var="usnow" value="${sessionScope.USER}" />
+                        <c:choose>
+                            <c:when test="${usnow == null}">
+                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                    <i class="fa fa-user"></i> Log in
+                                </a>
+                            </c:when>
+                            <c:when test="${usnow != null}">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> ${usnow.user_id}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${usnow.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
+                                    </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -124,6 +135,7 @@
         </div>
         <!-- Navbar End -->
         <br>
+        <c:set var="us" value="${requestScope.MEMBER}" />
         <!--Edit Profile Start-->
         <div class="container">
             <div class="row flex-lg-nowrap">
@@ -144,18 +156,24 @@
                                             </div>
                                             <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                 <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Kiet NT</h4>
-                                                    <p class="mb-0">@kietn17</p>
-                                                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${us.fullname}</h4>
+                                                    <p class="mb-0">@${us.user_id}</p>
+                                                    <div class="mt-2">
+                                                        <label for="avatarInput" class="btn btn-primary">
+                                                            <i class="fa fa-fw fa-camera"></i>
+                                                            <span>Change Photo</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="text-center text-sm-right">
                                                 <select class="custom-select bg-success text-light">
-                                                    <option selected>Member</option>
-                                                    <option value="1">Staff</option>
+                                                    <c:set var="roleNow" value="${us.role}"/>
+                                                    <option ${roleNow eq 'MEMBER' ? 'selected' : ''}>Member</option>
+                                                    <option ${roleNow eq 'STAFF' ? 'selected' : ''} value="1">Staff</option>
                                                 </select>
-                                                <div class="text-muted"><small>Joined 02 Oct 2023</small></div>
+                                                <div class="text-muted"><small>Joined ${us.created_at}</small></div>
                                             </div>
                                         </div>
                                     </div>
@@ -171,13 +189,13 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Full Name</label>
-                                                                    <input class="form-control" type="text" name="name" placeholder="Kiet NT" value="Kiet NT">
+                                                                    <input class="form-control" type="text" name="name" placeholder="${us.fullname}" value="${us.fullname}">
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Username</label>
-                                                                    <input class="form-control" type="text" name="username" placeholder="kietnt17" value="kietnt17">
+                                                                    <input class="form-control" type="text" name="username" placeholder="${us.user_id}" value="${us.user_id}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -185,16 +203,67 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Email</label>
-                                                                    <input class="form-control" type="text" placeholder="user@gmail.com">
+                                                                    <input class="form-control" type="text" placeholder="${us.email}" value="${us.email}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-group">
+                                                                    <label>About</label>
+                                                                    <textarea class="form-control" rows="5" placeholder="${us.description == "" ? us.description : "My bio"}">${us.description == "" ? us.description : "My bio"}</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col d-flex justify-content-start">
-                                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                                    <div class="col-12 col-sm-6 mb-3">
+                                                        <div class="mb-2"><b>Change Password</b></div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Current Password</label>
+                                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>New Password</label>
+                                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                                                    <input class="form-control" type="password" placeholder="••••••"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                                                        <div class="mb-2"><b>Keeping in Touch</b></div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <label>Email Notifications</label>
+                                                                <div class="custom-controls-stacked px-2">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="notifications-blog" checked>
+                                                                        <label class="custom-control-label" for="notifications-blog">Blog posts</label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="notifications-news" checked>
+                                                                        <label class="custom-control-label" for="notifications-news">Newsletter</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col d-flex justify-content-end">
                                                         <button class="btn btn-primary" type="submit">Save Changes</button>
                                                     </div>
