@@ -148,7 +148,8 @@
             }
             
             .error {
-                margin-left: 35%;
+                display: block;
+                text-align: center;
             }
         </style>
 
