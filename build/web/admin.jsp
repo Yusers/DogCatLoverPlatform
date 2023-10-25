@@ -181,7 +181,7 @@
                                             <td>${s.email}</td>
                                             <td>${s.phone_number}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
+                                                <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
                                                 <button class="btn btn-danger">Delete</button>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
                                                     Ban
@@ -212,11 +212,11 @@
                                     <c:forEach var="m" items="${listOfMember}">
                                         <tr>
                                         <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${m.fullname}</a></td>
+                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
                                         <td>${m.email}</td>
                                         <td>${m.phone_number}</td>
                                         <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
+                                            <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
                                             <button class="btn btn-danger">Delete</button>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
                                                 Ban
