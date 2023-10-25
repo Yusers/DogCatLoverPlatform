@@ -166,8 +166,8 @@ public class AccountDAO {
         if (cn != null) {
             String sql = "UPDATE [dbo].[Account]\n"
                     + "SET [status] = CASE\n"
-                    + "    WHEN [status] LIKE 'ACTIVE' THEN 'INACTIVE'\n"
-                    + "    ELSE 'ACTIVE'\n"
+                    + "    WHEN [status] = 'Active' THEN 'Inactive'\n"
+                    + "    ELSE 'Active'\n"
                     + "END\n"
                     + "WHERE [user_id] LIKE ?";
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -183,7 +183,7 @@ public class AccountDAO {
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
             String sql = "delete from [dbo].[Account] \n"
-                    + "where [user_id] LIKE ?";
+                    + "where [user_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, username);
             rs = pst.executeUpdate();

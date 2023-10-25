@@ -15,10 +15,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.sqljdbc4.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.mssql-jdbc-12.4.1.jre11-sources.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -33,6 +29,10 @@
                 <library dirs="200">
                     <file>${file.reference.overw-.config}</file>
                     <path-in-war>WEB-INF/classes</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.sqljdbc42.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

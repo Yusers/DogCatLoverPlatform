@@ -56,6 +56,10 @@
         <servlet-name>DeleteAccountController</servlet-name>
         <servlet-class>controllers.DeleteAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActionController</servlet-name>
+        <servlet-class>controllers.ActionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -111,5 +115,9 @@
     <servlet-mapping>
         <servlet-name>DeleteAccountController</servlet-name>
         <url-pattern>/DeleteAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActionController</servlet-name>
+        <url-pattern>/ActionController</url-pattern>
     </servlet-mapping>
 </web-app>

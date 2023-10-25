@@ -169,6 +169,7 @@
                                         <th>Staff Name</th>
                                         <th>Staff Email</th>
                                         <th>Staff Phone</th>
+                                        <th>Staff Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -180,12 +181,18 @@
                                             <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
                                             <td>${s.email}</td>
                                             <td>${s.phone_number}</td>
+                                            <td>${s.status}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
-                                                <button class="btn btn-danger">Delete</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                    Ban
-                                                </button>
+                                                <form action="ActionController" method="post">
+                                                    <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
+                                                    <input type="hidden" name="username" value="${s.user_id}"/>
+                                                    <button type="submit" name="action" value="delete" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        Delete
+                                                    </button>
+                                                    <button type="submit" name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        Ban
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -204,6 +211,7 @@
                                         <th>Member Name</th>
                                         <th>Member Email</th>
                                         <th>Member Phone</th>
+                                        <th>Member Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -211,18 +219,24 @@
                                     <!-- Rows for members go here -->
                                     <c:forEach var="m" items="${listOfMember}">
                                         <tr>
-                                        <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
-                                        <td>${m.email}</td>
-                                        <td>${m.phone_number}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-                                        </td>
-                                    </tr>
+                                            <td>${m.user_id}</td>
+                                            <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
+                                            <td>${m.email}</td>
+                                            <td>${m.phone_number}</td>
+                                            <td>${m.status}</td>
+                                            <td class="text-center">
+                                                <form action="ActionController" method="post">
+                                                    <button class="btn btn-warning"><a href="editprofile.jsp">Edit</a></button>
+                                                    <input type="hidden" name="username" value="${m.user_id}"/>
+                                                    <button type="submit" name="action" value="delete" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        Delete
+                                                    </button>
+                                                    <button type="submit" name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        Ban
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
@@ -235,7 +249,7 @@
 
         <!-- Modal -->
         <!-- Modal Promote -->
-        <div class="modal fade" id="modal-promote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!--        <div class="modal fade" id="modal-promote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -262,7 +276,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
