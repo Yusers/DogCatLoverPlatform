@@ -67,10 +67,8 @@
     
 })(jQuery);
 
-<<<<<<< HEAD
-=======
+
 // Khi role empty muon comment yeu cau login
->>>>>>> 8f572dfe2791d4a1aa4e25fb41ddd19016649d0c
 function showLoginPrompt() {
     var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
     if (confirmation) {
@@ -78,10 +76,7 @@ function showLoginPrompt() {
     }
 }
 
-<<<<<<< HEAD
-=======
 // Xu li comment
->>>>>>> 8f572dfe2791d4a1aa4e25fb41ddd19016649d0c
 function comment() {
     // Thực hiện xử lý bình luận ở đây
     var commentInput = document.getElementById("commentInput");
