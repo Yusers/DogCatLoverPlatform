@@ -6,7 +6,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Website</title>
+        <title>Trang Chủ | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
         <link href="icon/icons8-pet-lover-96.png" rel="icon">
@@ -113,7 +113,7 @@
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>

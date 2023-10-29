@@ -11,27 +11,27 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Diễn Đàn | Cat Dog Lover Website</title>
+        <!-- Favicon -->
+        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
+
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+        <!-- Flaticon Font -->
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="assets/css/forums.css" rel="stylesheet">
     </head>
-
-    <!-- Favicon -->
-    <link href="img/icons8-pet-lover-16.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Flaticon Font -->
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
 
     <body>
         <!-- Topbar Start -->
@@ -115,7 +115,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -139,7 +139,14 @@
                     <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Diễn Đàn</li>
                 </ol>
+                <div class="breadcrumb justify-content-around">
+                    <div class="input-group">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
+                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                    </div>
+                </div>
             </nav>
+
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
@@ -148,7 +155,7 @@
                             <ul class="list-group">
                                 <c:forEach var="c" items="${requestScope.CATEGORYS}">
                                     <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                         </div>
                     </div>
@@ -163,14 +170,14 @@
                                 <ul class="list-group">
                                     <c:set var="hasPosts" value="false" />
                                     <c:forEach var="p" items="${requestScope.POSTS}">
-                                    <c:if test="${p.cate_id eq c.id}">
-                                        <c:set var="hasPosts" value="true" />
+                                        <c:if test="${p.cate_id eq c.id}">
+                                            <c:set var="hasPosts" value="true" />
                                             <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:if test="${not hasPosts}">
+                                        <li class="list-group-item disabled">Chưa có bài viết</li>
                                         </c:if>
-                                    </c:forEach>
-                                    <c:if test="${not hasPosts}">
-                                    <li class="list-group-item disabled">Chưa có bài viết</li>
-                                    </c:if>
                                 </ul>
                             </div>
                         </div>

@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dbaccess.CommentDAO;
 import dbaccess.PostDAO;
 import dbaccess.Post_CategoryDAO;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Comment;
 import model.Post;
 import model.Post_Category;
 
@@ -39,9 +41,11 @@ public class LoadPostController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id").toString());
             Post post = PostDAO.getPost(id);
             if (post != null) {
+                ArrayList<Comment> comments = CommentDAO.getAllComment(id);
                 Post_Category cate = Post_CategoryDAO.getPostCategory(post.getCate_id());
                 request.setAttribute("POST", post);
                 request.setAttribute("CATE", cate);
+                request.setAttribute("COMMENTS", comments);
                 request.getRequestDispatcher("thread.jsp").forward(request, response);
             }
         } catch (Exception ex) {

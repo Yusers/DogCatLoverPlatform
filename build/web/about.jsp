@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Giới Thiệu | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
@@ -114,7 +114,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link active">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         -->
-                        <a href="#" class="nav-item nav-link">Contact</a>
+                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>

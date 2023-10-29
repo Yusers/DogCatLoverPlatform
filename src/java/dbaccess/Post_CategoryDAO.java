@@ -66,4 +66,44 @@ public class Post_CategoryDAO {
 
         return cate;
     }
+    
+    public static Post_Category getPostCategory(String cate_name) throws Exception {
+        Post_Category cate = null;
+
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Post_category]\n"
+                    + "WHERE name = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, cate_name);
+            ResultSet rs = pst.executeQuery();
+            if(rs != null) {
+                while(rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    Date created_at = rs.getDate("created_at");
+                    Date updated_at = rs.getDate("updated_at");
+                    cate = new Post_Category(id, name, created_at, updated_at);
+                }
+            }
+            cn.close();
+        }
+
+        return cate;
+    }
+    
+    public static int createPostCategory(String cate_name) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if(cn!=null) {
+            String sql = "INSERT INTO [dbo].[Post_category] ([name]) VALUES (?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, cate_name);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        
+        return rs;
+    }
 }

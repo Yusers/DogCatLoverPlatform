@@ -42,7 +42,7 @@ public class LoadAllPostController extends HttpServlet {
                 request.setAttribute("POSTS", listPost);
                 request.setAttribute("CATEGORYS", listCategory);
             }
-            request.getRequestDispatcher("forums.jsp").forward(request, response);
+            request.getRequestDispatcher("DispatcherController?action=forums-page").forward(request, response);
         } catch(Exception ex) {
             ex.printStackTrace();
         }

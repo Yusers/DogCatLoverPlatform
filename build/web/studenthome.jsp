@@ -1,165 +1,166 @@
-<%-- 
-    Document   : StudentSearch
-    Created on : Oct 20, 2023, 12:31:14 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Thêm liên kết đến Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <!-- Include Font Awesome CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+        <title>Dashboard</title>
         <style>
-            .user-profile {
-                width: 30px; /* Độ rộng của hình tròn */
-                height: 30px; /* Chiều cao của hình tròn */
-                border-radius: 50%; /* Để biến hình thành hình tròn */
-                object-fit: cover; /* Đảm bảo hình ảnh vừa với hình tròn */
+            .cus {
+                background-color: #f27125;
+                margin: 0 0.5rem;
+                border-radius: 5px;
+                color: #fff!important;
             }
 
-            /* Thêm border dưới cho Navbar */
+            .text-black {
+                color: #333!important;
+                font-size: 18px;
+            }
+
             .navbar {
-                border-bottom: 0.5px solid #f27125; /* Màu và độ dày của đường border */
-                background-color: #fff; /* Màu nền của Navbar */
+                padding: 0.8rem;
+                border-bottom: 1px solid black;
             }
 
-            /* Thay đổi màu chữ cho các mục menu */
-            .navbar-nav .nav-link {
-                color: #fff; /* Màu chữ trắng */
+            @media screen and (max-width: 980px) {
+                .cus {
+                    background: none!important;
+                    color: #333!important;
+                }
             }
 
-            /* Hiệu ứng hover cho các mục menu */
-            .navbar-nav .nav-item:not(:last-child) .nav-link:hover {
-                color: tomato; /* Màu chữ khi hover */
-                /*border: 1px solid #000;  Viền đen xung quanh khi hover */
-            }
 
-            .card-body > div {
-                margin-bottom: 0.2rem;
-            }
-            
             .card-body > .btn-book {
                 margin-top: 1rem;
+            }
+
+            .form-group {
+                margin: 0.4rem;
+                border-radius: 35px;
+            }
+            
+            .text-black {
+                color: #333!important;
+                font-size: 18px;
             }
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="https://daihoc.fpt.edu.vn/" target="_blank">
-                <img src="./img/2021fptulong-1-1@2x.png" width="100px" class="d-inline-block align-top" alt="Logo">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="home.jsp">
+                <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" width="100" class="d-inline-block align-top" alt="Logo">
             </a>
-            <div class="ml-auto">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">View Booking</a>
+                        <a class="cus nav-link" href="#">
+                            <i class="fas fa-calendar-alt"></i> View Booking
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Request</a>
+                        <a class="cus nav-link" href="#">
+                            <i class="fas fa-file"></i> Request
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="./img/person.svg" class="user-profile" alt="User Profile">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Logout</a>
-                            </div>
-                        </div>
+                        <a class="cus nav-link" href="#">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item" id="user-icon">
+                        <a class="nav-link text-black" href="#">
+                            <i class="fas fa-user"></i> User
+                        </a>
                     </li>
                 </ul>
             </div>
-        </nav>
-        
-        <div class="container mt-5">
-            <form>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="search" placeholder="Search...">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button">Search</button>
+        </nav>  
+        <div class="container mt-4">
+            <h1 class="text-center">Dashboard</h1>
+            <form action="MainController" method="POST">
+                <div class="d-flex justify-content-between mt-2">
+                    <input type="hidden" value="Find" name="action"/>
+                    <input type="text" name="txtsemester" class="form-control mx-auto" placeholder="E.g FA23">
+                    <button type="submit" value="Find" class="btn btn-primary float-right">Find</button>
+                </div>
+            </form>
+            <p class="text-danger text-center mt-2">${requestScope.MSG}</p>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Sinh viên <span style="color: red" >ĐẶT NHIỀU SLOT NHẤT</span></h5>                              
+                            </div>                            
+                            <p class="mt-2">Số lượt đặt: <b style="color: red">${requestScope.UserMaxSlot.number}</b></p>
+                            <p class="mt-2">MSSV: <b style="color: red">${requestScope.UserMaxSlot.userID}</b></p>
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <input type="text" class="form-control" id="input1" placeholder="Input 1...">
-                    <select class="form-control mt-2" id="option1">
-                        <option value="option1_value1">Option 1 Value 1</option>
-                        <option value="option1_value2">Option 1 Value 2</option>
-                        <option value="option1_value3">Option 1 Value 3</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <input type="text" class="form-control" id="input2" placeholder="Input 2...">
-                    <select class="form-control mt-2" id="option2">
-                        <option value="option2_value1">Option 2 Value 1</option>
-                        <option value="option2_value2">Option 2 Value 2</option>
-                        <option value="option2_value3">Option 2 Value 3</option>
-                    </select>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Sinh viên GỬI <span style="color: red" >NHIỀU REQUEST NHẤT</span></h5>
+
+                            </div>
+
+                            <p class="mt-2">Số lượt request: <b style="color: red">${requestScope.UserMaxRequest.number}</b></p>
+                            <p class="mt-2">MSSV: <b style="color: red">${requestScope.UserMaxRequest.userID}</b></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card" style="width: 260px; height: 240px; border-radius: 5%;">
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between"><strong>Subject:</strong> <span class="ml-auto">SWP209</span></div>
-                            <div class="d-flex justify-content-between"><strong>Lecture name:</strong> <span class="ml-auto">LamNN15</span></div>
-                            <div class="d-flex justify-content-between"><strong>Semester:</strong> <span class="ml-auto">Fall23</span></div>
-                            <div class="d-flex justify-content-between"><strong>Start time:</strong> <span class="ml-auto">12:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>End time:</strong> <span class="ml-auto">13:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>Limit:</strong> <span class="ml-auto">1/6</span></div>
-                            <div class="d-flex justify-content-end btn-book">
-                                <!-- Added d-flex justify-content-between to create a flex container -->
-                                <a href="#" class="btn btn-primary">BOOK</a>
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Giảng viên <span style="color: red" >TẠO NHIỀU SLOT NHẤT</span></h5>
+
                             </div>
+
+                            <p class="mt-2">Số lượt tạo slot: <b style="color: red">${requestScope.LecturerMaxSlot.number}</b></p>
+                            <p class="mt-2">MSGV: <b style="color: red">${requestScope.LecturerMaxSlot.userID}</b></p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card" style="width: 260px; height: 240px; border-radius: 5%;">
+
+                <div class="col-md-6">
+                    <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between"><strong>Subject:</strong> <span class="ml-auto">SWP209</span></div>
-                            <div class="d-flex justify-content-between"><strong>Lecture name:</strong> <span class="ml-auto">LamNN15</span></div>
-                            <div class="d-flex justify-content-between"><strong>Semester:</strong> <span class="ml-auto">Fall23</span></div>
-                            <div class="d-flex justify-content-between"><strong>Start time:</strong> <span class="ml-auto">12:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>End time:</strong> <span class="ml-auto">13:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>Limit:</strong> <span class="ml-auto">1/6</span></div>
-                            <div class="d-flex justify-content-end btn-book">
-                                <!-- Added d-flex justify-content-between to create a flex container -->
-                                <a href="#" class="btn btn-primary">BOOK</a>
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Giảng viên <span style="color: red" >NHẬN ĐƯỢC NHIỀU REQUEST NHẤT</span></h5>
+
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card" style="width: 260px; height: 240px; border-radius: 5%;">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between"><strong>Subject:</strong> <span class="ml-auto">SWP209</span></div>
-                            <div class="d-flex justify-content-between"><strong>Lecture name:</strong> <span class="ml-auto">LamNN15</span></div>
-                            <div class="d-flex justify-content-between"><strong>Semester:</strong> <span class="ml-auto">Fall23</span></div>
-                            <div class="d-flex justify-content-between"><strong>Start time:</strong> <span class="ml-auto">12:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>End time:</strong> <span class="ml-auto">13:30 01/10/2023</span></div>
-                            <div class="d-flex justify-content-between"><strong>Limit:</strong> <span class="ml-auto">1/6</span></div>
-                            <div class="d-flex justify-content-end btn-book">
-                                <!-- Added d-flex justify-content-between to create a flex container -->
-                                <a href="#" class="btn btn-primary">BOOK</a>
-                            </div>
+
+                            <p class="mt-2">Số lượt request: <b style="color: red">${requestScope.LecturerMaxRequest.number}</b></p>
+                            <p class="mt-2">MSGV: <b style="color: red">${requestScope.LecturerMaxRequest.userID}</b></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </body>
 </html>

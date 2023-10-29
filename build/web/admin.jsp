@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Admin | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
@@ -63,7 +63,7 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
                                         <c:if test="${us.role eq 'ADMIN'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=manage-staff">Dashboard</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
@@ -114,7 +114,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -212,7 +212,7 @@
                                     <c:forEach var="m" items="${listOfMember}">
                                         <tr>
                                         <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${m.fullname}</a></td>
+                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
                                         <td>${m.email}</td>
                                         <td>${m.phone_number}</td>
                                         <td class="text-center">

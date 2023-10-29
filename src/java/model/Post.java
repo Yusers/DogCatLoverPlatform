@@ -23,6 +23,13 @@ public class Post {
 
     public Post() {
     }
+    
+    public Post(String title, int cate_id, String author_id, String content) {
+        this.title = title;
+        this.cate_id = cate_id;
+        this.author_id = author_id;
+        this.content = content;
+    }
 
     public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at, Date updated_at) {
         this.id = id;

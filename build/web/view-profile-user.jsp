@@ -195,7 +195,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -238,9 +238,11 @@
                         </div>
                     </div>
                     <c:set var="us" value="${requestScope.MEMBER}" />
-                    <div class="col-md-2">
-                        <input type="button" class="profile-edit-btn btn-primary" name="btnAddMore" value="Edit Profile" onclick="window.location.href = `DispatcherController?action=manage&actions=editprofileuser&usname=${us.user_id}`" />
-                    </div>
+                    <c:if test="${sessionScope.USER.role == 'ADMIN'}">
+                        <div class="col-md-2">
+                            <input type="button" class="profile-edit-btn btn-primary" name="btnAddMore" value="Edit Profile" onclick="window.location.href = `DispatcherController?action=manage&actions=editprofileuser&usname=${us.user_id}`" />
+                        </div>
+                    </c:if>
                 </div>
                 <div class="row">
                     <div class="col-md-8">

@@ -48,6 +48,18 @@
         <servlet-name>LoadPostController</servlet-name>
         <servlet-class>controllers.LoadPostController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatController</servlet-name>
+        <servlet-class>controllers.ChatController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreatePostController</servlet-name>
+        <servlet-class>controllers.CreatePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAllTradeController</servlet-name>
+        <servlet-class>controllers.LoadAllTradeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -95,5 +107,17 @@
     <servlet-mapping>
         <servlet-name>LoadPostController</servlet-name>
         <url-pattern>/LoadPostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatController</servlet-name>
+        <url-pattern>/ChatController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatePostController</servlet-name>
+        <url-pattern>/CreatePostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllTradeController</servlet-name>
+        <url-pattern>/LoadAllTradeController</url-pattern>
     </servlet-mapping>
 </web-app>

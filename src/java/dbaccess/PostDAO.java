@@ -74,4 +74,19 @@ public class PostDAO {
 
         return post;
     }
+    
+    public static int createPost(Post post) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if(cn != null) {
+            String sql = "INSERT INTO [dbo].[Post] (title, [category_id], author_id, [status], content) VALUES (?, ?, ?, 'Created', ?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, post.getTitle());
+            pst.setInt(2, post.getCate_id());
+            pst.setString(3, post.getAuthor_id());
+            pst.setString(4, post.getContent());
+            rs = pst.executeUpdate();
+        }
+        return rs;
+    }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controllers;
 
 import jakarta.servlet.ServletException;
@@ -21,6 +17,8 @@ public class DispatcherController extends HttpServlet {
     final String ADMIN_PAGE = "adminpage.jsp";
     final String LOGIN_PAGE = "login.jsp";
     final String REGISTER_PAGE = "signup.jsp";
+    final String FORUMS_PAGE = "forums.jsp";
+    final String TRADE_PAGE = "tradepage.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,8 +56,16 @@ public class DispatcherController extends HttpServlet {
                 }
             } else if (action.equals("forums")) {
                 url = "LoadAllPostController";
+            } else if (action.equals("forums-page")) {
+                url = FORUMS_PAGE;
             } else if (action.equals("thread")) {
                 url = "LoadPostController";
+            } else if(action.equals("create-post")) {
+                url = "CreatePostController";
+            } else if(action.equals("trade")) {
+                url = "LoadAllTradeController";
+            } else if(action.equals("trade-page")) {
+                url = TRADE_PAGE;
             }
             // Chuyển hướng đến trang tương ứng với chức năng đã chọn
             request.getRequestDispatcher(url).forward(request, response);

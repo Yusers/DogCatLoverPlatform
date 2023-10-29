@@ -113,8 +113,8 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link active">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -132,6 +132,7 @@
             </nav>
         </div>
         <!-- Navbar End -->
+        <c:set var="us" value="${sessionScope.USER}"/>
 
         <!-- Threads -->
         <div class="container mt-5">
@@ -153,7 +154,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                             <div class="author-container">
                                 <div class="author-info">
-                                    <h6><a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">${post.author_id}</a></h6>
+                                    <c:if test="${us.role != null}"><h6><a href="DispatcherController?action=manage&actions=viewprofile&usname=${post.author_id}">${post.author_id}</a></h6></c:if>
+                                    <c:if test="${us.role == null}"><h6><a href="login.jsp">${post.author_id}</a></h6></c:if>
                                     <p>${post.created_at}</p>
                                 </div>
                                 <div class="post-action">
@@ -174,15 +176,15 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="alert alert-secondary" role="alert">
-                                Welcome to our thread dedicated to keeping our furry friends in the best possible health! 
-                                Whether you have a cat, a dog, or both, here are some valuable tips to ensure they lead happy and healthy lives.
+                                Chúng tôi rất vui mừng khi chào đón bạn vào cộng đồng của chúng tôi. Đây là nơi để chia sẻ ý kiến, hỏi đáp và kết nối với những người có sở thích tương tự. 
+                                Hãy không ngần ngại tham gia vào các cuộc trò chuyện và đóng góp ý kiến của bạn.
                             </div>
                             <!-- Thread img -->
-                            <img src="./assets/img/blog-1.jpg" class="card-img-top thread-img" alt="blog-1"><br>
+                            <!--<img src="./assets/img/blog-1.jpg" class="card-img-top thread-img" alt="blog-1"><br>-->
                             <p>
                                 ${post.content}
                             </p>
-                            <img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>
+                            <!--<img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>-->
                         </div>
                     </div>
                 </div>
@@ -190,12 +192,11 @@
             <!-- Sidebar with Replies -->
             <div class="row">
                 <!-- Replies Section -->
-                <c:set var="us" value="${sessionScope.USER}"/>
                 <div class="col-md-12 replies">
                     <div class="comment">
                         <div class="user-info">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">${us.fullname != null ? us.fullname : "Guess"}</a></span>
+                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">${us.user_id != null ? us.user_id : "Guess"}</a></span>
                         </div>
                         <p>
                             <c:choose>
@@ -214,30 +215,44 @@
                         </p>
                     </div>
                     <!-- Reply 1 -->
-                    <div class="comment">
-                        <div class="user-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                            <span><a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">Phước</a></span>
-                        </div>
-                        <p>Tips khá hữu ích mà bằng tiếng anh thì hơi phí</p>
-                    </div>
+                    <c:forEach items="${requestScope.COMMENTS}" var="comment">
+                        <c:choose>
+                            <c:when test="${comment.parent_id == 0}">
+                                <!-- This is a top-level comment -->
+                                <div class="comment">
+                                    <div class="user-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                                        <span><a href="DispatcherController?action=manage&actions=viewprofile&usname=NhatNTM">${comment.author_id}</a></span>
+                                    </div>
+                                    <p>${comment.content}</p>
+                                    <a class="pl-4">reply</a>
+                                </div>
+                            </c:when>
 
-                    <!-- Reply 2 -->
-                    <div class="comment">
-                        <div class="user-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                            <span><a href="viewprofile.jsp?username=An&email=an@gmail.com">Lê An</a></span>
-                        </div>
-                        <p>Bài này khá hay, cảm ơn bạn đã chia sẻ.</p>
-                    </div>
-
-                    <!-- Add more replies as needed -->
+                            <c:otherwise>
+                                <!-- This is a sub-reply, handle it as needed -->
+                                <div class="sub-reply pl-4">
+                                    <div class="user-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                                        <span><a href="DispatcherController?action=manage&actions=viewprofile&usname=NhatNTM">${comment.author_id}</a></span>
+                                    </div>
+                                    <p>${comment.content}</p>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </div>
             </div>
         </div>
         <!-- end Threads -->
 
         <script>
+            $(document).ready(function () {
+                $(".show-sub-replies").click(function () {
+                    $(this).siblings(".sub-replies").toggle();
+                });
+            });
+
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
                 if (confirmation) {

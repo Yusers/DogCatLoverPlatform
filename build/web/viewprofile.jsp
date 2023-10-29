@@ -152,7 +152,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
-                            <c:if test="${sessionScope.us.role eq 'ADMIN'}">
+                            <c:if test="${sessionScope.USER.role eq 'ADMIN'}">
                                 <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                             </c:if>
                             <a class="dropdown-item" href="#">My Posts</a>
@@ -201,7 +201,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
