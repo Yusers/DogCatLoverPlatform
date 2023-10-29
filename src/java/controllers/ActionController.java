@@ -5,18 +5,21 @@
 package controllers;
 
 import dbaccess.AccountDAO;
+import dbaccess.PostDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import model.Account;
 
 /**
  *
  * @author Kuuga
  */
-public class DeleteStaffController extends HttpServlet {
+public class ActionController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +34,31 @@ public class DeleteStaffController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("txtusername");
-            int rs = AccountDAO.deleteAccount(username);
-            if (rs > 0) {
-                response.sendRedirect("StaffManagerController");
+            String action = request.getParameter("action");
+            String username = request.getParameter("username");
+            Account account = AccountDAO.getAccount(username);
+
+            if ("delete".equals(action)) {
+                boolean hasPosts = PostDAO.hasPosts(username);
+                if (hasPosts) {
+                    int deletePost = PostDAO.deletePost(username);
+                }
+                int deleteAccount = AccountDAO.deleteAccount(username);
+                if (deleteAccount > 0) {
+                    response.sendRedirect("DispatcherController?action=manage");
+                }
+            } else if ("ban".equals(action)) {
+                int banAccount = AccountDAO.banAccount(username);
+                if (banAccount > 0) {
+                    response.sendRedirect("DispatcherController?action=manage");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

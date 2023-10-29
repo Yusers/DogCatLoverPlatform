@@ -64,9 +64,9 @@ public class AccountDAO {
             pst.setString(3, acc.getEmail());
             pst.setString(4, acc.getPassword());
             pst.setString(5, acc.getPhone_number());
-            pst.setString(6, "do not have bio yet");
+            pst.setString(6, "Không có mô tả");
             pst.setString(7, "MEMBER");
-            pst.setString(8, "active");
+            pst.setString(8, "Active");
             rs = pst.executeUpdate();
             cn.close();
         }
@@ -166,8 +166,8 @@ public class AccountDAO {
         if (cn != null) {
             String sql = "UPDATE [dbo].[Account]\n"
                     + "SET [status] = CASE\n"
-                    + "    WHEN [status] LIKE 'ACTIVE' THEN 'INACTIVE'\n"
-                    + "    ELSE 'ACTIVE'\n"
+                    + "    WHEN [status] = 'Active' THEN 'Inactive'\n"
+                    + "    ELSE 'Active'\n"
                     + "END\n"
                     + "WHERE [user_id] LIKE ?";
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -183,7 +183,7 @@ public class AccountDAO {
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
             String sql = "delete from [dbo].[Account] \n"
-                    + "where [user_id] LIKE ?";
+                    + "where [user_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, username);
             rs = pst.executeUpdate();
@@ -220,5 +220,26 @@ public class AccountDAO {
             cn.close();
         }
         return list;
+    }
+    
+    public static int updateProfile(String user_name, String fullname, String email, String description, String password, String phone) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "UPDATE [dbo].[Account]\n"
+                    + "SET [user_id] = ?, [fullname] = ?, [email] = ?, [description] = ?, [password] = ?, [phone_number] = ?, [updated_at] = GETDATE()\n"
+                    + "WHERE [user_id] LIKE ? ";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, user_name);
+            pst.setString(2, fullname);
+            pst.setString(3, email);
+            pst.setString(4, description);
+            pst.setString(5, password);
+            pst.setString(6, phone);
+            pst.setString(7, user_name);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
     }
 }

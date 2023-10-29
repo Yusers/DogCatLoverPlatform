@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.regex.Pattern;
 import model.Account;
 
 /**
@@ -39,11 +40,35 @@ public class RegisterController extends HttpServlet {
             String email = request.getParameter("email");
             String phone = request.getParameter("phonenumber");
 
-            Account existed = AccountDAO.checkLogin(userid, password);
-            if (existed == null) {
+            Account existed = AccountDAO.getAccount(userid);
+            // Check duplicate User name
+            if (existed != null) {
+                request.setAttribute("ERR_USERNAME", "Username already exists!!");
+                request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
+            } 
+            //Check valid fullname
+            else if (!Pattern.matches("^[\\p{L}\\p{M} ']+$", fullname)) {
+                request.setAttribute("ERR_FULLNAME", "Invalid fullname!!");
+                request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
+            } 
+            //Check valid phone number
+            else if (!Pattern.matches("^[0-9]{10}$", phone)) {
+                request.setAttribute("ERR_PHONE", "Invalid phone number!!");
+                request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
+            } 
+            //Check valid email
+            else if (!Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email)) {
+                request.setAttribute("ERR_EMAIL", "Invalid E-mail!!");
+                request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
+            } 
+            //Check valid password
+            else if (password.length() < 6) {
+                request.setAttribute("ERROR", "Password must have at least 6 characters!!");
+                request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
+            } else {
                 Account account = new Account(userid.trim(), fullname.trim(), email.trim(), password.trim(), phone.trim());
                 int rs = AccountDAO.createAccount(account);
-                if(rs > 0) {
+                if (rs > 0) {
                     response.sendRedirect("login.jsp");
                 } else {
                     request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
