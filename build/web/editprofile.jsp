@@ -177,8 +177,7 @@
                                     </ul>
                                     <div class="tab-content pt-3">
                                         <div class="tab-pane active">
-                                            <form action="EditProfileController" method="post" class="form" novalidate>
-                                                <input type="hidden" value="${us.user_id}" name="username"/>
+                                            <form class="form" novalidate>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
@@ -186,14 +185,12 @@
                                                                 <div class="form-group">
                                                                     <label>Full Name</label>
                                                                     <input class="form-control" type="text" name="name" placeholder="${us.fullname}" value="${us.fullname}">
-                                                                    <label class="error">${requestScope.ERR_FULLNAME}</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
-                                                                    <label>Phone Number</label>
-                                                                    <input class="form-control" type="text" name="phone" placeholder="${us.phone_number}" value="${us.phone_number}">
-                                                                    <label class="error">${requestScope.ERR_PHONE}</label>
+                                                                    <label>Username</label>
+                                                                    <input class="form-control" type="text" name="username" placeholder="${us.user_id}" value="${us.user_id}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -201,8 +198,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Email</label>
-                                                                    <input class="form-control" type="text" name="email" placeholder="${us.email}" value="${us.email}">
-                                                                    <label class="error">${requestScope.ERR_EMAIL}</label>
+                                                                    <input class="form-control" type="text" placeholder="${us.email}" value="${us.email}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -210,7 +206,7 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label>About</label>
-                                                                    <textarea class="form-control" rows="5" name="description" placeholder="${us.description}">${us.description}</textarea>
+                                                                    <textarea class="form-control" rows="5" placeholder="${us.description == "" ? us.description : "My bio"}"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -223,8 +219,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Current Password</label>
-                                                                    <input class="form-control" name="current_password" type="password" placeholder="••••••">
-                                                                    <label class="error">${requestScope.ERR_PASS}</label>
+                                                                    <input class="form-control" type="password" placeholder="••••••">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -232,8 +227,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>New Password</label>
-                                                                    <input class="form-control" name="new_password" type="password" placeholder="••••••">
-                                                                    <label class="error">${requestScope.ERR_NEW_PASS}</label>
+                                                                    <input class="form-control" type="password" placeholder="••••••">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -241,8 +235,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                                                    <input class="form-control" name="confirm_password" type="password" placeholder="••••••"></div>
-                                                                    <label class="error">${requestScope.ERR_CONFIRM_PASS}</label>
+                                                                    <input class="form-control" type="password" placeholder="••••••"></div>
                                                             </div>
                                                         </div>
                                                     </div>

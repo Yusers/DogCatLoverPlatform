@@ -25,7 +25,7 @@
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
+        
         <style>
 
             .registry {
@@ -74,7 +74,7 @@
             input[type="password"] {
                 font-family: 'Montserrat', sans-serif;
                 color: #fff;
-                color: #fff;
+                 color: #fff;
                 width: 100%;
                 padding: 10px 20px;
                 display: block;
@@ -140,15 +140,15 @@
                 text-decoration: none;
                 color: rgb(86 255 251 / 80%);
             }
-
+            
             label {
                 color: white;
             }
         </style>
-
+        
     </head>
     <body>
-        <!-- Topbar Start -->
+          <!-- Topbar Start -->
         <div class="container-fluid">
             <div class="row bg-secondary py-2 px-lg-5">
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -255,32 +255,27 @@
                 <input type="hidden" name="action" value="register"/>
                 <div>
                     <label for="fullname">Tên tài khoản</label>
-                    <input type="text" id="fullname" class="text" name="userid" required >
-                    <label class="error">${requestScope.ERR_USERNAME}</label>
+                    <input type="text" id="fullname" class="text" name="userid" required>
                 </div>
                 <br>
                 <div>
                     <label for="fullname">Họ và tên: </label>
                     <input type="text" id="fullname" class="text" name="fullname" required>
-                    <label class="error">${requestScope.ERR_FULLNAME}</label>
                 </div>
                 <br>
                 <div>
                     <label for="username">Email: </label>
                     <input type="text" id="username" class="text" name="email" required>
-                    <label class="error">${requestScope.ERR_PHONE}</label>
                 </div>
                 <br>
                 <div>
                     <label for="phonenumber">Số điện thoại: </label>
                     <input type="text" id="phonenumber" class="text" name="phonenumber" required>
-                    <label class="error">${requestScope.ERR_EMAIL}</label>
                 </div>
                 <br>
                 <div>
                     <label for="password">Mật khẩu:</label>
                     <input type="password" id="password" class="text" name="password" required>
-                    <label class="error">${requestScope.ERROR}</label>
                 </div>
                 <br>
                 <hr>
