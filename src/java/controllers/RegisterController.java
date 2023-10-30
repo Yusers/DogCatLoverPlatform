@@ -34,7 +34,7 @@ public class RegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String userid = request.getParameter("userid");
+            String userid = request.getParameter("username");
             String password = request.getParameter("password");
             String fullname = request.getParameter("fullname");
             String email = request.getParameter("email");
@@ -63,7 +63,7 @@ public class RegisterController extends HttpServlet {
             } 
             //Check valid password
             else if (password.length() < 6) {
-                request.setAttribute("ERROR", "Password must have at least 6 characters!!");
+                request.setAttribute("ERR_PASSWORD", "Password must have at least 6 characters!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } else {
                 Account account = new Account(userid.trim(), fullname.trim(), email.trim(), password.trim(), phone.trim());

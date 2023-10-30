@@ -255,27 +255,32 @@
                 <input type="hidden" name="action" value="register"/>
                 <div>
                     <label for="fullname">Tên tài khoản</label>
-                    <input type="text" id="fullname" class="text" name="userid" required>
+                    <input type="text" id="fullname" class="text" name="username" required>
+                    <label class="error">${requestScope.ERR_USERNAME}</label>
                 </div>
                 <br>
                 <div>
                     <label for="fullname">Họ và tên: </label>
                     <input type="text" id="fullname" class="text" name="fullname" required>
+                    <label class="error">${requestScope.ERR_FULLNAME}</label>
                 </div>
                 <br>
                 <div>
                     <label for="username">Email: </label>
                     <input type="text" id="username" class="text" name="email" required>
+                    <label class="error">${requestScope.ERR_EMAIL}</label>
                 </div>
                 <br>
                 <div>
                     <label for="phonenumber">Số điện thoại: </label>
                     <input type="text" id="phonenumber" class="text" name="phonenumber" required>
+                    <label class="error">${requestScope.ERR_PHONE}</label>
                 </div>
                 <br>
                 <div>
                     <label for="password">Mật khẩu:</label>
                     <input type="password" id="password" class="text" name="password" required>
+                    <label class="error">${requestScope.ERR_PASSWORD}</label>
                 </div>
                 <br>
                 <hr>

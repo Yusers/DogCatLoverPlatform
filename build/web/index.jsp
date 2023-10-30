@@ -56,7 +56,7 @@
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
-                            <c:when test="${us != null}">
+                            <c:otherwise>
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user"></i> ${us.user_id}
@@ -64,13 +64,13 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
                                         <c:if test="${us.role == 'ADMIN'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
-                            </c:when>
+                            </c:otherwise>
                         </c:choose>
                     </div>
                 </div>
