@@ -169,90 +169,76 @@
                             <div class="card-body bg-light p-4">
                                 <h4 class="card-title text-truncate">${trade.title}</h4>
                                 <div class="d-flex mb-3">
-                                    <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">${trade.author_id}</a></small>
+                                    <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
+                                        <c:if test="${us.role == null}"><a href="login.jsp">${trade.author_id}</a></c:if></small>
                                     <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${trade.cate_id}</a></small>
                                     <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
                                 </div>
-                                <p>${trade.content}</p>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal" data-trade-title="${trade.title}" data-trade-author="${trade.author_id}" data-trade-content="${trade.content}">View Details</button>
+                                    <p class="text-truncate">${trade.content}</p>
+                                <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-                <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="postModalLabel"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <img src="assets/img/cat-1.jpg" class="img-fluid" alt="Big Image">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5 class="author-name"></h5>
-                                        <p>Email: <span class="author-email"></span></p>
-                                        <p>Điện Thoại: <span class="author-phone"></span></p>
-                                        <button type="button" class="btn btn-primary mt-2" id="contactUser">Chat</button>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col">
-                                        <h5>Mô Tả</h5>
-                                        <p class="trade-content"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div id="chatBox" class="chat-box">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    Chat with User
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
+            <div class="row pt-5">
+                <div class="col-lg-4 col-md-12 mb-5">
+                    <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Dog&Cat</span>Lover</h1>
+                    <p class="m-0">Chung toi hi vong nen tang nay se giup ban trong viec cham soc thu cung va hay tham gia dien dan de ban co the tham gia trao doi voi nha nhu trao doi cho, meo, do dung cua cho hoac meo va dich vu cham soc thu cung</p>
                 </div>
-                <div class="card-body">
-                    <div class="chat-messages" id="chat"></div>
-                </div>
-                <div class="card-footer">
-                    <div class="input-group">
-                        <input type="text" name="msg" id="msg" class="form-control" placeholder="Type a message...">
-                        <div class="input-group-append">
-                            <button onclick="return sendMsg();" class="btn btn-primary" type="button">Send</button>
+                <div class="col-lg-8 col-md-12">
+                    <div class="row">
+                        <div class="col-md-4 mb-5">
+                            <h5 class="text-primary mb-4">Get In Touch</h5>
+                            <p><i class="fa fa-map-marker-alt mr-2"></i>Nha van hoa sinh vien, Tp.Thu Duc, VN</p>
+                            <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                            <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <h5 class="text-primary mb-4">Popular Links</h5>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Forums</a>
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trade</a>
+                                <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container-fluid text-white py-4 px-sm-3 px-md-5" style="background: #111111;">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                    <p class="m-0 text-white">
+                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <ul class="nav d-inline-flex">
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Terms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Help</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('#postModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget);
-                    var title = button.data('trade-title');
-                    var author = button.data('trade-author');
-                    var content = button.data('trade-content');
-
-                    var modal = $(this);
-                    modal.find('.modal-title').text(title);
-                    modal.find('.modal-body .author-name').text(author);
-                    modal.find('.modal-body .trade-content').text(content);
-                });
-            });
-
             var wsUrl;
             if (window.location.protocol == 'http:') {
                 wsUrl = 'ws://';

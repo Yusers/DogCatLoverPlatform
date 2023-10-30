@@ -64,6 +64,22 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>controllers.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadTradeController</servlet-name>
+        <servlet-class>controllers.LoadTradeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateCommentController</servlet-name>
+        <servlet-class>controllers.CreateCommentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateConversationController</servlet-name>
+        <servlet-class>controllers.CreateConversationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateMessageController</servlet-name>
+        <servlet-class>controllers.CreateMessageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -127,5 +143,21 @@
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadTradeController</servlet-name>
+        <url-pattern>/LoadTradeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateCommentController</servlet-name>
+        <url-pattern>/CreateCommentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateConversationController</servlet-name>
+        <url-pattern>/CreateConversationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateMessageController</servlet-name>
+        <url-pattern>/CreateMessageController</url-pattern>
     </servlet-mapping>
 </web-app>

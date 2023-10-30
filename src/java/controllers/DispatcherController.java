@@ -19,6 +19,8 @@ public class DispatcherController extends HttpServlet {
     final String REGISTER_PAGE = "signup.jsp";
     final String FORUMS_PAGE = "forums.jsp";
     final String TRADE_PAGE = "tradepage.jsp";
+    final String TRADE_CHAT = "chat.jsp";
+    final String TRADE_DETAIL_PAGE = "tradingpage.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,8 +66,20 @@ public class DispatcherController extends HttpServlet {
                 url = "CreatePostController";
             } else if(action.equals("trade")) {
                 url = "LoadAllTradeController";
+            } else if(action.equals("trade-details")) {
+                url = "LoadTradeController";
             } else if(action.equals("trade-page")) {
                 url = TRADE_PAGE;
+            } else if(action.equals("trade-detail-page")) {
+                url = TRADE_DETAIL_PAGE;
+            } else if(action.equals("trade-chat")) {
+                url = TRADE_CHAT;
+            } else if(action.equals("comment")) {
+                url = "CreateCommentController";
+            } else if(action.equals("create-conversation")) {
+                url = "CreateConversationController";
+            } else if(action.equals("create-message")) {
+                url = "CreateMessageController";
             }
             // Chuyển hướng đến trang tương ứng với chức năng đã chọn
             request.getRequestDispatcher(url).forward(request, response);

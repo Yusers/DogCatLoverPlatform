@@ -7,6 +7,7 @@ package dbaccess;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Trade;
@@ -43,5 +44,34 @@ public class TradeDAO {
             cn.close();
         }
         return trades;
+    }
+    
+    public static Trade getTrade(int trade_id) throws Exception {
+        Trade trade = null;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT [id], [author_id], [title], [content], [status], [category], [image], [created_at], [updated_at]\n"
+                    + "FROM [dbo].[Trade]\n"
+                    + "WHERE [id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, trade_id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String author_id = rs.getString("author_id");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String status = rs.getString("status");
+                    int category = rs.getInt("category");
+                    String image = rs.getString("image");
+                    Date created_at = rs.getDate("created_at");
+                    Date updated_at = rs.getDate("updated_at");
+                    trade = new Trade(id, author_id, title, content, status, category, image);
+                }
+            }
+            cn.close();
+        }
+        return trade;
     }
 }

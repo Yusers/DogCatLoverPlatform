@@ -22,8 +22,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int id, String author_id, int post_id, String content, int parent_id) {
-        this.id = id;
+    public Comment(String author_id, int post_id, String content, int parent_id) {
         this.author_id = author_id;
         this.post_id = post_id;
         this.content = content;

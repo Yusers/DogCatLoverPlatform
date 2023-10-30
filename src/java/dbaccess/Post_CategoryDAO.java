@@ -62,6 +62,7 @@ public class Post_CategoryDAO {
                     cate = new Post_Category(id, name, created_at, updated_at);
                 }
             }
+            cn.close();
         }
 
         return cate;

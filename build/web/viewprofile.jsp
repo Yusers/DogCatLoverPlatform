@@ -334,7 +334,6 @@
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
                         &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
-                        <a class="text-white font-weight-bold" href=""></a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
