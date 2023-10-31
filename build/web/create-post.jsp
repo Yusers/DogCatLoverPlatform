@@ -155,6 +155,7 @@
                         <div class="form-group">
                             <label for="content">Nội dung bài viết</label>
                             <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
+                            <label class="error">${requestScope.ERR_CONTENT}</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

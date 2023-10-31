@@ -211,18 +211,22 @@
                                     <!-- Rows for members go here -->
                                     <c:forEach var="m" items="${listOfMember}">
                                         <tr>
-                                        <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
-                                        <td>${m.email}</td>
-                                        <td>${m.phone_number}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-                                        </td>
-                                    </tr>
+                                            <td>${m.user_id}</td>
+                                            <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
+                                            <td>${m.email}</td>
+                                            <td>${m.phone_number}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
+                                                <form action="ActionController" method="post">
+                                                    <button value="delete" name="action" class="btn btn-danger">
+                                                        Delete
+                                                    </button>
+                                                    <button value="ban" name="action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        Ban
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
