@@ -84,6 +84,10 @@
         <servlet-name>EditProfileController</servlet-name>
         <servlet-class>controllers.EditProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActionController</servlet-name>
+        <servlet-class>controllers.ActionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -167,5 +171,9 @@
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
         <url-pattern>/EditProfileController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActionController</servlet-name>
+        <url-pattern>/ActionController</url-pattern>
     </servlet-mapping>
 </web-app>
