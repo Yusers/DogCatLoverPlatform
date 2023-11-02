@@ -52,17 +52,31 @@
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
                         <!-- GET SESSION -->
-                        <c:set var="us" value="${sessionScope.MEMBER}" />
+                        <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
                                 <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                                    <i class="fa fa-user"></i> <br> Log in
+                                    <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                                    <i class="fa fa-user"></i> <br> ${us.user_id}
-                                </a>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> ${us.user_id}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
+                                    </div>
+                                </div>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -105,20 +119,10 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
+                        <a href="index.jsp" class="nav-item nav-link active">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link active">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                     </div>
 

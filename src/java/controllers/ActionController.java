@@ -5,7 +5,10 @@
 package controllers;
 
 import dbaccess.AccountDAO;
+import dbaccess.CommentDAO;
+import dbaccess.MessageDAO;
 import dbaccess.PostDAO;
+import dbaccess.TradeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,17 +43,23 @@ public class ActionController extends HttpServlet {
 
             if ("delete".equals(action)) {
                 boolean hasPosts = PostDAO.hasPosts(username);
-                if (hasPosts) {
+                boolean hasTrade = TradeDAO.hasTrades(username);
+                boolean hasMessage = MessageDAO.hasMessages(username);
+                boolean hasComment = CommentDAO.hasComments(username);
+                if (hasPosts || hasTrade || hasMessage || hasComment) {
+                    int deleteComment = CommentDAO.deleteComment(username);
+                    int deleteMessage = MessageDAO.deleteMessage(username);
                     int deletePost = PostDAO.deletePost(username);
+                    int deleteTrade = TradeDAO.deleteTrade(username);
                 }
                 int deleteAccount = AccountDAO.deleteAccount(username);
                 if (deleteAccount > 0) {
-                    response.sendRedirect("DispatcherController?action=manage");
+                    response.sendRedirect("DispatcherController?action=staff-manage");
                 }
             } else if ("ban".equals(action)) {
                 int banAccount = AccountDAO.banAccount(username);
                 if (banAccount > 0) {
-                    response.sendRedirect("DispatcherController?action=manage");
+                    response.sendRedirect("DispatcherController?action=staff-manage");
                 }
             }
         } catch (Exception e) {

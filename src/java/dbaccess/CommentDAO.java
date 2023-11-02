@@ -90,4 +90,36 @@ public class CommentDAO {
         return rs;
     }
     
+    public static boolean hasComments(String author) throws Exception {
+        boolean rs = false;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM [dbo].[Comment]\n"
+                    + "WHERE author_id = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, author);
+            ResultSet resultSet = pst.executeQuery();
+            if (resultSet.next()) {
+                int postCount = resultSet.getInt(1);
+                rs = (postCount > 0);
+            }
+            cn.close();
+        }
+        return rs;
+    }
+    
+    public static int deleteComment(String author) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "DELETE FROM [dbo].[Comment]\n"
+                    + "WHERE [author_id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, author);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
 }

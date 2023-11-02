@@ -65,7 +65,11 @@
                                         <c:if test="${us.role eq 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
                                         </c:if>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -171,7 +175,7 @@
         </div>
         <!-- About End -->
 
-<!-- Footer Start -->
+        <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
             <div class="row pt-5">
                 <div class="col-lg-4 col-md-12 mb-5">

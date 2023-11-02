@@ -5,6 +5,7 @@
 package controllers;
 
 import dbaccess.TradeDAO;
+import dbaccess.Trade_CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

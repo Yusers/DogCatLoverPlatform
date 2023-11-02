@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.AccountDAO" %>
+<%@ page import="dbaccess.Trade_CategoryDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +86,11 @@
                                         <c:if test="${us.role eq 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -135,14 +140,6 @@
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link active">Trade</a>
-                        <!--                        <div class="nav-item dropdown">
-                                                    <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                                                    <div class="dropdown-menu rounded-0 m-0">
-                                                        <a href="#" class="dropdown-item">Dog</a>
-                                                        <a href="#" class="dropdown-item">Cat</a>
-                                                        <a href="#" class="dropdown-item">Items</a>
-                                                    </div>
-                                                </div>-->
                         <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                     </div>
 
@@ -171,8 +168,7 @@
                                 <div class="d-flex mb-3">
                                     <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
                                         <c:if test="${us.role == null}"><a href="login.jsp">${trade.author_id}</a></c:if></small>
-                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${trade.cate_id}</a></small>
-                                    <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
+                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
                                 </div>
                                     <p class="text-truncate">${trade.content}</p>
                                 <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>

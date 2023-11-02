@@ -41,7 +41,9 @@ public class CreateConversationController extends HttpServlet {
             String sender_id = request.getParameter("sender_id");
             String receiver_id = request.getParameter("receiver_id");
             String content = "Xin chào bạn mặt hàng này còn không ạ.";
-            Conversation existed = ConversationDAO.getConversation(topic);
+            Conversation conversationed = ConversationDAO.getConversation(topic);
+            Conversation existed = null;
+            if(conversationed != null) existed = ConversationDAO.getConversation(conversationed.getId());
             if (existed == null) {
                 int rs = ConversationDAO.createConversation(topic);
                 if (rs > 0) {

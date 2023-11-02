@@ -34,7 +34,6 @@ public class CreatePostController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             String title = request.getParameter("title");
             String category = request.getParameter("category");
             String author_id = request.getParameter("author_id");
@@ -42,17 +41,22 @@ public class CreatePostController extends HttpServlet {
             Post_Category existed = Post_CategoryDAO.getPostCategory(category);
             Post post = null;
             int rs = 0;
-            if(existed != null) {
-                post = new Post(title, existed.getId(), author_id, content);
-                rs = PostDAO.createPost(post);
-            } else {
-                rs = Post_CategoryDAO.createPostCategory(category);
-                if(rs > 0) {
-                    post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content);
+            if (content.length() >= 50) {
+                if (existed != null) {
+                    post = new Post(title, existed.getId(), author_id, content);
+                    rs = PostDAO.createPost(post);
+                } else {
+                    rs = Post_CategoryDAO.createPostCategory(category);
+                    if (rs > 0) {
+                        post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content);
+                    }
                 }
+                response.sendRedirect("DispatcherController?action=forums");
+            } else {
+                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 50 kí tự!!!");
+                request.getRequestDispatcher("create-post.jsp").forward(request, response);
             }
-            response.sendRedirect("DispatcherController?action=forums");
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
