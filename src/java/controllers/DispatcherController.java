@@ -17,6 +17,11 @@ public class DispatcherController extends HttpServlet {
     final String ADMIN_PAGE = "adminpage.jsp";
     final String STAFF_PAGE = "staffpage.jsp";
     final String MY_POST_PAGE = "manage-threads.jsp";
+<<<<<<< HEAD
+=======
+    final String STAFF_PAGE = "staffpage.jsp";
+    final String MY_POST_PAGE = "manage-threads.jsp";
+>>>>>>> e171e003676125de96cd90488e7a930a3436b26f
     final String LOGIN_PAGE = "login.jsp";
     final String REGISTER_PAGE = "signup.jsp";
     final String FORUMS_PAGE = "forums.jsp";

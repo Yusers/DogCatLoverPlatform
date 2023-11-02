@@ -34,6 +34,7 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             String username = request.getParameter("username");
             String name = request.getParameter("name");
             String phone = request.getParameter("phone");
@@ -45,27 +46,24 @@ public class EditProfileController extends HttpServlet {
 
             Account account = AccountDAO.getAccount(username);
             if (account != null) {
+                //Check current password
+                if (!current_password.equals(account.getPassword())) {
+                    request.setAttribute("ERR_PASS", "Current password is incorrect!!");
+                    request.getRequestDispatcher("editprofile.jsp").forward(request, response);
+                }
                 //Check valid fullname
                 if (!Pattern.matches("^[\\p{L}\\p{M} ']+$", name)) {
                     request.setAttribute("ERR_FULLNAME", "Invalid fullname!!");
                     request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-                } 
-                //Check valid phone number
+                } //Check valid phone number
                 else if (!Pattern.matches("^[0-9]{10}$", phone)) {
                     request.setAttribute("ERR_PHONE", "Invalid phone number!!");
                     request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-                } 
-                //Check valid email
+                } //Check valid email
                 else if (!Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email)) {
                     request.setAttribute("ERR_EMAIL", "Invalid E-mail!!");
                     request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-                } 
-                //Check current password
-                else if (!current_password.equals(account.getPassword())) {
-                    request.setAttribute("ERR_PASS", "Current password is incorrect!!");
-                    request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-                } 
-                //Check new password null
+                } //Check new password null
                 else if (new_password.isEmpty()) {
                     int rs = AccountDAO.updateProfile(username, name, email, description, current_password, phone);
                     if (rs > 0) {
@@ -75,8 +73,7 @@ public class EditProfileController extends HttpServlet {
                     } else {
                         request.getRequestDispatcher("editprofile.jsp").forward(request, response);
                     }
-                } 
-                //Check new password null
+                } //Check new password null
                 else if (!new_password.isEmpty()) {
                     if (new_password.length() < 6) {
                         request.setAttribute("ERR_NEW_PASS", "Password must have at least 6 characters!!");

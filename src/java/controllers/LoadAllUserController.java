@@ -46,9 +46,9 @@ public class LoadAllUserController extends HttpServlet {
                     acc = AccountDAO.getAccount(usname.trim());
                     if (acc.getFullname() != null) {
                         request.setAttribute("MEMBER", acc);
-                        if(actions.equals("viewprofile")) {
-                        url = "view-profile-user.jsp";
-                        } else if(actions.equals("editprofileuser")) {
+                        if (actions.equals("viewprofile")) {
+                            url = "view-profile-user.jsp";
+                        } else if (actions.equals("editprofileuser")) {
                             url = "editprofileuser.jsp";
                         }
                     }
