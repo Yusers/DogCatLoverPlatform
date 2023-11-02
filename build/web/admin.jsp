@@ -161,71 +161,178 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Manage Staffs</h5>
-                            <input type="text" class="form-control mb-3" placeholder="Search Members">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Staff ID</th>
-                                        <th>Staff Name</th>
-                                        <th>Staff Email</th>
-                                        <th>Staff Phone</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Rows for members go here -->
-                                    <c:forEach var="s" items="${listOfStaff}">
+                            <form action="SearchStaffController" method="post">
+                                <input type="text" name="search" class="form-control mb-3" placeholder="Search Staffs">
+                                <button>
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+
+                            <c:if test="${not empty staffs}">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td>${s.user_id}</td>
-                                            <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
-                                            <td>${s.email}</td>
-                                            <td>${s.phone_number}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                                <button class="btn btn-danger">Delete</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                    Ban
-                                                </button>
-                                            </td>
+                                            <th>Staff ID</th>
+                                            <th>Staff Name</th>
+                                            <th>Staff Email</th>
+                                            <th>Staff Phone</th>
+                                            <th>Staff Status</th>
+                                            <th class="text-center">Actions</th>
                                         </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows for members go here -->
+                                        <c:forEach var="staff" items="${staffs}">
+                                            <tr>
+                                                <td>${staff.user_id}</td>
+                                                <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${staff.user_id}">${staff.fullname}</a></td>
+                                                <td>${staff.email}</td>
+                                                <td>${staff.phone_number}</td>
+                                                <td>${staff.status}</td>
+                                                <td class="text-center">
+                                                    <!--<button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                    <form action="ActionController" method="post">
+                                                        <input type="hidden" name="username" value="${staff.user_id}"/>
+                                                        <button name="action" value="delete" class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <button name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                            <i class="fas fa-lock"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
+
+                            <c:if test="${empty staffs}">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Staff ID</th>
+                                            <th>Staff Name</th>
+                                            <th>Staff Email</th>
+                                            <th>Staff Phone</th>
+                                            <th>Staff Status</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows for members go here -->
+                                        <c:forEach var="s" items="${listOfStaff}">
+                                            <tr>
+                                                <td>${s.user_id}</td>
+                                                <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
+                                                <td>${s.email}</td>
+                                                <td>${s.phone_number}</td>
+                                                <td>${s.status}</td>
+                                                <td class="text-center">
+                                                    <!--<button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                    <form action="ActionController" method="post">
+                                                        <input type="hidden" name="username" value="${s.user_id}"/>
+                                                        <button name="action" value="delete" class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <button name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                            <i class="fas fa-lock"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Manage Members</h5>
-                            <input type="text" class="form-control mb-3" placeholder="Search Members">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Member ID</th>
-                                        <th>Member Name</th>
-                                        <th>Member Email</th>
-                                        <th>Member Phone</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Rows for members go here -->
-                                    <c:forEach var="m" items="${listOfMember}">
+                            <form action="SearchMemberController" method="post">
+                                <input type="text" name="search" class="form-control mb-3" placeholder="Search Members">
+                                <button>
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                            <c:if test="${not empty members}">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                        <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
-                                        <td>${m.email}</td>
-                                        <td>${m.phone_number}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                            <th>Member ID</th>
+                                            <th>Member Name</th>
+                                            <th>Member Email</th>
+                                            <th>Member Phone</th>
+                                            <th>Member Status</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows for members go here -->
+                                        <c:forEach var="member" items="${members}">
+                                            <tr>
+                                                <td>${member.user_id}</td>
+                                                <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${member.user_id}">${member.fullname}</a></td>
+                                                <td>${member.email}</td>
+                                                <td>${member.phone_number}</td>
+                                                <td>${member.status}</td>
+                                                <td class="text-center">
+                                                    <!--<button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                    <form action="ActionController" method="post">
+                                                        <input type="hidden" name="username" value="${member.user_id}"/>
+                                                        <button name="action" value="delete" class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <button name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                            <i class="fas fa-lock"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
+
+                            <c:if test="${empty members}">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Member ID</th>
+                                            <th>Member Name</th>
+                                            <th>Member Email</th>
+                                            <th>Member Phone</th>
+                                            <th>Member Status</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows for members go here -->
+                                        <c:forEach var="m" items="${listOfMember}">
+                                            <tr>
+                                                <td>${m.user_id}</td>
+                                                <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
+                                                <td>${m.email}</td>
+                                                <td>${m.phone_number}</td>
+                                                <td>${m.status}</td>
+                                                <td class="text-center">
+                                                    <!--<button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                    <form action="ActionController" method="post">
+                                                        <input type="hidden" name="username" value="${m.user_id}"/>
+                                                        <button name="action" value="delete" class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <button name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                            <i class="fas fa-lock"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -235,34 +342,34 @@
 
         <!-- Modal -->
         <!-- Modal Promote -->
-        <div class="modal fade" id="modal-promote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Ban User</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">How many day?</span>
+        <!--        <div class="modal fade" id="modal-promote" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Ban User</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <input type="number" class="form-control" id="numberInput">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">How many hours?</span>
-                            </div>                               
-                            <input type="number" class="form-control" id="numberInput">
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">How many day?</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="numberInput">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">How many hours?</span>
+                                    </div>                               
+                                    <input type="number" class="form-control" id="numberInput">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </div>-->
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

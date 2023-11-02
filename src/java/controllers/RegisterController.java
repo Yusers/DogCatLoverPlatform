@@ -63,7 +63,7 @@ public class RegisterController extends HttpServlet {
             } 
             //Check valid password
             else if (password.length() < 6) {
-                request.setAttribute("ERROR", "Password must have at least 6 characters!!");
+                request.setAttribute("ERR_PASSWORD", "Password must have at least 6 characters!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } else {
                 Account account = new Account(userid.trim(), fullname.trim(), email.trim(), password.trim(), phone.trim());

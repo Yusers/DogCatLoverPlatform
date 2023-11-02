@@ -5,7 +5,10 @@
 package controllers;
 
 import dbaccess.AccountDAO;
+import dbaccess.CommentDAO;
+import dbaccess.MessageDAO;
 import dbaccess.PostDAO;
+import dbaccess.TradeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,8 +43,14 @@ public class ActionController extends HttpServlet {
 
             if ("delete".equals(action)) {
                 boolean hasPosts = PostDAO.hasPosts(username);
-                if (hasPosts) {
+                boolean hasTrade = TradeDAO.hasTrades(username);
+                boolean hasMessage = MessageDAO.hasMessages(username);
+                boolean hasComment = CommentDAO.hasComments(username);
+                if (hasPosts || hasTrade || hasMessage || hasComment) {
+                    int deleteComment = CommentDAO.deleteComment(username);
+                    int deleteMessage = MessageDAO.deleteMessage(username);
                     int deletePost = PostDAO.deletePost(username);
+                    int deleteTrade = TradeDAO.deleteTrade(username);
                 }
                 int deleteAccount = AccountDAO.deleteAccount(username);
                 if (deleteAccount > 0) {

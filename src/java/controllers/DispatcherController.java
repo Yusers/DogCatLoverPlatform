@@ -15,6 +15,8 @@ public class DispatcherController extends HttpServlet {
 
     final String HOME_PAGE = "index.jsp";
     final String ADMIN_PAGE = "adminpage.jsp";
+    final String STAFF_PAGE = "staffpage.jsp";
+    final String MY_POST_PAGE = "manage-threads.jsp";
     final String LOGIN_PAGE = "login.jsp";
     final String REGISTER_PAGE = "signup.jsp";
     final String FORUMS_PAGE = "forums.jsp";
@@ -80,6 +82,14 @@ public class DispatcherController extends HttpServlet {
                 url = "CreateConversationController";
             } else if(action.equals("create-message")) {
                 url = "CreateMessageController";
+            } else if(action.equals("my-post")) {
+                url = "LoadAllPostUserController";
+            } else if(action.equals("view-post")) {
+                url = MY_POST_PAGE;
+            } else if(action.equals("staff-manage")) {
+                url = "LoadDataForStaffController";
+            } else if(action.equals("staff-page")) {
+                url = STAFF_PAGE;
             }
             // Chuyển hướng đến trang tương ứng với chức năng đã chọn
             request.getRequestDispatcher(url).forward(request, response);

@@ -65,7 +65,7 @@
                                         <c:if test="${us.role eq 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -155,6 +155,7 @@
                         <div class="form-group">
                             <label for="content">Nội dung bài viết</label>
                             <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
+                            <label class="error">${requestScope.ERR_CONTENT}</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

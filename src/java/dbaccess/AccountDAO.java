@@ -222,6 +222,36 @@ public class AccountDAO {
         return list;
     }
     
+    public static ArrayList<Account> searchMember(String search) throws Exception {
+        Connection cn = DBUtils.makeConnection();
+        ArrayList<Account> list = new ArrayList<>();
+        if (cn != null) {
+            String sql = "SELECT [user_id],[fullname],[email],[phone_number],[description],[role],[status],[created_at]\n"
+                    + "FROM [dbo].[Account]\n"
+                    + "WHERE [user_id] LIKE ? OR [fullname] LIKE ? AND [role] LIKE 'MEMBER'";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, search);
+            pst.setString(2, "%" + search + "%");
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String id = rs.getString("user_id");
+                    String name = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String phone_number = rs.getString("phone_number");
+                    String des = rs.getString("description");
+                    String role = rs.getString("role");
+                    String status = rs.getString("status");
+                    Date createdat = rs.getDate("created_at");
+                    Account account = new Account(id, name, email, phone_number, des, role, status, createdat);
+                    list.add(account);
+                }
+            }
+            cn.close();
+        }
+        return list;
+    }
+    
     public static int updateProfile(String user_name, String fullname, String email, String description, String password, String phone) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
