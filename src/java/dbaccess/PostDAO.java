@@ -18,13 +18,14 @@ import model.Post;
  * @author overw
  */
 public class PostDAO {
-
+// Hiển thị tất cả bài viết có trạng thái là Created (Trong trang quản lý bài viết của staff)
     public static ArrayList<Post> getAllPost() throws Exception {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
             String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at]\n"
-                    + "FROM [dbo].[Post]";
+                    + "FROM [dbo].[Post]\n"
+                    + "WHERE [status] = 'Created'";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             if (rs != null) {
@@ -45,50 +46,23 @@ public class PostDAO {
         }
         return posts;
     }
-    
-    public static ArrayList<Post> getAllPost(String status) throws Exception {
+   
+// Hiển thị tất cả các bài viết có trạng thái là Approved (Các bài viết đã được staff duyệt)
+    public static ArrayList<Post> getAllPostinForum() throws Exception {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
             String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at]\n"
                     + "FROM [dbo].[Post]\n"
-                    + "WHERE [status] = ?";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, status);
-            ResultSet rs = pst.executeQuery();
+                    + "WHERE [status] = 'Approved'";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
             if (rs != null) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
                     String author_id = rs.getString("author_id");
-                    String content = rs.getString("content");
-                    String rejected_reason = rs.getString("rejected_reason");
-                    Date created_at = rs.getDate("created_at");
-                    Date updated_at = rs.getDate("updated_at");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at));
-                }
-            }
-            cn.close();
-        }
-        return posts;
-    }
-    
-    public static ArrayList<Post> getAllPostByAuthor(String author_id) throws Exception {
-        ArrayList<Post> posts = new ArrayList<>();
-        Connection cn = DBUtils.makeConnection();
-        if (cn != null) {
-            String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at]\n"
-                    + "FROM [dbo].[Post]\n"
-                    + "WHERE [author_id] = ?";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, author_id);
-            ResultSet rs = pst.executeQuery();
-            if (rs != null) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String title = rs.getString("title");
-                    int cate_id = rs.getInt("category_id");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
                     String rejected_reason = rs.getString("rejected_reason");

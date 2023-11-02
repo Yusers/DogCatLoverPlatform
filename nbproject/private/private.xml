@@ -6,6 +6,13 @@
             <file>file:/C:/Users/Kuuga/Downloads/DogCatLoverPlatform/src/java/controllers/CreatePostController.java</file>
             <file>file:/C:/Users/Kuuga/Downloads/DogCatLoverPlatform/web/admin.jsp</file>
             <file>file:/C:/Users/Kuuga/Downloads/DogCatLoverPlatform/src/java/dbaccess/AccountDAO.java</file>
+
+            <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/controllers/CreateMessageController.java</file>
+            <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/chat.jsp</file>
+            <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/test-chat.jsp</file>
+            <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/controllers/ChatController.java</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/web/admin.jsp</file>
+            <file>file:/D:/SWP391/DogCatLoverPlatform/src/java/controllers/ActionController.java</file>
         </group>
     </open-files>
 </project-private>

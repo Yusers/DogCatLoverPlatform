@@ -4,21 +4,18 @@
  */
 package controllers;
 
-import dbaccess.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import model.Account;
 
 /**
  *
  * @author overw
  */
-public class LoadAllUserController extends HttpServlet {
+public class LoadAllMemberController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,33 +31,19 @@ public class LoadAllUserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String actions = request.getParameter("actions");
-            String usname = request.getParameter("usname");
-            String url = "admin.jsp";
-            Account acc = new Account();
-            if (actions.equals("getAll")) {
-                request.setAttribute("MEMBERS", AccountDAO.getAllMember());
-                request.setAttribute("STAFFS", AccountDAO.getAllStaff());
-            } else {
-                if (usname != null || !usname.isEmpty()) {
-                    acc = AccountDAO.getAccount(usname.trim());
-                    if (acc.getFullname() != null) {
-                        request.setAttribute("MEMBER", acc);
-                        if (actions.equals("viewprofile")) {
-                            url = "view-profile-user.jsp";
-                        } else if (actions.equals("editprofileuser")) {
-                            url = "editprofileuser.jsp";
-                        }
-                    }
-                }
-            }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoadAllMemberController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoadAllMemberController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
