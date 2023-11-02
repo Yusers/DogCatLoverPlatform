@@ -10,8 +10,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
-import model.Trade;
 import myutils.DBUtils;
+import model.Trade;
 
 /**
  *

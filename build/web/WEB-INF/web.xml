@@ -80,6 +80,14 @@
         <servlet-name>CreateMessageController</servlet-name>
         <servlet-class>controllers.CreateMessageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadConversationController</servlet-name>
+        <servlet-class>controllers.LoadConversationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAllMemberController</servlet-name>
+        <servlet-class>controllers.LoadAllMemberController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -159,5 +167,13 @@
     <servlet-mapping>
         <servlet-name>CreateMessageController</servlet-name>
         <url-pattern>/CreateMessageController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadConversationController</servlet-name>
+        <url-pattern>/LoadConversationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllMemberController</servlet-name>
+        <url-pattern>/LoadAllMemberController</url-pattern>
     </servlet-mapping>
 </web-app>

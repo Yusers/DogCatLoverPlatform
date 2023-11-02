@@ -84,6 +84,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -132,7 +133,7 @@
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
-                        <a href="DispatcherController?action=trade" class="nav-item nav-link active">Trade</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        <div class="nav-item dropdown">
                                                     <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
                                                     <div class="dropdown-menu rounded-0 m-0">
@@ -238,7 +239,44 @@
             </div>
         </div>
         <!-- Footer End -->
-                            
+        <script type="text/javascript">
+
+            var wsUrl;
+            if (window.location.protocol == 'http:') {
+                wsUrl = 'ws://';
+            } else {
+                wsUrl = 'wss://';
+            }
+            var ws = new WebSocket(wsUrl + window.location.host + "/ChatApp/chat");
+
+            ws.onmessage = function (event) {
+                var mySpan = document.getElementById("chat");
+                mySpan.innerHTML += event.data + "<br/>";
+            };
+
+            ws.onerror = function (event) {
+                console.log("Error ", event)
+            }
+            function sendMsg() {
+                var msg = document.getElementById("msg").value;
+                if (msg) {
+                    var user_id = "${us.user_id}"; // Get the user's ID from the JSP
+                    var conversation_id = "${requestScope.CONVER_ID}"; // Get the conversation ID from the JSP
+
+                    // Create a JSON object to send to the server
+                    var data = {
+                        sender_id: user_id,
+                        content: msg,
+                        conversation_id: conversation_id
+                    };
+
+                    // Send the message to the server
+                    ws.send(JSON.stringify(data));
+                }
+                document.getElementById("msg").value = "";
+            }
+        </script>
+
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

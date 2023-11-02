@@ -4,21 +4,21 @@
  */
 package controllers;
 
-import dbaccess.AccountDAO;
+import dbaccess.ConversationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 import model.Account;
 
 /**
  *
  * @author overw
  */
-public class LoadAllUserController extends HttpServlet {
+public class LoadConversationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,33 +34,16 @@ public class LoadAllUserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String actions = request.getParameter("actions");
-            String usname = request.getParameter("usname");
-            String url = "admin.jsp";
-            Account acc = new Account();
-            if (actions.equals("getAll")) {
-                request.setAttribute("MEMBERS", AccountDAO.getAllMember());
-                request.setAttribute("STAFFS", AccountDAO.getAllStaff());
-            } else {
-                if (usname != null || !usname.isEmpty()) {
-                    acc = AccountDAO.getAccount(usname.trim());
-                    if (acc.getFullname() != null) {
-                        request.setAttribute("MEMBER", acc);
-                        if (actions.equals("viewprofile")) {
-                            url = "view-profile-user.jsp";
-                        } else if (actions.equals("editprofileuser")) {
-                            url = "editprofileuser.jsp";
-                        }
-                    }
-                }
-            }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("USER");
+            session.setAttribute("CHAT", ConversationDAO.getChatConversation(acc.getUser_id()));
+            response.sendRedirect("conversation.jsp");
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

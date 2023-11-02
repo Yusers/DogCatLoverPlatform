@@ -1,19 +1,19 @@
 <%-- 
-    Document   : forums
-    Created on : Oct 2, 2023, 9:36:03 AM
+    Document   : about
+    Created on : Oct 1, 2023, 10:28:30 PM
     Author     : ADMIN
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Diễn Đàn | Cat Dog Lover Website</title>
+        <title>Giới Thiệu | Cat Dog Lover Website</title>
+
         <!-- Favicon -->
-        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -30,9 +30,8 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <link href="assets/css/forums.css" rel="stylesheet">
-    </head>
 
+    </head>
     <body>
         <!-- Topbar Start -->
         <div class="container-fluid">
@@ -56,7 +55,7 @@
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${us != null}">
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user"></i> ${us.user_id}
@@ -64,14 +63,14 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
                                         <c:if test="${us.role eq 'ADMIN'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
                                         <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
-                            </c:otherwise>
+                            </c:when>
                         </c:choose>
                     </div>
                 </div>
@@ -114,8 +113,8 @@
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
+                        <a href="about.jsp" class="nav-item nav-link active">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
@@ -134,61 +133,76 @@
             </nav>
         </div>
         <!-- Navbar End -->
-        <div class="container mt-5">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Diễn Đàn</li>
-                </ol>
-                <div class="breadcrumb justify-content-around">
-                    <div class="input-group">
-                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
-                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
-                    </div>
-                </div>
-            </nav>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mục Lục</h5>
-                            <ul class="list-group">
-                                <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                                    <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
-                                    </c:forEach>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-9">
-                    <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                        <!-- Thread cate 1 -->
-                        <div id="thread-${c.id}" class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${c.name}</h5>
-                                <ul class="list-group">
-                                    <c:set var="hasPosts" value="false" />
-                                    <c:forEach var="p" items="${requestScope.POSTS}">
-                                        <c:if test="${p.cate_id eq c.id}">
-                                            <c:set var="hasPosts" value="true" />
-                                            <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title}</a></li>
-                                            </c:if>
-                                        </c:forEach>
-                                        <c:if test="${not hasPosts}">
-                                        <li class="list-group-item disabled">Chưa có bài viết</li>
-                                        </c:if>
-                                </ul>
-                            </div>
-                        </div>
-                        <br/>
-                    </c:forEach>
+        <div id="chatBox" class="chat-box">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Chat with User
+            <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="chat-messages" id="chat"></div>
+        </div>
+        <div class="card-footer">
+            <div class="input-group">
+                <input type="text" name="msg" id="msg" class="form-control" placeholder="Type a message...">
+                <div class="input-group-append">
+                    <button onclick="return sendMsg();" class="btn btn-primary" type="button">Send</button>
                 </div>
             </div>
         </div>
-                    
-                    <!-- Footer Start -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    var wsUrl;
+    if (window.location.protocol == 'http:') {
+        wsUrl = 'ws://';
+    } else {
+        wsUrl = 'wss://';
+    }
+    var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
+    var username = prompt("Please enter your name:");
+
+    ws.onmessage = function(event) {
+        var messageData = JSON.parse(event.data);
+        var sender = messageData.sender;
+        var message = messageData.message;
+        var chat = document.getElementById("chat");
+        var messageElement = document.createElement('div');
+        
+        if (sender === username) {
+            messageElement.classList.add('my-message');
+        } else {
+            messageElement.classList.add('other-message');
+        }
+
+        messageElement.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+        chat.appendChild(messageElement);
+        chat.scrollTop = chat.scrollHeight;
+    };
+
+    ws.onerror = function(event){
+        console.log("Error ", event)
+    } 
+
+    function sendMsg() {
+        var msg = document.getElementById("msg").value;
+        if(msg) {
+            var messageData = {
+                sender: username,
+                message: msg
+            };
+            ws.send(JSON.stringify(messageData));
+        }
+        document.getElementById("msg").value = "";
+    }
+</script>
+
+
+<!-- Footer Start -->
         <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
             <div class="row pt-5">
                 <div class="col-lg-4 col-md-12 mb-5">
@@ -242,6 +256,7 @@
             </div>
         </div>
         <!-- Footer End -->
+
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

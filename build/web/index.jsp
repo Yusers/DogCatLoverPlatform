@@ -67,6 +67,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>

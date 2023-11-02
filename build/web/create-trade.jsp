@@ -1,11 +1,6 @@
-<%-- 
-    Document   : forums
-    Created on : Oct 2, 2023, 9:36:03 AM
-    Author     : ADMIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="dbaccess.Post_CategoryDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,9 +25,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <link href="assets/css/forums.css" rel="stylesheet">
     </head>
-
     <body>
         <!-- Topbar Start -->
         <div class="container-fluid">
@@ -67,7 +60,6 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
-                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -135,113 +127,34 @@
         </div>
         <!-- Navbar End -->
         <div class="container mt-5">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Diễn Đàn</li>
-                </ol>
-                <div class="breadcrumb justify-content-around">
-                    <div class="input-group">
-                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
-                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
-                    </div>
-                </div>
-            </nav>
-
             <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mục Lục</h5>
-                            <ul class="list-group">
-                                <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                                    <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
-                                    </c:forEach>
-                            </ul>
+                <div class="col-md-8 offset-md-2">
+                    <form action="DispatcherController" method="POST">
+                        <input type="hidden" name="action" value="create-post" />
+                        <input type="hidden" name="author_id" value="${us.user_id}" />
+                        <div class="form-group">
+                            <label for="title">Tiêu đề</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Nhập tiêu đề bài viết">
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-9">
-                    <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                        <!-- Thread cate 1 -->
-                        <div id="thread-${c.id}" class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${c.name}</h5>
-                                <ul class="list-group">
-                                    <c:set var="hasPosts" value="false" />
-                                    <c:forEach var="p" items="${requestScope.POSTS}">
-                                        <c:if test="${p.cate_id eq c.id}">
-                                            <c:set var="hasPosts" value="true" />
-                                            <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title}</a></li>
-                                            </c:if>
-                                        </c:forEach>
-                                        <c:if test="${not hasPosts}">
-                                        <li class="list-group-item disabled">Chưa có bài viết</li>
-                                        </c:if>
-                                </ul>
-                            </div>
+                        <c:set var="categorys" value="${Post_CategoryDAO.getAllPostCategory()}"/>
+                        <div class="form-group">
+                            <label for="exampleDataList" class="form-label">Loại bài viết về</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
+                            <datalist id="datalistOptions">
+                                <c:forEach var="c" items="${categorys}">
+                                    <option value="${c.name}">
+                                </c:forEach>
+                            </datalist>
                         </div>
-                        <br/>
-                    </c:forEach>
+                        <div class="form-group">
+                            <label for="content">Nội dung bài viết</label>
+                            <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
-                    
-                    <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
-            <div class="row pt-5">
-                <div class="col-lg-4 col-md-12 mb-5">
-                    <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Dog&Cat</span>Lover</h1>
-                    <p class="m-0">Chung toi hi vong nen tang nay se giup ban trong viec cham soc thu cung va hay tham gia dien dan de ban co the tham gia trao doi voi nha nhu trao doi cho, meo, do dung cua cho hoac meo va dich vu cham soc thu cung</p>
-                </div>
-                <div class="col-lg-8 col-md-12">
-                    <div class="row">
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-primary mb-4">Get In Touch</h5>
-                            <p><i class="fa fa-map-marker-alt mr-2"></i>Nha van hoa sinh vien, Tp.Thu Duc, VN</p>
-                            <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                            <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-                        </div>
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-primary mb-4">Popular Links</h5>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Forums</a>
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trade</a>
-                                <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid text-white py-4 px-sm-3 px-md-5" style="background: #111111;">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
-                    <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
-                    </p>
-                </div>
-                <div class="col-md-6 text-center text-md-right">
-                    <ul class="nav d-inline-flex">
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Terms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">FAQs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Help</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

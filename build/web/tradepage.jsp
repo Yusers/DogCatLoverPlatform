@@ -7,12 +7,33 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.AccountDAO" %>
+<%@ page import="dbaccess.Trade_CategoryDAO" %>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
+
+        <!-- Favicon -->
+        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
+
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+        <!-- Flaticon Font -->
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="assets/css/trade.css" rel="stylesheet">
         <style>
             .my-message {
                 text-align: right;
@@ -29,28 +50,15 @@
                 padding: 5px 10px;
                 margin: 5px 0;
             }
+
+            .custom-btn:hover {
+                cursor: text;
+                text-decoration: none;
+                border: 1px solid black;
+                color: black;
+            }
         </style>
     </head>
-
-    <!-- Favicon -->
-    <link href="img/icons8-pet-lover-16.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Flaticon Font -->
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="assets/css/trade.css" rel="stylesheet">
 
     <body>
         <!-- Topbar Start -->
@@ -86,6 +94,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -135,14 +144,6 @@
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link active">Trade</a>
-                        <!--                        <div class="nav-item dropdown">
-                                                    <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                                                    <div class="dropdown-menu rounded-0 m-0">
-                                                        <a href="#" class="dropdown-item">Dog</a>
-                                                        <a href="#" class="dropdown-item">Cat</a>
-                                                        <a href="#" class="dropdown-item">Items</a>
-                                                    </div>
-                                                </div>-->
                         <a href="contact.jsp" class="nav-item nav-link">Contact</a>
                     </div>
 
@@ -156,6 +157,12 @@
                     <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Trao Đổi Và Mua Bán</li>
                 </ol>
+                <div class="breadcrumb justify-content-around">
+                    <div class="input-group">
+                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
+                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                    </div>
+                </div>
             </nav>
             <!-- Page Title -->
             <h1>Cat & Dog Trading</h1>
@@ -171,10 +178,9 @@
                                 <div class="d-flex mb-3">
                                     <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
                                         <c:if test="${us.role == null}"><a href="login.jsp">${trade.author_id}</a></c:if></small>
-                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${trade.cate_id}</a></small>
-                                    <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
+                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
                                 </div>
-                                    <p class="text-truncate">${trade.content}</p>
+                                <p class="text-truncate">${trade.content}</p>
                                 <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
                             </div>
                         </div>

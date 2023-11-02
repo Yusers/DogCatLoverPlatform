@@ -67,6 +67,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -179,7 +180,7 @@
                             </div>
                             <div class="user-action">
                                 <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block">Contact Seller</button></c:if>
-                                <c:if test="${empty us.role}"><button class="btn btn-primary btn-block" type="button" onclick="showLoginPrompt()">Contact Seller</button></c:if>
+                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="login.jsp">Contact Seller</a></c:if>
                             </div>
                         </div>
                     </form>
