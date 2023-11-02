@@ -80,6 +80,26 @@
         <servlet-name>CreateMessageController</servlet-name>
         <servlet-class>controllers.CreateMessageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadConversationController</servlet-name>
+        <servlet-class>controllers.LoadConversationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActionController</servlet-name>
+        <servlet-class>controllers.ActionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchMemberController</servlet-name>
+        <servlet-class>controllers.SearchMemberController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadDataForStaffController</servlet-name>
+        <servlet-class>controllers.LoadDataForStaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAllPostUserController</servlet-name>
+        <servlet-class>controllers.LoadAllPostUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -159,5 +179,25 @@
     <servlet-mapping>
         <servlet-name>CreateMessageController</servlet-name>
         <url-pattern>/CreateMessageController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadConversationController</servlet-name>
+        <url-pattern>/LoadConversationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActionController</servlet-name>
+        <url-pattern>/ActionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchMemberController</servlet-name>
+        <url-pattern>/SearchMemberController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadDataForStaffController</servlet-name>
+        <url-pattern>/LoadDataForStaffController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllPostUserController</servlet-name>
+        <url-pattern>/LoadAllPostUserController</url-pattern>
     </servlet-mapping>
 </web-app>

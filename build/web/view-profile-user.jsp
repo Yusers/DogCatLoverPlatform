@@ -149,7 +149,10 @@
                             <c:if test="${sessionScope.us.role eq 'ADMIN'}">
                                 <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                             </c:if>
-                            <a class="dropdown-item" href="#">My Posts</a>
+                            <c:if test="${us.role eq 'STAFF'}">
+                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                            </c:if>
+                            <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                             <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                         </div>
                     </div>
