@@ -169,6 +169,7 @@
                                         <th>Staff Name</th>
                                         <th>Staff Email</th>
                                         <th>Staff Phone</th>
+                                        <th>Staff Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -180,12 +181,19 @@
                                             <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
                                             <td>${s.email}</td>
                                             <td>${s.phone_number}</td>
+                                            <td>${s.status}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                                <button class="btn btn-danger">Delete</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                    Ban
-                                                </button>
+                                                <!--                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                <form action="ActionController" method="post">
+                                                    <input type="hidden" value="${s.user_id}" name="username"/>
+                                                    <button value="delete" name="action" class="btn btn-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button value="ban" name="action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        <!--<i class="fa fa-unlock"></i>-->
+                                                        <i class="fa fa-lock"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -204,6 +212,7 @@
                                         <th>Member Name</th>
                                         <th>Member Email</th>
                                         <th>Member Phone</th>
+                                        <th>Member Status</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -211,18 +220,25 @@
                                     <!-- Rows for members go here -->
                                     <c:forEach var="m" items="${listOfMember}">
                                         <tr>
-                                        <td>${m.user_id}</td>
-                                        <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
-                                        <td>${m.email}</td>
-                                        <td>${m.phone_number}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>
-                                            <button class="btn btn-danger">Delete</button>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                Ban
-                                            </button>
-                                        </td>
-                                    </tr>
+                                            <td>${m.user_id}</td>
+                                            <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
+                                            <td>${m.email}</td>
+                                            <td>${m.phone_number}</td>
+                                            <td>${m.status}</td>
+                                            <td class="text-center">
+                                                <!--                                                <button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
+                                                <form action="ActionController" method="post">
+                                                    <input type="hidden" value="${m.user_id}" name="username"/>
+                                                    <button value="delete" name="action" class="btn btn-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button value="ban" name="action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
+                                                        <!--<i class="fa fa-unlock"></i>-->
+                                                        <i class="fa fa-lock"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
