@@ -182,6 +182,36 @@
                                 <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                             </div>
                         </div>
+<<<<<<< HEAD
+                        <c:set var="categorys" value="${Post_CategoryDAO.getAllPostCategory()}"/>
+                        <div class="form-group">
+                            <label for="exampleDataList" class="form-label">Loại bài viết về</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
+                            <datalist id="datalistOptions">
+                                <c:forEach var="c" items="${categorys}">
+                                    <option value="${c.name}">
+                                </c:forEach>
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Nội dung bài viết</label>
+                            <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
+                            <label class="error">${requestScope.ERR_CONTENT}</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+=======
                     </div>
                 </div>
             </div>

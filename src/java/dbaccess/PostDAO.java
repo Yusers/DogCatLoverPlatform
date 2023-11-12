@@ -47,6 +47,8 @@ public class PostDAO {
         }
         return posts;
     }
+<<<<<<< HEAD
+=======
    
 // Hiển thị tất cả các bài viết có trạng thái là Approved (Các bài viết đã được staff duyệt)
     public static ArrayList<Post> getAllPostinForum() throws Exception {
@@ -77,6 +79,7 @@ public class PostDAO {
         }
         return posts;
     }
+>>>>>>> e171e003676125de96cd90488e7a930a3436b26f
     
     public static ArrayList<Post> getAllPost(String status) throws Exception {
         ArrayList<Post> posts = new ArrayList<>();

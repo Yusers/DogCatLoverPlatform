@@ -127,7 +127,6 @@ public class DispatcherController extends HttpServlet {
                 } else {
                     url = "LoadAllPostUserController?us=" + us.trim();
                 }
-                url = "LoadAllPostUserController";
             } else if (action.equals("view-post")) {
                 url = MY_POST_PAGE;
             } else if (action.equals("staff-manage")) {
