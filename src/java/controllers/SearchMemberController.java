@@ -36,8 +36,8 @@ public class SearchMemberController extends HttpServlet {
             String search = request.getParameter("search");
             ArrayList<Account> account = AccountDAO.searchMember(search);
             if (account != null) {
-                request.setAttribute("members", account);
-                request.getRequestDispatcher("DispatcherController?action=manage").forward(request, response);
+                request.setAttribute("MEMBERS", account);
+                request.getRequestDispatcher("DispatcherController?action=staff-page").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

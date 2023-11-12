@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import model.Post;
 import model.Post_Category;
 
@@ -21,83 +22,62 @@ import model.Post_Category;
  */
 public class CreatePostController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        try {
             String title = request.getParameter("title");
             String category = request.getParameter("category");
             String author_id = request.getParameter("author_id");
             String content = request.getParameter("content");
             Post_Category existed = Post_CategoryDAO.getPostCategory(category);
+
             Post post = null;
             int rs = 0;
-            if (content.length() >= 50) {
+            if (content.length() >= 20) {
+                Part part = request.getPart("image");
+                String imageUrl;
+                if (part != null && part.getSize() > 0) {
+                    // User has uploaded a file
+                    String fileName = getFileName(part);
+                    String filePath = getServletContext().getRealPath("/") + "/img/" + fileName;
+                    part.write(filePath);
+                    String contextPath = request.getContextPath();
+                    imageUrl = "http://localhost:8080" + contextPath + "/img/" + fileName;
+                } else {
+                    // User did not upload a file
+                    imageUrl = "NULL"; // or imageUrl = ""; // Set to a default value
+                }
                 if (existed != null) {
-                    post = new Post(title, existed.getId(), author_id, content);
+                    post = new Post(title, existed.getId(), author_id, content, "Created", imageUrl);
                     rs = PostDAO.createPost(post);
                 } else {
                     rs = Post_CategoryDAO.createPostCategory(category);
                     if (rs > 0) {
-                        post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content);
+                        post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content, "Created", imageUrl);
+                        PostDAO.createPost(post);
                     }
                 }
-                response.sendRedirect("DispatcherController?action=forums");
+                request.setAttribute("ERR_CONTENT", "Tạo Thành Công!");
             } else {
-                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 50 kí tự!!!");
-                request.getRequestDispatcher("create-post.jsp").forward(request, response);
+                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 20 kí tự!!!");
             }
+            request.getRequestDispatcher("create-post.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    private String getFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf('=') + 2, token.length() - 1);
+            }
+        }
+        return "";
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

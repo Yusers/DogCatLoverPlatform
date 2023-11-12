@@ -5,6 +5,8 @@
 package controllers;
 
 import dbaccess.AccountDAO;
+import dbaccess.PostDAO;
+import dbaccess.TradeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,6 +35,8 @@ public class LoadDataForStaffController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             request.setAttribute("MEMBERS", AccountDAO.getAllMember());
+            request.setAttribute("POSTS", PostDAO.getAllPost("Created"));
+            request.setAttribute("TRADES", TradeDAO.getAllTrade("Created"));
             request.getRequestDispatcher("DispatcherController?action=staff-page").forward(request, response);
         } catch(Exception ex) {
             ex.printStackTrace();

@@ -16,6 +16,7 @@ public class Trade {
     private String title;
     private String content;
     private String status;
+    private String rejected_reason;
     private int cate_id;
     private String image;
     private Date created_at;
@@ -24,14 +25,30 @@ public class Trade {
     public Trade() {
     }
 
-    public Trade(int id, String author_id, String title, String content, String status, int cate_id, String image) {
+    public Trade(String author_id, String title, String content, int cate_id) {
+        this.author_id = author_id;
+        this.title = title;
+        this.content = content;
+        this.cate_id = cate_id;
+    }
+    
+    public Trade(int id, String author_id, String title, String content, String status, int cate_id) {
         this.id = id;
         this.author_id = author_id;
         this.title = title;
         this.content = content;
         this.status = status;
         this.cate_id = cate_id;
-        this.image = image;
+    }
+    
+    public Trade(int id, String author_id, String title, String content, String status, int cate_id, String rejected_reason) {
+        this.id = id;
+        this.author_id = author_id;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.cate_id = cate_id;
+        this.rejected_reason = rejected_reason;
     }
     
     public Trade(int id, String author_id, String title, String content, String status, int cate_id, String image, Date created_at, Date updated_at) {
@@ -44,6 +61,14 @@ public class Trade {
         this.image = image;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public String getRejected_reason() {
+        return rejected_reason;
+    }
+
+    public void setRejected_reason(String rejected_reason) {
+        this.rejected_reason = rejected_reason;
     }
 
     public int getId() {

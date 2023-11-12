@@ -55,6 +55,11 @@
     <servlet>
         <servlet-name>CreatePostController</servlet-name>
         <servlet-class>controllers.CreatePostController</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet>
         <servlet-name>LoadAllTradeController</servlet-name>
@@ -99,6 +104,49 @@
     <servlet>
         <servlet-name>LoadAllPostUserController</servlet-name>
         <servlet-class>controllers.LoadAllPostUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HandlePostController</servlet-name>
+        <servlet-class>controllers.HandlePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateStaffController</servlet-name>
+        <servlet-class>controllers.CreateStaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePostController</servlet-name>
+        <servlet-class>controllers.DeletePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePostController</servlet-name>
+        <servlet-class>controllers.UpdatePostController</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet>
+        <servlet-name>HandleTradeController</servlet-name>
+        <servlet-class>controllers.HandleTradeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTradeController</servlet-name>
+        <servlet-class>controllers.CreateTradeController</servlet-class>
+        <multipart-config>
+            <location>C:/Users/overw/Desktop/hehe</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadAllUserTradeController</servlet-name>
+        <servlet-class>controllers.LoadAllUserTradeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteTradeController</servlet-name>
+        <servlet-class>controllers.DeleteTradeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
@@ -199,5 +247,37 @@
     <servlet-mapping>
         <servlet-name>LoadAllPostUserController</servlet-name>
         <url-pattern>/LoadAllPostUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HandlePostController</servlet-name>
+        <url-pattern>/HandlePostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateStaffController</servlet-name>
+        <url-pattern>/CreateStaffController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePostController</servlet-name>
+        <url-pattern>/DeletePostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePostController</servlet-name>
+        <url-pattern>/UpdatePostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HandleTradeController</servlet-name>
+        <url-pattern>/HandleTradeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTradeController</servlet-name>
+        <url-pattern>/CreateTradeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllUserTradeController</servlet-name>
+        <url-pattern>/LoadAllUserTradeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteTradeController</servlet-name>
+        <url-pattern>/DeleteTradeController</url-pattern>
     </servlet-mapping>
 </web-app>

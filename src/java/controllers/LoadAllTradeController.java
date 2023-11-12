@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import dbaccess.MediaDAO;
 import dbaccess.TradeDAO;
 import dbaccess.Trade_CategoryDAO;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Trade;
+import model.Trade_Category;
 
 /**
  *
@@ -35,11 +37,18 @@ public class LoadAllTradeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Trade> list = TradeDAO.getAllTrade();
-            if(!list.isEmpty()) {
-                request.setAttribute("TRADES", list);
+            String status = request.getParameter("status");
+            ArrayList<Trade> listTrade = new ArrayList<>();
+            String url = "DispatcherController?action=trade-page";
+            if(status == null || status.isEmpty()) {
+                listTrade = TradeDAO.getAllTrade("Approved");
+                request.setAttribute("TRADES", listTrade);
+            } else {
+                listTrade = TradeDAO.getAllTrade("Created");
+                request.setAttribute("TRADES", listTrade);
+                url = "DispatcherController?action=staff-manage-trade";
             }
-            request.getRequestDispatcher("DispatcherController?action=trade-page").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         } catch(Exception ex) {
             ex.printStackTrace();
         }

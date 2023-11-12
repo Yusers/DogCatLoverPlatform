@@ -36,7 +36,7 @@ public class LoadAllUserController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String actions = request.getParameter("actions");
             String usname = request.getParameter("usname");
-            String url = "admin.jsp";
+            String url = "DispatcherController?action=admin-page";
             Account acc = new Account();
             if (actions.equals("getAll")) {
                 request.setAttribute("MEMBERS", AccountDAO.getAllMember());

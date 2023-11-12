@@ -50,6 +50,29 @@ public class AccountDAO {
         }
         return account;
     }
+    
+    public static int createNewStaff(Account acc) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "INSERT INTO Account ( user_id,fullname, email, password, phone_number, description, role, status,created_at)\n"
+                    + "VALUES \n"
+                    + "( ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, acc.getUser_id());
+            pst.setString(2, acc.getFullname());
+            pst.setString(3, acc.getEmail());
+            pst.setString(4, "staff123");
+            pst.setString(5, acc.getPhone_number());
+            pst.setString(6, "Không có mô tả");
+            pst.setString(7, "STAFF");
+            pst.setString(8, "Active");
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+
+        return rs;
+    }
 
     public static int createAccount(Account acc) throws Exception {
         int rs = 0;
@@ -228,10 +251,9 @@ public class AccountDAO {
         if (cn != null) {
             String sql = "SELECT [user_id],[fullname],[email],[phone_number],[description],[role],[status],[created_at]\n"
                     + "FROM [dbo].[Account]\n"
-                    + "WHERE [user_id] LIKE ? OR [fullname] LIKE ? AND [role] LIKE 'MEMBER'";
+                    + "WHERE ([fullname] LIKE ?) AND [role] = 'MEMBER'";
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, search);
-            pst.setString(2, "%" + search + "%");
+            pst.setString(1,"%" + search);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {

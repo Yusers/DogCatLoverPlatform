@@ -6,6 +6,7 @@ package controllers;
 
 import dbaccess.AccountDAO;
 import dbaccess.TradeDAO;
+import dbaccess.Trade_CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Trade;
+import model.Trade_Category;
 
 /**
  *
@@ -36,12 +38,24 @@ public class LoadTradeController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String id = request.getParameter("id").trim();
             int trade_id = Integer.parseInt(id.toString());
-            if (trade_id > 0) {
-                Trade trade = TradeDAO.getTrade(trade_id);
-                request.setAttribute("AUTHOR", AccountDAO.getAccount(trade.getAuthor_id()));
+            String edit = request.getParameter("edit");
+            String url = "DispatcherController?action=trade-detail-page";
+            Trade trade = TradeDAO.getTrade(trade_id);
+            Trade_Category cate = Trade_CategoryDAO.getTradeCategory(trade.getCate_id());
+            request.setAttribute("AUTHOR", AccountDAO.getAccount(trade.getAuthor_id()));
+            if (edit == null || edit.isEmpty()) {
                 request.setAttribute("TRADE", trade);
+                request.setAttribute("CATE", cate);
+            } else if (edit.equals("staff")) {
+                request.setAttribute("TRADE", trade);
+                request.setAttribute("CATE", cate);
+                url = "DispatcherController?action=trade-page-manage";
+            } else if (edit.equals("true")) {
+                request.setAttribute("TRADE", trade);
+                request.setAttribute("CATE", cate);
+                url = "DispatcherController?action=trade-edit-page";
             }
-            request.getRequestDispatcher("DispatcherController?action=trade-detail-page").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

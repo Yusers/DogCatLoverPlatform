@@ -15,6 +15,7 @@ public class Post {
     private String title;
     private int cate_id;
     private String author_id;
+    private String image;
     private String content;
     private String status;
     private String rejected_reason;
@@ -22,6 +23,15 @@ public class Post {
     private Date updated_at;
 
     public Post() {
+    }
+
+    public Post(String title, int cate_id, String author_id, String content, String status, String image) {
+        this.title = title;
+        this.cate_id = cate_id;
+        this.author_id = author_id;
+        this.content = content;
+        this.status = status;
+        this.image = image;
     }
     
     public Post(String title, int cate_id, String author_id, String content) {
@@ -31,7 +41,7 @@ public class Post {
         this.content = content;
     }
 
-    public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at, Date updated_at) {
+    public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at, Date updated_at, String image) {
         this.id = id;
         this.title = title;
         this.cate_id = cate_id;
@@ -41,6 +51,7 @@ public class Post {
         this.rejected_reason = rejected_reason;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.image = image;
     }
     
     public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at) {
@@ -54,6 +65,14 @@ public class Post {
         this.created_at = created_at;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     public int getId() {
         return id;
     }

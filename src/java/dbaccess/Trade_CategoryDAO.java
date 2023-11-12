@@ -43,6 +43,45 @@ public class Trade_CategoryDAO {
 
         return tr;
     }
+    
+    public static int createTradeCategory(String cate_name) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if(cn!=null) {
+            String sql = "INSERT INTO [dbo].[Trade_category] ([name]) VALUES (?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, cate_name);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        
+        return rs;
+    }
+    
+    public static Trade_Category getTradeCategory(String name) throws Exception {
+        Trade_Category tr = null;
+
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT [id], [name], [created_at], [updated_at]\n"
+                    + "FROM [dbo].[Trade_category]\n"
+                    + "WHERE [name] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, name);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    Date created_at = rs.getDate("created_at");
+                    Date updated_at = rs.getDate("updated_at");
+                    tr = new Trade_Category(id, name, created_at, updated_at);
+                }
+            }
+            cn.close();
+        }
+
+        return tr;
+    }
 
     public static ArrayList<Trade_Category> getAllTradeCate() throws Exception {
         ArrayList<Trade_Category> list = new ArrayList<>();

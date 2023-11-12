@@ -25,6 +25,13 @@ public class Account {
     public Account() {
     }
 
+    public Account(String user_id, String fullname, String email, String phone_number) {
+        this.user_id = user_id;
+        this.fullname = fullname;
+        this.email = email;
+        this.phone_number = phone_number;
+    }
+    
     public Account(String user_id, String fullname, String email, String password, String phone_number) {
         this.user_id = user_id;
         this.fullname = fullname;

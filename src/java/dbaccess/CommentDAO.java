@@ -109,6 +109,20 @@ public class CommentDAO {
         return rs;
     }
     
+    public static int deleteComment(int post_id) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "DELETE FROM [dbo].[Comment]\n"
+                    + "WHERE [post_id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, post_id);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+    
     public static int deleteComment(String author) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();

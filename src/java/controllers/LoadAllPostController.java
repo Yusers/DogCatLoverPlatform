@@ -36,13 +36,20 @@ public class LoadAllPostController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Post> listPost = PostDAO.getAllPost();
+            String status = request.getParameter("status");
+            ArrayList<Post> listPost = new ArrayList<>();
             ArrayList<Post_Category> listCategory = Post_CategoryDAO.getAllPostCategory();
-            if(listCategory!=null || !listCategory.isEmpty()) {
+            String url = "DispatcherController?action=forums-page";
+            if(status == null || status.isEmpty()) {
+                listPost = PostDAO.getAllPost("Approved");
                 request.setAttribute("POSTS", listPost);
                 request.setAttribute("CATEGORYS", listCategory);
+            } else {
+                listPost = PostDAO.getAllPost("Created");
+                request.setAttribute("POSTS", listPost);
+                url = "DispatcherController?action=staff-manage-post";
             }
-            request.getRequestDispatcher("DispatcherController?action=forums-page").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         } catch(Exception ex) {
             ex.printStackTrace();
         }

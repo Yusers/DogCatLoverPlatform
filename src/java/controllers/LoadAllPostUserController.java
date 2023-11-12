@@ -38,6 +38,7 @@ public class LoadAllPostUserController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 
             String us = request.getParameter("us");
+            String url = "DispatcherController?action=view-post";
             ArrayList<Post> listPost = new ArrayList<>();
             if (us != null && !us.isEmpty()) {
                 listPost = PostDAO.getAllPostByAuthor(us);
@@ -47,9 +48,10 @@ public class LoadAllPostUserController extends HttpServlet {
                 Account author = (Account) session.getAttribute("USER");
                 listPost = PostDAO.getAllPostByAuthor(author.getUser_id());
                 request.setAttribute("AUTHOR", author.getUser_id());
+                url = "DispatcherController?action=my-trade";
             }
             request.setAttribute("POSTS", listPost);
-            request.getRequestDispatcher("DispatcherController?action=view-post").forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
