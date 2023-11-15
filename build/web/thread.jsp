@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.CommentDAO" %>
+<%@ page import="dbaccess.AccountDAO" %>
 
 
 <!DOCTYPE html>
@@ -39,6 +40,15 @@
             .cus-comment:hover {
                 cursor: pointer;
             }
+
+            .comment__user-content{
+                border: 1px solid #454d55;
+                border-radius: 10px;
+                background-color: #ededed;
+            }
+            .comment__user-content p{
+                margin: 0.5rem;
+            }
         </style>
     </head>
 
@@ -61,7 +71,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -125,11 +135,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -137,7 +147,7 @@
         </div>
         <!-- Navbar End -->
         <c:set var="us" value="${sessionScope.USER}"/>
-
+        <c:set var="author" value="${AccountDAO.getAccount(post.author_id)}" />
         <!-- Threads -->
         <div class="container mt-5">
             <nav aria-label="breadcrumb">
@@ -155,11 +165,11 @@
                 <div class="col-md-12">
                     <div class="alert alert-info">
                         <div class="author">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                            <img class="img-fluid mr-3" style="width: 100px; height: 100px; border-radius: 50%" src="${(author.avatar ne 'NULL' && not empty author.avatar) ? author.avatar : 'assets/img/149071.png'}" />
                             <div class="author-container">
                                 <div class="author-info">
                                     <c:if test="${us.role != null}"><h6><a href="DispatcherController?action=manage&actions=viewprofile&usname=${post.author_id}">${post.author_id}</a></h6></c:if>
-                                    <c:if test="${us.role == null}"><h6><a href="login.jsp">${post.author_id}</a></h6></c:if>
+                                    <c:if test="${us.role == null}"><h6><a href="DispatcherController?action=login-page">${post.author_id}</a></h6></c:if>
                                     <p>${post.created_at}</p>
                                 </div>
                                 <div class="post-action">
@@ -182,10 +192,10 @@
                                 Hãy không ngần ngại tham gia vào các cuộc trò chuyện và đóng góp ý kiến của bạn.
                             </div>
                             <!-- Thread img -->
-                            <c:if test="${not empty post.image}">                            
+                            <c:if test="${not empty post.image && post.image ne 'NULL'}">                            
                                 <img style="height: 22rem; object-fit: scale-down;" src="${post.image}" class="card-img-top thread-img" alt="${post.title}"><br>
                             </c:if>
-                            <pre>
+                            <pre style="width: 100%; text-align: justify; white-space: pre-wrap;">
                                 ${post.content.trim()}
                             </pre>
                             <!--<img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>-->
@@ -201,7 +211,7 @@
                         <div class="user-info">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                             <span><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${us.user_id}">${us.user_id != null ? us.user_id : "Guess"}</a></c:if>
-                                <c:if test="${us.role == null}"><a href="login.jsp">${us.user_id != null ? us.user_id : "Guess"}</a></c:if></span>
+                                <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${us.user_id != null ? us.user_id : "Guess"}</a></c:if></span>
                             </div>
                             <form action="DispatcherController" method="POST">
                                 <input type="hidden" name="action" value="comment" />
@@ -235,9 +245,11 @@
                                     <div class="user-info">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                                         <span><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${comment.author_id}">${comment.author_id}</a></c:if>
-                                            <c:if test="${us.role == null}"><a href="login.jsp">${comment.author_id}</a></c:if></span>
+                                            <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${comment.author_id}</a></c:if></span>
                                         </div>
-                                        <p>${comment.content}</p>
+                                        <div class="comment__user-content">
+                                            <p>${comment.content}</p>
+                                        </div>
                                     <a class="cus-comment text-primary" data-toggle="collapse" data-target="#replyFormTop${comment.id}">Reply</a>
                                     <div class="mt-1 ml-4 collapse" id="replyFormTop${comment.id}">
                                         <div class="user-info">
@@ -254,8 +266,11 @@
                                                     <input placeholder="Write a comment..." value="" type="text" class="form-control" aria-label="Sizing example input" disabled aria-describedby="inputGroup-sizing-sm">
                                                     <button class="btn btn-primary mt-2" type="button" onclick="showLoginPrompt()">Comment</button>
                                                 </c:when>
-                                                <c:when test="${us.role eq 'ADMIN' or us.role eq 'STAFF'}">
-                                                    <input placeholder="You are not allowed to comment." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+                                                <c:when test="${post.status eq 'Created' or post.status eq 'Rejected'}">
+                                                    <input placeholder="This post need Approve first" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+                                                </c:when>
+                                                <c:when test="${us.status ne 'Active'}">
+                                                    <input placeholder="You are not allowed to comments" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
@@ -270,7 +285,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                                                 <span><a href="DispatcherController?action=manage&actions=viewprofile&usname=NhatNTM">${sub.author_id}</a></span>
                                             </div>
-                                            <p>${sub.content}</p>
+                                                <div style="margin-bottom: 0; margin-left: 1rem;" class="comment__user-content"><p>${sub.content}</p></div>
                                             <a class="cus-comment text-primary" data-toggle="collapse" data-target="#replyForm${comment.id}">Reply</a>
                                         </div>
                                     </c:forEach>
@@ -289,8 +304,11 @@
                                                     <input placeholder="Write a comment..." value="" type="text" class="form-control" aria-label="Sizing example input" disabled aria-describedby="inputGroup-sizing-sm">
                                                     <button class="btn btn-primary mt-2" type="button" onclick="showLoginPrompt()">Comment</button>
                                                 </c:when>
-                                                <c:when test="${us.role eq 'ADMIN' or us.role eq 'STAFF'}">
-                                                    <input placeholder="You are not allowed to comment." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+                                                <c:when test="${post.status eq 'Created' or post.status eq 'Rejected'}">
+                                                    <input placeholder="This post need Approve first" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+                                                </c:when>
+                                                <c:when test="${us.status ne 'Active'}">
+                                                    <input placeholder="You are not allowed to comments" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
@@ -374,7 +392,7 @@
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
                 if (confirmation) {
-                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                    window.location.href = "DispatcherController?action=login-page"; // Điều hướng đến trang đăng nhập
                 }
             }
 

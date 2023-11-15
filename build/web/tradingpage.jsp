@@ -53,7 +53,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -135,14 +135,9 @@
             <div class="row">
                 <div class="col-md-8">
                     <div id="carouselExampleIndicators" class="carousel slide">
-                        <ol class="carousel-indicators">
-                            <c:forEach var="url" items="${media.url}" varStatus="loop">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="${loop.index}" class="${loop.index == 0 ? 'active' : ''}"></li>
-                                </c:forEach>
-                        </ol>
                         <c:set var="listMedia" value="${MediaDAO.getAllMedia(trade.id)}" />
                         <div class="carousel-inner">
-                                <c:forEach var="media" items="${listMedia}" varStatus="loop">
+                            <c:forEach var="media" items="${listMedia}" varStatus="loop">
                                 <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
                                     <div class="card" style="height: 500px">
                                         <img style="object-fit: cover; height: 100%" src="${media.url}" class="card-img-top img-fluid" alt="${media.file_name}">
@@ -176,7 +171,7 @@
                             </div>
                             <div class="user-action">
                                 <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block" ${(us.user_id == trade.author_id || us.status ne 'Active')? 'disabled' : ''}>${us.status ne 'Active' ? 'Có vẻ bạn đã bị cấm chat' : 'Nhắn tin cho người bán'}</button></c:if>
-                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="login.jsp">Nhắn tin cho người bán</a></c:if>
+                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="DispatcherController?action=login-page">Nhắn tin cho người bán</a></c:if>
                                 </div>
                             </div>
                         </form>
@@ -252,7 +247,7 @@
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to Chat. Do you want to go to the login page?");
                 if (confirmation) {
-                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                    window.location.href = "DispatcherController?action=login-page"; // Điều hướng đến trang đăng nhập
                 }
             }
         </script>

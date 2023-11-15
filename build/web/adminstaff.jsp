@@ -52,12 +52,12 @@
                         <c:set var="us" value="${sessionScope.MEMBER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> <br> Log in
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> <br> ${us.user_id}
                                 </a>
                             </c:otherwise>

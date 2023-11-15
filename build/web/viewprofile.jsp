@@ -155,7 +155,7 @@
                             <c:if test="${sessionScope.USER.role eq 'ADMIN'}">
                                 <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                             </c:if>
-                            <c:if test="${us.role eq 'STAFF'}">
+                            <c:if test="${sessionScope.USER.role eq 'STAFF'}">
                                 <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
                             </c:if>
                             <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
@@ -202,23 +202,12 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -228,8 +217,8 @@
             <form action="" method="post">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="assets/img/149071.png" alt=""/>
+                        <div class="profile-img">                            
+                            <img style="width: 100px; height: 100px; border-radius: 50%" src="${(sessionScope.USER.avatar ne 'NULL' && not empty sessionScope.USER.avatar)? sessionScope.USER.avatar : 'assets/img/149071.png'}" alt=""/>
                         </div>
                     </div>
                     <div class="col-md-6">

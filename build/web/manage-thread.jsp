@@ -55,7 +55,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -153,7 +153,7 @@
                             <div class="author-container">
                                 <div class="author-info">
                                     <c:if test="${us.role != null}"><h6><a href="DispatcherController?action=manage&actions=viewprofile&usname=${post.author_id}">${post.author_id}</a></h6></c:if>
-                                    <c:if test="${us.role == null}"><h6><a href="login.jsp">${post.author_id}</a></h6></c:if>
+                                    <c:if test="${us.role == null}"><h6><a href="DispatcherController?action=login-page">${post.author_id}</a></h6></c:if>
                                     <p>${post.created_at}</p>
                                 </div>
                                 <div class="post-action">

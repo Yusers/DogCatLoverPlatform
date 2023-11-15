@@ -1,18 +1,13 @@
-<%-- 
-    Document   : manage-threads
-    Created on : Oct 11, 2023, 12:30:58 AM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="dbaccess.Post_CategoryDAO" %>
+<%@page import="dbaccess.Trade_CategoryDAO" %>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Bài viết của tôi | DogCatLoverPlatform</title>
 
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
@@ -73,7 +68,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -165,7 +160,7 @@
                             <!-- Thread 1 -->
                             <c:forEach var="post" items="${posts}">
                                 <div class="card shadow p-1 bg-black rounded">
-                                    <div class="card-header custom-title-post" id="thread${post.id}" data-toggle="collapse" data-target="#collapseThread${post.id}" aria-expanded="true" aria-controls="collapseThread${post.id}">
+                                    <div class="card-header custom-title-post" id="trade${post.id}" data-toggle="collapse" data-target="#collapseTrade${post.id}" aria-expanded="true" aria-controls="collapseTrade${post.id}">
                                         <h6>
                                             Bài viết: <strong>${post.title}</strong>
                                         </h6>
@@ -180,7 +175,7 @@
                                         </c:if>
                                     </div>
 
-                                    <div id="collapseThread${post.id}" class="collapse" aria-labelledby="thread${post.id}" data-parent="#threadAccordion">
+                                    <div id="collapseTrade${post.id}" class="collapse" aria-labelledby="trade${post.id}" data-parent="#threadAccordion">
                                         <div class="card-body">
                                             <div class="card shadow p-1 bg-black rounded">
                                                 <div class="card-body">
@@ -188,7 +183,7 @@
                                                     <div class="mb-3">
                                                         <h5 class="mb-3">Tiêu đề: ${post.title}</h5>
                                                         <p class="text-truncate"><strong>Nội dung:</strong> ${post.content}</p>
-                                                        <p><strong>Thể Loại:</strong> ${Post_CategoryDAO.getPostCategory(post.cate_id).name}</p>
+                                                        <p><strong>Thể Loại:</strong> ${Trade_CategoryDAO.getTradeCategory(post.cate_id).name}</p>
                                                         <c:if test="${post.status eq 'Created'}">
                                                             <p><strong>Trạng thái:</strong> <strong style="color: blue;">Đang chờ duyệt</strong></p>
                                                         </c:if>
@@ -204,7 +199,7 @@
                                                     <!-- Thread Actions (e.g., Delete, Edit) -->
                                                     <div class="row d-flex">
                                                         <div class="btn-group col-md-6 d-flex justify-content-start">
-                                                            <a href="DispatcherController?action=thread&id=${post.id}&edit=true" class="btn btn-primary">Chỉnh sửa</a>
+                                                            <a href="DispatcherController?action=trade-details&id=${post.id}&edit=true" class="btn btn-primary">Chỉnh sửa</a>
                                                             <a href="DispatcherController?action=trade-delete&id=${post.id}" class="btn btn-danger">Xóa</a>
                                                         </div>
                                                         <div class="col-md-2"></div>
@@ -216,12 +211,40 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="modal fade" id="rejectTradeModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectTradeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form action="DispatcherController" method="POST">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="rejectTradeModalLabel">Từ chối: ${post.title}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="action" value="handle-trade" />
+                                                        <input type="hidden" name="id" value="${post.id}"/>
+                                                        <input type="hidden" name="us" value="${author}"/>
+                                                        <input type="hidden" name="i" value="true"/>
+                                                        <div class="form-group">
+                                                            <label for="rejectReason">Lí do</label>
+                                                            <textarea name="reason" class="form-control" id="rejectReason" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" value="reject" name="btn" class="btn btn-danger">Từ chối</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>           
+                                </div>
                             </c:forEach>
                             <c:if test="${empty posts}">
                                 <h4>Chưa có bài viết</h4>
                                 <c:if test="${us.role ne 'STAFF'}">
-                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
                                 </c:if>
                             </c:if>
                         </div>
@@ -281,16 +304,44 @@
                                                             <c:if test="${us.user_id eq author}"><a href="DispatcherController?action=thread&id=${post.id}" class="btn btn-primary">Xem chi tiết</a></c:if>
                                                             </div>
                                                         </div>
+                                                        <div class="modal fade" id="rejectPostModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectPostModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <form action="DispatcherController" method="POST">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="rejectPostModalLabel">Từ chối: ${post.title}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="action" value="handle-post" />
+                                                                        <input type="hidden" name="id" value="${post.id}"/>
+                                                                        <input type="hidden" name="us" value="${author}"/>
+                                                                        <input type="hidden" name="i" value="true"/>
+                                                                        <div class="form-group">
+                                                                            <label for="rejectReason">Lí do</label>
+                                                                            <textarea name="reason" class="form-control" id="rejectReason" rows="3"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" value="reject" name="btn" class="btn btn-danger">Từ chối</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </c:forEach>
                             <c:if test="${empty posts}">
                                 <h4>Chưa có bài viết</h4>
                                 <c:if test="${us.role ne 'STAFF'}">
-                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
                                 </c:if>
                             </c:if>
                         </div>

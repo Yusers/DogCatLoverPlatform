@@ -23,7 +23,7 @@ public class PostDAO {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at]\n"
+            String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at], [image]\n"
                     + "FROM [dbo].[Post]\n"
                     + "WHERE [status] = 'Created'";
             Statement st = cn.createStatement();
@@ -47,8 +47,6 @@ public class PostDAO {
         }
         return posts;
     }
-<<<<<<< HEAD
-=======
    
 // Hiển thị tất cả các bài viết có trạng thái là Approved (Các bài viết đã được staff duyệt)
     public static ArrayList<Post> getAllPostinForum() throws Exception {
@@ -79,7 +77,6 @@ public class PostDAO {
         }
         return posts;
     }
->>>>>>> e171e003676125de96cd90488e7a930a3436b26f
     
     public static ArrayList<Post> getAllPost(String status) throws Exception {
         ArrayList<Post> posts = new ArrayList<>();

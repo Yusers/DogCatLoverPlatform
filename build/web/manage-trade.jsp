@@ -53,7 +53,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -182,7 +182,7 @@
                             </div>
                             <div class="user-action">
                                 <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block" ${(trade.status eq 'Created' || trade.status eq 'Rejected') ? 'disabled' : ''}>Nhắn tin cho người bán</button></c:if>
-                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="login.jsp">Nhắn tin cho người bán</a></c:if>
+                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="DispatcherController?action=login-page">Nhắn tin cho người bán</a></c:if>
                                 </div>
                             </div>
                         </form>
@@ -290,7 +290,7 @@
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to Chat. Do you want to go to the login page?");
                 if (confirmation) {
-                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                    window.location.href = "DispatcherController?action=login-page"; // Điều hướng đến trang đăng nhập
                 }
             }
         </script>

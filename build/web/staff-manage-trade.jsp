@@ -47,7 +47,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -220,7 +220,7 @@
                                 <c:if test="${empty listOfTrade}">
                                     <h4>Chưa có bài viết</h4>
                                     <c:if test="${us.role ne 'STAFF'}">
-                                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
                                     </c:if>
                                 </c:if>
                             </div>

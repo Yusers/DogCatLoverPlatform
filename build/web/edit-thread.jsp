@@ -50,6 +50,26 @@
             .custom-input {
                 border: none;
             }
+
+            .custom-input-img {
+                position: relative;
+            }
+
+            .custom-input-img:hover::after {
+                content: 'Click here to edit';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 18px;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .custom-input-img:hover img {
+                filter: brightness(70%); /* Adjust the brightness level as needed */
+            }
         </style>
     </head>
 
@@ -72,7 +92,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -136,11 +156,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -179,11 +199,11 @@
                     <div class="col-md-12">
                         <div class="alert alert-info">
                             <div class="author">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                                <img class="img-fluid mr-3" style="width: 100px; height: 100px; border-radius: 50%" src="${us.avatar}" />
                                 <div class="author-container">
                                     <div class="author-info">
                                         <c:if test="${us.role != null}"><h6><a href="DispatcherController?action=manage&actions=viewprofile&usname=${post.author_id}">${post.author_id}</a></h6></c:if>
-                                        <c:if test="${us.role == null}"><h6><a href="login.jsp">${post.author_id}</a></h6></c:if>
+                                        <c:if test="${us.role == null}"><h6><a href="DispatcherController?action=login-page">${post.author_id}</a></h6></c:if>
                                         <p>${post.created_at}</p>
                                     </div>
                                     <div class="post-action">
@@ -205,7 +225,7 @@
                                 <label for="inputfile"><strong>Chỉnh sửa hoặc thêm hình ảnh tại đây</strong></label>
                                 <div class="text-center">
                                     <label for="inputfile">
-                                        <div class="d-flex justify-content-center align-items-center rounded">
+                                        <div class="d-flex justify-content-center align-items-center rounded custom-input-img">
                                             <img id="previewImage" style="height: 22rem; object-fit: scale-down;" src="${empty post.image ? 'assets/img/no-img.jpg' : post.image}" class="card-img-top thread-img" alt="${post.title}">
                                         </div>
                                         <input name="image" type="file" class="custom-file-input" id="inputfile" onchange="previewFile()">
@@ -312,7 +332,7 @@
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to comment. Do you want to go to the login page?");
                 if (confirmation) {
-                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                    window.location.href = "DispatcherController?action=login-page"; // Điều hướng đến trang đăng nhập
                 }
             }
 

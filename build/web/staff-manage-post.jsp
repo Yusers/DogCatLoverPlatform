@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="model.Account" %>
 <%@page import="dbaccess.Post_CategoryDAO" %>
-        <c:set var="listOfPost" value="${requestScope.POSTS}" />
+<c:set var="listOfPost" value="${requestScope.POSTS}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,7 +48,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -175,7 +175,6 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="btn" value="reject" />
                                                             <input type="hidden" name="action" value="handle-post" />
                                                             <input type="hidden" name="id" value="${post.id}"/>
                                                             <div class="form-group">
@@ -184,7 +183,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" value="reject" class="btn btn-danger">Từ chối</button>
+                                                            <button type="submit" value="reject" name="btn" class="btn btn-danger">Từ chối</button>
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                                         </div>
                                                     </form>
@@ -221,7 +220,7 @@
                                 <c:if test="${empty listOfPost}">
                                     <h4>Chưa có bài viết</h4>
                                     <c:if test="${us.role ne 'STAFF'}">
-                                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'login.jsp'}">Create post...</a>
+                                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
                                     </c:if>
                                 </c:if>
                             </div>

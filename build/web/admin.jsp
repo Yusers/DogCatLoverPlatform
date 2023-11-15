@@ -24,13 +24,13 @@
         <!-- Flaticon Font -->
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- Libraries Stylesheet -->
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
     </head>
     <body>
         <!-- Topbar Start -->
@@ -51,7 +51,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -114,21 +114,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="#" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -161,6 +151,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <h2 class="mb-4">Tổng số bài viết đã được duyệt của từng tháng</h2>
+                            <p class="ml-4"><strong>Tổng bài tất cả: ${requestScope.TOTAL}</strong></p>
+                            <canvas id="postChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
                     <div class="card">
                         <a class="btn btn-primary" href="DispatcherController?action=create-staff">Create Staff</a>
                         <div class="card-body">
@@ -175,6 +172,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Avatar</th>
                                             <th>Staff ID</th>
                                             <th>Staff Name</th>
                                             <th>Staff Email</th>
@@ -187,6 +185,11 @@
                                         <!-- Rows for members go here -->
                                         <c:forEach var="staff" items="${staffs}">
                                             <tr>
+                                                <td>
+                                                    <a href="DispatcherController?action=manage&actions=viewprofile&usname=${staff.user_id}">
+                                                        <img src="avatar_url_here" alt="Staff Avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+                                                    </a>
+                                                </td>
                                                 <td>${staff.user_id}</td>
                                                 <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${staff.user_id}">${staff.fullname}</a></td>
                                                 <td>${staff.email}</td>
@@ -214,6 +217,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Avatar</th>
                                             <th>Staff ID</th>
                                             <th>Staff Name</th>
                                             <th>Staff Email</th>
@@ -226,6 +230,11 @@
                                         <!-- Rows for members go here -->
                                         <c:forEach var="s" items="${listOfStaff}">
                                             <tr>
+                                                <td>
+                                                    <a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">
+                                                        <img src="${(s.avatar ne 'NULL' && not empty s.avatar)? s.avatar : 'assets/img/149071.png'}" alt="Staff Avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+                                                    </a>
+                                                </td>
                                                 <td>${s.user_id}</td>
                                                 <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${s.user_id}">${s.fullname}</a></td>
                                                 <td>${s.email}</td>
@@ -263,6 +272,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Avatar</th>
                                             <th>Member ID</th>
                                             <th>Member Name</th>
                                             <th>Member Email</th>
@@ -275,6 +285,11 @@
                                         <!-- Rows for members go here -->
                                         <c:forEach var="member" items="${members}">
                                             <tr>
+                                                <td>
+                                                    <a href="DispatcherController?action=manage&actions=viewprofile&usname=${member.user_id}">
+                                                        <img src="${(member.avatar ne 'NULL' && not empty member.avatar)? member.avatar : 'assets/img/149071.png'}" alt="Staff Avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+                                                    </a>
+                                                </td>
                                                 <td>${member.user_id}</td>
                                                 <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${member.user_id}">${member.fullname}</a></td>
                                                 <td>${member.email}</td>
@@ -302,6 +317,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Avatar</th>
                                             <th>Member ID</th>
                                             <th>Member Name</th>
                                             <th>Member Email</th>
@@ -314,6 +330,11 @@
                                         <!-- Rows for members go here -->
                                         <c:forEach var="m" items="${listOfMember}">
                                             <tr>
+                                                <td>
+                                                    <a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">
+                                                        <img src="${(m.avatar ne 'NULL' && not empty m.avatar)? m.avatar : 'assets/img/149071.png'}" alt="Staff Avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+                                                    </a>
+                                                </td>
                                                 <td>${m.user_id}</td>
                                                 <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
                                                 <td>${m.email}</td>
@@ -374,6 +395,48 @@
                     </div>
                 </div>-->
 
+
+        <script>
+            // Use JSTL to retrieve data from the servlet
+            var postCounts = ${MONTHLY_COUNTS}; // Array of post counts
+            console.log(postCounts); // Check the console for the output
+
+
+            // Get the context of the canvas element
+            var ctx = document.getElementById('postChart').getContext('2d');
+
+            // Create the chart
+            var postChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ${MONTHLY_COUNTS_LABELS}, // Array of month labels
+                    datasets: [{
+                            label: "Total Posts",
+                            data: postCounts,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Posts'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -382,6 +445,7 @@
         <script src="lib/tempusdominus/js/moment.min.js"></script>
         <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
         <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 
         <!-- Contact Javascript File -->
         <script src="mail/jqBootstrapValidation.min.js"></script>

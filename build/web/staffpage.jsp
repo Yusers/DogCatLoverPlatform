@@ -58,7 +58,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -184,6 +184,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>Avatar</th>
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
@@ -197,6 +198,11 @@
                                         <!-- Rows for members go here -->
                                         <c:forEach var="m" items="${listOfMember}">
                                             <tr>
+                                                <td>
+                                                    <a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">
+                                                        <img src="${(m.avatar ne 'NULL' && not empty m.avatar)? m.avatar : 'assets/img/149071.png'}" alt="Staff Avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+                                                    </a>
+                                                </td>
                                                 <td>${m.user_id}</td>
                                                 <td><a href="DispatcherController?action=manage&actions=viewprofile&usname=${m.user_id}">${m.fullname}</a></td>
                                                 <td>${m.email}</td>

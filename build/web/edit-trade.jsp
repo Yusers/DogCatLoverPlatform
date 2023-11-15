@@ -6,7 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page import="dbaccess.MediaDAO" %>
+<%@ page import="dbaccess.Trade_CategoryDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -32,7 +34,31 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <style>
+            .carousel-item {
+                position: relative;
+            }
 
+            .card {
+                position: relative;
+            }
+
+            .card:hover::after {
+                content: 'Click here to edit';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .card:hover img {
+                filter: brightness(70%); /* Adjust the brightness level as needed */
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <!-- Topbar Start -->
@@ -53,7 +79,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -117,11 +143,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link active">Trade</a>
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -129,62 +155,76 @@
         </div>
         <!-- Navbar End -->
         <c:set var="trade" value="${requestScope.TRADE}" />
+        <c:set var="cate" value="${requestScope.CATE}" />
         <!-- Trading Start -->
         <div class="container mt-5 mb-5">
-            <span>
-                <label for="heading"><strong>Chỉnh sửa tiêu đề ở đây</strong></label>
-            </span>
-            <h2 id="heading" class="mb-4 col-md-12"><input style="border: none; width: 100%" type="text" value="${trade.title}" /></h2>
-
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <br/>
-                            <button type="button" onclick="previewFiles()" class="btn btn-primary col-4" data-toggle="modal" data-target="#filePreviewModal">
-                                Xem trước hình ảnh
-                            </button>
-                        </div>
-                        <input type="hidden" id="editedImageURL" name="editedImageURL">
-                    </div>
-                    <div id="carouselExampleIndicators" class="carousel slide col-12">
-                        <ol class="carousel-indicators">
-                            <c:forEach var="url" items="${media.url}" varStatus="loop">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="${loop.index}" class="${loop.index == 0 ? 'active' : ''}"></li>
-                                </c:forEach>
-                        </ol>
-                        <c:set var="listMedia" value="${MediaDAO.getAllMedia(trade.id)}" />
-                        <div class="carousel-inner">
-                            <c:forEach var="media" items="${listMedia}" varStatus="loop">
-                                <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
-                                    <label for="inputfile${loop.index}">
-                                        <div class="card" style="height: 500px">
-                                            <img id="previewImage${loop.index}" style="object-fit: cover; height: 100%" src="${media.url}" class="card-img-top img-fluid" alt="${media.file_name}">
-                                        </div>
-                                    </label>
-                                    <input name="image" type="file" class="custom-file-input" id="inputfile${loop.index}" onchange="previewFile(${loop.index})">
-                                </div>
+            <form action="UpdateTradeController" method="POST" enctype="multipart/form-data">
+                <c:set var="categorys" value="${Trade_CategoryDAO.getAllTradeCate()}"/>
+                <input type="hidden" name="author" value="${trade.author_id}" />
+                <input type="hidden" name="id" value="${trade.id}" />
+                <input type="hidden" name="cate_id" value="${cate.id}" />
+                <span>
+                    <label for="title"><strong>Chỉnh sửa tiêu đề ở đây</strong></label>
+                </span>
+                <h2 class="mb-4 col-md-12"><input style="border: none; width: 100%" id="title" name="title" typtitlee="text" value="${trade.title}" /></h2>
+                <div class="form-group ml-5">
+                    <label for="exampleDataList" class="form-label"><strong>Loại bài viết về</strong></label>
+                    <input class="form-control" value="${cate.name}" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
+                    <datalist id="datalistOptions">
+                        <c:forEach var="c" items="${categorys}">
+                            <option value="${c.name}">
                             </c:forEach>
-                        </div>
-
-
-                        <a style="color: black" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
+                    </datalist>
                 </div>
-                <c:set var="author" value="${requestScope.AUTHOR}" />
-                <div class="col-md-4 justify-content-center">
-                    <form action="DispatcherController" method="POST">
-                        <input type="hidden" name="action" value="create-conversation" />
-                        <input type="hidden" name="sender_id" value="${us.user_id}" />
-                        <input type="hidden" name="receiver_id" value="${trade.author_id}" />
-                        <input type="hidden" name="topic" value="${trade.title} | ${trade.author_id} | ${us.user_id}" />
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="carouselExampleIndicators" class="carousel slide col-12">
+                            <div class="form-floating">
+                                <label for="addimg">Chọn thêm ảnh hoặc bạn có thể bấm vào ảnh dưới để chỉnh</label>
+                                <input class="ml-3" id="addimg" type="file" name="images" multiple="true"/>
+                            </div>
+                            <c:set var="listMedia" value="${MediaDAO.getAllMedia(trade.id)}" />
+                            <c:set var="listMediaId" value="${MediaDAO.getAllMediaId(trade.id)}" />
+                            <input type="hidden" name="listValues" value="${listMediaId}" />
+                            <div class="carousel-inner">
+                                <c:choose>
+                                    <c:when test="${not empty listMedia}">
+                                        <c:forEach var="media" items="${listMedia}" varStatus="loop">
+                                            <div class="carousel-item ${loop.index == 0 ? 'active' : ''}">
+                                                <label for="inputfile${loop.index}">
+                                                    <div class="card" style="height: 500px">
+                                                        <img id="previewImage${loop.index}" style="object-fit: cover; height: 100%" src="${media.url}" class="card-img-top img-fluid" alt="${media.file_name}">
+                                                    </div>
+                                                </label>
+                                                <input name="image${loop.index}" type="file" class="custom-file-input" id="inputfile${loop.index}" onchange="previewFile(${loop.index})">
+                                            </div>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="carousel-item active">
+                                            <label for="inputfile0">
+                                                <div class="card" style="height: 500px">
+                                                    <img id="previewImage0" style="object-fit: cover; height: 100%" src="assets/img/no-img.jpg" class="card-img-top img-fluid" alt="no img">
+                                                </div>
+                                            </label>
+                                            <input name="image0" type="file" class="custom-file-input" id="inputfile0" onchange="previewFile(0)">
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+
+                            <a style="color: black" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <c:set var="author" value="${requestScope.AUTHOR}" />
+                    <div class="col-md-4 justify-content-center">
                         <div class="user">
                             <div class="user-info">
                                 <h5>Tên: ${author.fullname}</h5>
@@ -193,20 +233,22 @@
                             </div>
                             <div class="user-action">
                                 <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block" ${(us.user_id == trade.author_id || us.status ne 'Active')? 'disabled' : ''}>${us.status ne 'Active' ? 'Có vẻ bạn đã bị cấm chat' : 'Nhắn tin cho người bán'}</button></c:if>
-                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="login.jsp">Nhắn tin cho người bán</a></c:if>
+                                <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="DispatcherController?action=login-page">Nhắn tin cho người bán</a></c:if>
                                 </div>
                             </div>
-                        </form>
-                        <br>
-                        <div class="trade-post-details">
-                            <h5>Mô tả</h5>
-                            <div class="form-floating">
-                                <label for="content"><strong>Chỉnh sửa nội dung bấm vào đây</strong></label>
-                                <textarea rows='${trade.content.length() > 300 ? 15 : 6} ' class="form-control custom-input" placeholder="${trade.content}" name="content" id="content">${trade.content}</textarea>
+                            <br>
+                            <div class="trade-post-details">
+                                <h5>Mô tả</h5>
+                                <div class="form-floating">
+                                    <label for="content"><strong>Chỉnh sửa nội dung bấm vào đây</strong></label>
+                                    <textarea rows='${trade.content.length() > 300 ? 15 : 6} ' class="form-control custom-input" placeholder="${trade.content}" name="content" id="content">${trade.content}</textarea>
+                            </div>
                         </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-block">Lưu thay đổi</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <!-- Trading End -->
 
@@ -288,7 +330,7 @@
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to Chat. Do you want to go to the login page?");
                 if (confirmation) {
-                    window.location.href = "login.jsp"; // Điều hướng đến trang đăng nhập
+                    window.location.href = "DispatcherController?action=login-page"; // Điều hướng đến trang đăng nhập
                 }
             }
         </script>

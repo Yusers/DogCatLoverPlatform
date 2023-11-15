@@ -37,6 +37,7 @@ public class HandlePostController extends HttpServlet {
             String reason = request.getParameter("reason");
             int id = Integer.parseInt(request.getParameter("id"));
             Post post = PostDAO.getPost(id);
+            String user_id = request.getParameter("us");
             String url = "DispatcherController?action=forums&status=created";
             if (btn != null && !btn.isEmpty()) {
                 if ("approve".equals(btn)) {

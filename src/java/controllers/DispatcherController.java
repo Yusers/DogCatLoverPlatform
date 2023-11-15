@@ -14,7 +14,10 @@ import java.io.PrintWriter;
 public class DispatcherController extends HttpServlet {
 
     final String HOME_PAGE = "index.jsp";
+    final String ABOUT_PAGE = "about.jsp";
+    final String CONTACT_PAGE = "contact.jsp";
     final String ADMIN_PAGE = "admin.jsp";
+    final String VIEW_PROFILE = "viewprofile.jsp";
     final String CREATE_STAFF = "create-staff.jsp";
     final String STAFF_PAGE = "staffpage.jsp";
     final String STAFF_PAGE_MANAGE_POST = "staff-manage-post.jsp";
@@ -53,6 +56,10 @@ public class DispatcherController extends HttpServlet {
                 url = HOME_PAGE;
             } else if (action.equals("login")) {
                 url = "LoginController";
+            } else if (action.equals("about-us")) {
+                url = ABOUT_PAGE;
+            } else if (action.equals("contact-us")) {
+                url = CONTACT_PAGE;
             } else if (action.equals("login-page")) {
                 url = LOGIN_PAGE;
             } else if (action.equals("logout")) {

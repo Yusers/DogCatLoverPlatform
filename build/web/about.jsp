@@ -51,7 +51,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -80,7 +80,7 @@
             </div>
             <div class="row py-3 px-lg-5">
                 <div class="col-lg-4">
-                    <a href="" class="navbar-brand d-none d-lg-block">
+                    <a href="DispatcherController" class="navbar-brand d-none d-lg-block">
                         <h1 class="m-0 display-5 text-capitalize"><span class="text-primary">Dog&Cat</span>Lover</h1>
                     </a>
                 </div>
@@ -115,21 +115,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link active">About</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link active">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -141,7 +131,7 @@
         <div class="container py-5">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="DispatcherController?action=">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Giới Thiệu</li>
                 </ol>
             </nav>
@@ -156,7 +146,6 @@
                         <li><h5><i class="fa fa-check-double text-secondary mr-3"></i>Help people gain knowledge about dogs and cats</h5></li>
                         <li><h5><i class="fa fa-check-double text-secondary mr-3"></i>24/7 Customer Support</h5></li>
                     </ul>
-                    <!--                    <a href="" class="btn btn-lg btn-primary mt-3 px-4">Learn More</a>-->
                 </div>
                 <div class="col-lg-5">
                     <div class="row px-3">
