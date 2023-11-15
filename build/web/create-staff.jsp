@@ -179,10 +179,10 @@
                                         <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
                                         <c:if test="${us.role eq 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
-                                            <a class="dropdown-item" href="create-staff.jsp">Create new Staff</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=create-staff">Create new Staff</a>
                                         </c:if>
-                                        <a class="dropdown-item" href="#">My Posts</a>
-                                        <a class="dropdown-item" href="LoadConversationController">Chat</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>

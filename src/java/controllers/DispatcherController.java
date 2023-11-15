@@ -64,6 +64,8 @@ public class DispatcherController extends HttpServlet {
                 url = LOGIN_PAGE;
             } else if (action.equals("my-profile")) {
                 url = MY_PROFILE;
+            } else if (action.equals("conversation")) {
+                url = "LoadConversationController";
             } else if (action.equals("logout")) {
                 url = "LogoutController";
             } else if (action.equals("register")) {
