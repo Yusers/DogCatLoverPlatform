@@ -17,7 +17,7 @@ public class DispatcherController extends HttpServlet {
     final String ABOUT_PAGE = "about.jsp";
     final String CONTACT_PAGE = "contact.jsp";
     final String ADMIN_PAGE = "admin.jsp";
-    final String VIEW_PROFILE = "viewprofile.jsp";
+    final String MY_PROFILE = "viewprofile.jsp";
     final String CREATE_STAFF = "create-staff.jsp";
     final String STAFF_PAGE = "staffpage.jsp";
     final String STAFF_PAGE_MANAGE_POST = "staff-manage-post.jsp";
@@ -62,6 +62,8 @@ public class DispatcherController extends HttpServlet {
                 url = CONTACT_PAGE;
             } else if (action.equals("login-page")) {
                 url = LOGIN_PAGE;
+            } else if (action.equals("my-profile")) {
+                url = MY_PROFILE;
             } else if (action.equals("logout")) {
                 url = "LogoutController";
             } else if (action.equals("register")) {

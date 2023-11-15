@@ -68,7 +68,7 @@
                                         <i class="fa fa-user"></i> ${us.user_id}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
                                         <c:if test="${us.role == 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>

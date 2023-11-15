@@ -63,7 +63,7 @@
                                         <i class="fa fa-user"></i> ${usnow.user_id}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
                                         <c:if test="${usnow.role eq 'ADMIN'}">
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
