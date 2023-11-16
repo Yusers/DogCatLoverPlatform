@@ -122,7 +122,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action" class="nav-item nav-link">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="DispatcherController?action=forums" class="nav-item nav-link active">Forums</a>
                         <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
@@ -137,7 +137,7 @@
         <div class="container mt-5">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="DispatcherController?action">Trang chủ</a></li>
                     <li class="breadcrumb-item" aria-current="#">Diễn Đàn</li>
                     <li class="breadcrumb-item" aria-current="#">Chó</li>
                     <li class="breadcrumb-item active" aria-current="#">Sức khỏe</li>
