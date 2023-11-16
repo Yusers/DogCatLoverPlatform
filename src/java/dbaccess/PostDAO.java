@@ -107,6 +107,34 @@ public class PostDAO {
         return posts;
     }
     
+    public static ArrayList<Post> getAllPostByCate(String status, int cate_id) throws Exception {
+        ArrayList<Post> posts = new ArrayList<>();
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Post]\n"
+                    + "WHERE [status] = ? AND [category_id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, status);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String title = rs.getString("title");
+                    String author_id = rs.getString("author_id");
+                    String content = rs.getString("content");
+                    String rejected_reason = rs.getString("rejected_reason");
+                    Date created_at = rs.getDate("created_at");
+                    Date updated_at = rs.getDate("updated_at");
+                    String image = rs.getString("image");
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                }
+            }
+            cn.close();
+        }
+        return posts;
+    }
+    
     public static int updatePost(int id, String title, String content, int cate_id, String imgUrl) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();

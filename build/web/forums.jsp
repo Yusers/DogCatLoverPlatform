@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@page import="dbaccess.PostDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -154,25 +156,34 @@
                         </div>
                     </div>
                 </div>
-
+                <c:set var="listPost" value="${requestScope.POSTS}" />
                 <div class="col-md-9">
                     <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                        <!-- Thread cate 1 -->
                         <div id="thread-${c.id}" class="card">
                             <div class="card-body">
                                 <h5 class="card-title">${c.name}</h5>
                                 <ul class="list-group">
-                                    <c:set var="hasPosts" value="false" />
-                                    <c:forEach var="p" items="${requestScope.POSTS}">
+                                    <c:set var="count" value="0" />
+                                    <c:forEach var="p" items="${listPost}">
                                         <c:if test="${p.cate_id eq c.id}">
-                                            <c:set var="hasPosts" value="true" />
-                                            <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title} | tác giả : ${p.author_id}</a></li>
+                                            <c:if test="${count lt 4}">
+                                                <li class="list-group-item">
+                                                    <a href="DispatcherController?action=thread&id=${p.id}">
+                                                        ${p.title} | tác giả : ${p.author_id}
+                                                    </a>
+                                                </li>
+                                                <c:set var="count" value="${count + 1}" />
                                             </c:if>
-                                        </c:forEach>
-                                        <c:if test="${not hasPosts}">
-                                        <li class="list-group-item disabled">Chưa có bài viết</li>
                                         </c:if>
+                                    </c:forEach>
                                 </ul>
+
+                                <!-- Show button to navigate if more than 3 threads -->
+                                <div class="d-flex mt-3 justify-content-end">
+                                    <c:if test="${count gt 3}">
+                                    <a href="DispatcherController?action=allThreads&categoryId=${c.id}" class="text text-primary">Read more ${PostDAO.getAllPostByCate("Approved", c.id).size()}</a>
+                                </c:if>
+                                </div>
                             </div>
                         </div>
                         <br/>
@@ -180,8 +191,8 @@
                 </div>
             </div>
         </div>
-                    
-                    <!-- Footer Start -->
+
+        <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
             <div class="row pt-5">
                 <div class="col-lg-4 col-md-12 mb-5">

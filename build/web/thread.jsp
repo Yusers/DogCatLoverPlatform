@@ -195,9 +195,9 @@
                             <c:if test="${not empty post.image && post.image ne 'NULL'}">                            
                                 <img style="height: 22rem; object-fit: scale-down;" src="${post.image}" class="card-img-top thread-img" alt="${post.title}"><br>
                             </c:if>
-                            <pre style="width: 100%; text-align: justify; white-space: pre-wrap;">
+                            <p style="text-align: justify; white-space: pre-line;">
                                 ${post.content.trim()}
-                            </pre>
+                            </p>
                             <!--<img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>-->
                         </div>
                     </div>
