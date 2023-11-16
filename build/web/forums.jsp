@@ -8,6 +8,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="dbaccess.PostDAO" %>
+<%@page import="dbaccess.AccountDAO" %>
+<%@page import="dbaccess.CommentDAO" %>
 
 <!DOCTYPE html>
 <html>
@@ -168,9 +170,25 @@
                                         <c:if test="${p.cate_id eq c.id}">
                                             <c:if test="${count lt 4}">
                                                 <li class="list-group-item">
-                                                    <a href="DispatcherController?action=thread&id=${p.id}">
-                                                        ${p.title} | tác giả : ${p.author_id}
-                                                    </a>
+                                                    <div class="card" style="width: 100%;">
+                                                        <div class="card-body d-flex align-items-center justify-content-between">
+                                                            <div class="col-md-10 d-flex flex-row align-items-center">
+                                                                <div style="width: 60px" class="user-info d-flex flex-column align-items-center">
+                                                                    <img src="${(AccountDAO.getAccount(p.author_id).avatar ne 'NULL' && not empty AccountDAO.getAccount(p.author_id).avatar)?  AccountDAO.getAccount(p.author_id).avatar : 'assets/img/149071.png'}" alt="Avatar" class="rounded-circle img-thumbnail" style="width: 60px; height: 60px;">
+                                                                    <p><strong>${p.author_id}</strong></p>
+                                                                </div>
+                                                                <div style="margin-left: 30px;">
+                                                                    <h5 class="card-subtitle mb-2 text-body-secondary" style="max-width: 500px; word-wrap: break-word;">
+                                                                        <a href="DispatcherController?action=thread&id=${p.id}">
+                                                                            ${p.title}
+                                                                        </a>
+                                                                    </h5>
+                                                                    <p><strong>${p.created_at}</strong></p>
+                                                                </div>
+                                                            </div>
+                                                                <p class="col-md-2"><strong>Replies: ${CommentDAO.getTotalCommentsForPost(p.id)}</strong></p>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                                 <c:set var="count" value="${count + 1}" />
                                             </c:if>

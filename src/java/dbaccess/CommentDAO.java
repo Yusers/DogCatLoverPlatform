@@ -45,12 +45,47 @@ public class CommentDAO {
 
         return list;
     }
-    
+
+    public static int getTotalCommentsForPost(int postId) throws Exception {
+        int totalComments = 0;
+
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "SELECT COUNT(*) AS total FROM [dbo].[Comment] WHERE [post_id] = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, postId);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    totalComments = rs.getInt("total");
+                }
+            }
+        } finally {
+            // Close JDBC objects in reverse order of their creation to avoid resource leaks
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
+            if (cn != null) {
+                cn.close();
+            }
+        }
+
+        return totalComments;
+    }
+
     public static ArrayList<Comment> getSubComment(int post_id, int parent_id) throws Exception {
         ArrayList<Comment> list = new ArrayList<>();
-        
+
         Connection cn = DBUtils.makeConnection();
-        if(cn!=null) {
+        if (cn != null) {
             String sql = "SELECT * FROM [dbo].[Comment] WHERE [post_id] = ? and [parent_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, post_id);
@@ -68,7 +103,7 @@ public class CommentDAO {
             }
             cn.close();
         }
-        
+
         return list;
     }
 
@@ -89,7 +124,7 @@ public class CommentDAO {
 
         return rs;
     }
-    
+
     public static boolean hasComments(String author) throws Exception {
         boolean rs = false;
         Connection cn = DBUtils.makeConnection();
@@ -108,7 +143,7 @@ public class CommentDAO {
         }
         return rs;
     }
-    
+
     public static int deleteComment(int post_id) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
@@ -122,7 +157,7 @@ public class CommentDAO {
         }
         return rs;
     }
-    
+
     public static int deleteComment(String author) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
