@@ -169,7 +169,7 @@
                                 <h5 class="card-title">${c.name}</h5>
                                 <ul class="list-group">
                                     <c:set var="hasPosts" value="false" />
-                                    <c:forEach var="p" items="${requestScope.POSTS}">
+                                    <c:forEach var="p" items="${requestScope.POSTTAGS}">
                                         <c:if test="${p.cate_id eq c.id}">
                                             <c:set var="hasPosts" value="true" />
                                             <li class="list-group-item"><a href="DispatcherController?action=thread&id=${p.id}">${p.title} | tác giả : ${p.author_id}</a></li>
