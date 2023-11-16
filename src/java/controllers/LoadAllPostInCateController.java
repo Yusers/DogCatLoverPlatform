@@ -6,7 +6,6 @@ package controllers;
 
 import dbaccess.PostDAO;
 import dbaccess.Post_CategoryDAO;
-import dbaccess.SubcategoriesDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +13,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.Post;
 import model.Post_Category;
-import model.Subcategories;
 
 /**
  *
  * @author overw
  */
-public class LoadAllPostController extends HttpServlet {
+public class LoadAllPostInCateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,21 +35,16 @@ public class LoadAllPostController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String status = request.getParameter("status");
-            ArrayList<Post> listPost = new ArrayList<>();
+            String cate_id = request.getParameter("id");
             ArrayList<Post_Category> listCategory = Post_CategoryDAO.getAllPostCategory();
-            String url = "DispatcherController?action=forums-page";
-            if(status == null || status.isEmpty()) {
-                listPost = PostDAO.getAllPost("Approved");
-                request.setAttribute("POSTS", listPost);
+            if (cate_id != null || !cate_id.isEmpty()) {
+                int cateId = Integer.parseInt(cate_id);
+                request.setAttribute("CATE", Post_CategoryDAO.getPostCategory(cateId));
+                request.setAttribute("POSTS", PostDAO.getAllPostByCate("Approved", cateId));
                 request.setAttribute("CATEGORYS", listCategory);
-            } else {
-                listPost = PostDAO.getAllPost("Created");
-                request.setAttribute("POSTS", listPost);
-                url = "DispatcherController?action=staff-manage-post";
             }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch(Exception ex) {
+            request.getRequestDispatcher("DispatcherController?action=forums-cate-page").forward(request, response);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

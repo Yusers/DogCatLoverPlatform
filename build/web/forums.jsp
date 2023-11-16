@@ -150,7 +150,7 @@
                             <h5 class="card-title">Mục Lục</h5>
                             <ul class="list-group">
                                 <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                                    <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
+                                    <li class="list-group-item"><a href="DispatcherController?action=forums-cate&id=${c.id}">${c.name}</a></li>
                                     </c:forEach>
                             </ul>
                         </div>
@@ -181,7 +181,7 @@
                                 <!-- Show button to navigate if more than 3 threads -->
                                 <div class="d-flex mt-3 justify-content-end">
                                     <c:if test="${count gt 3}">
-                                    <a href="DispatcherController?action=allThreads&categoryId=${c.id}" class="text text-primary">Read more ${PostDAO.getAllPostByCate("Approved", c.id).size()}</a>
+                                    <a href="DispatcherController?action=forums-cate&id=${c.id}" class="text text-primary">Read more</a>
                                 </c:if>
                                 </div>
                             </div>

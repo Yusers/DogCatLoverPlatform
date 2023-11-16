@@ -24,7 +24,8 @@ public class SubcategoriesDAO {
 
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "";
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Subcategories]";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             if(rs!=null) {
@@ -45,7 +46,9 @@ public class SubcategoriesDAO {
 
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "";
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Subcategories]\n"
+                    + "WHERE [cate_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, cate_id);
             ResultSet rs = pst.executeQuery();

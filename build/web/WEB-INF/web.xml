@@ -169,6 +169,10 @@
         <servlet-name>UpdateProfileUserController</servlet-name>
         <servlet-class>controllers.UpdateProfileUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadAllPostInCateController</servlet-name>
+        <servlet-class>controllers.LoadAllPostInCateController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -312,5 +316,9 @@
     <servlet-mapping>
         <servlet-name>UpdateProfileUserController</servlet-name>
         <url-pattern>/UpdateProfileUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadAllPostInCateController</servlet-name>
+        <url-pattern>/LoadAllPostInCateController</url-pattern>
     </servlet-mapping>
 </web-app>

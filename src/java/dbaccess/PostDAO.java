@@ -116,6 +116,7 @@ public class PostDAO {
                     + "WHERE [status] = ? AND [category_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, status);
+            pst.setInt(2, cate_id);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {

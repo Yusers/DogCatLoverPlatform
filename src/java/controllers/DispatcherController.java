@@ -85,6 +85,10 @@ public class DispatcherController extends HttpServlet {
                 url = CREATE_STAFF;
             } else if (action.equals("forums")) {
                 url = "LoadAllPostController";
+            } else if (action.equals("forums-cate")) {
+                url = "LoadAllPostInCateController";
+            } else if (action.equals("forums-cate-page")) {
+                url = "forums-cate.jsp";
             } else if (action.equals("forums-page")) {
                 url = FORUMS_PAGE;
             } else if (action.equals("thread")) {
