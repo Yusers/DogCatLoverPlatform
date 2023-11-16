@@ -30,6 +30,7 @@ public class DispatcherController extends HttpServlet {
     final String THREAD_DELETE = "DeletePostController";
     final String TRADE_DELETE = "DeleteTradeController";
     final String THREAD_PAGE_MANAGE = "manage-thread.jsp";
+    final String THREAD_CREATE_PAGE = "create-post.jsp";
     final String THREAD_EDIT_PAGE = "edit-thread.jsp";
     final String TRADE_EDIT_PAGE = "edit-trade.jsp";
     final String TRADE_PAGE = "tradepage.jsp";
@@ -109,6 +110,8 @@ public class DispatcherController extends HttpServlet {
                 url = TRADE_EDIT_PAGE;
             } else if (action.equals("create-post")) {
                 url = "CreatePostController";
+            } else if (action.equals("create-post-page")) {
+                url = THREAD_CREATE_PAGE;
             } else if (action.equals("create-trade")) {
                 url = "CreateTradeController";
             } else if (action.equals("handle-post")) {

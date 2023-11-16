@@ -176,13 +176,20 @@
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
+                                    <c:if test="${count eq 0}">
+                                        <li class="list-group-item">
+                                            <a href="DispatcherController?action=${empty us.user_id? 'login-page' : 'create-post-page'}">
+                                                Chưa có bài viết
+                                            </a>
+                                        </li>
+                                    </c:if>
                                 </ul>
 
                                 <!-- Show button to navigate if more than 3 threads -->
                                 <div class="d-flex mt-3 justify-content-end">
                                     <c:if test="${count gt 3}">
-                                    <a href="DispatcherController?action=forums-cate&id=${c.id}" class="text text-primary">Read more</a>
-                                </c:if>
+                                        <a href="DispatcherController?action=forums-cate&id=${c.id}" class="text text-primary">Read more</a>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
