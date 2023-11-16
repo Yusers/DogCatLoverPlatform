@@ -43,7 +43,7 @@ public class LoadAllPostController extends HttpServlet {
             ArrayList<Post_Category> listCategory = Post_CategoryDAO.getAllPostCategory();
             String url = "DispatcherController?action=forums-page";
             if(status == null || status.isEmpty()) {
-                listPost = PostDAO.getAllPost("Approved");
+                listPost = PostDAO.getAllPostWithCommentCount("Approved");
                 request.setAttribute("POSTS", listPost);
                 request.setAttribute("CATEGORYS", listCategory);
             } else {

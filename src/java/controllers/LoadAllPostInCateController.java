@@ -40,7 +40,7 @@ public class LoadAllPostInCateController extends HttpServlet {
             if (cate_id != null || !cate_id.isEmpty()) {
                 int cateId = Integer.parseInt(cate_id);
                 request.setAttribute("CATE", Post_CategoryDAO.getPostCategory(cateId));
-                request.setAttribute("POSTS", PostDAO.getAllPostByCate("Approved", cateId));
+                request.setAttribute("POSTS", PostDAO.getAllPostWithCommentCount("Approved", cateId));
                 request.setAttribute("CATEGORYS", listCategory);
             }
             request.getRequestDispatcher("DispatcherController?action=forums-cate-page").forward(request, response);

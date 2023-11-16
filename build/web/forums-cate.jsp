@@ -194,7 +194,7 @@
                                                                     <p><strong>${p.created_at}</strong></p>
                                                                 </div>
                                                             </div>
-                                                            <p class="col-md-2"><strong>Replies: ${CommentDAO.getTotalCommentsForPost(p.id)}</strong></p>
+                                                            <p class="col-md-2"><strong>Replies: ${p.amountComment}</strong></p>
                                                         </div>
                                                     </div>
                                                 </li>

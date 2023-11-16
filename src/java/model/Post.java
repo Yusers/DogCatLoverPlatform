@@ -21,6 +21,7 @@ public class Post {
     private String rejected_reason;
     private Date created_at;
     private Date updated_at;
+    private int amountComment;
 
     public Post() {
     }
@@ -65,6 +66,14 @@ public class Post {
         this.created_at = created_at;
     }
 
+    public int getAmountComment() {
+        return amountComment;
+    }
+
+    public void setAmountComment(int amountComment) {
+        this.amountComment = amountComment;
+    }
+    
     public String getImage() {
         return image;
     }
