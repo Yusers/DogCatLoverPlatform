@@ -94,6 +94,8 @@ public class DispatcherController extends HttpServlet {
                 url = FORUMS_PAGE;
             } else if (action.equals("thread")) {
                 url = "LoadPostController";
+            } else if (action.equals("handle-like")) {
+                url = "HandleLikePostController";
             } else if (action.equals("thread-page")) {
                 url = THREAD_PAGE;
             } else if (action.equals("thread-page-manage")) {

@@ -5,21 +5,18 @@
 package controllers;
 
 import dbaccess.PostDAO;
-import dbaccess.Post_CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import model.Post_Category;
 
 /**
  *
  * @author overw
  */
-public class LoadAllPostInCateController extends HttpServlet {
+public class HandleLikePostController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,16 +32,15 @@ public class LoadAllPostInCateController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String cate_id = request.getParameter("id");
-            ArrayList<Post_Category> listCategory = Post_CategoryDAO.getAllPostCategory();
-            if (cate_id != null || !cate_id.isEmpty()) {
-                int cateId = Integer.parseInt(cate_id);
-                request.setAttribute("CATE", Post_CategoryDAO.getPostCategory(cateId));
-                request.setAttribute("POSTS", PostDAO.getAllPostByCate("Approved", cateId));
-                request.setAttribute("CATEGORYS", listCategory);
+            String id = request.getParameter("id");
+            String likes = request.getParameter("likes");
+            if(id!=null || !id.isEmpty()) {
+                int like = Integer.parseInt(likes);
+                int post_id = Integer.parseInt(id);
+                PostDAO.updatePostFavorites(post_id, like+=1);
             }
-            request.getRequestDispatcher("DispatcherController?action=forums-cate-page").forward(request, response);
-        } catch (Exception ex) {
+            request.getRequestDispatcher("DispatcherController?action=thread&id=" + id).forward(request, response);
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
     }

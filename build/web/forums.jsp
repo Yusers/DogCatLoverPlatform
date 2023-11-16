@@ -186,7 +186,10 @@
                                                                     <p><strong>${p.created_at}</strong></p>
                                                                 </div>
                                                             </div>
-                                                                <p class="col-md-2"><strong>Replies: ${p.amountComment}</strong></p>
+                                                            <div class="col-sm-4">
+                                                                <p><strong>Replies: ${p.amountComment}</strong></p>
+                                                                <p><strong>Lượt thích: ${p.favorites}</strong></p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -206,7 +209,7 @@
                                 <!-- Show button to navigate if more than 3 threads -->
                                 <div class="d-flex mt-3 justify-content-end">
                                     <c:if test="${count gt 3}">
-                                        <a href="DispatcherController?action=forums-cate&id=${c.id}" class="text text-primary">Read more</a>
+                                        <a href="DispatcherController?action=forums-cate&id=${c.id}" class="text text-primary">Đọc thêm</a>
                                     </c:if>
                                 </div>
                             </div>

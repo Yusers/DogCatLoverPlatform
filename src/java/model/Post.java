@@ -14,6 +14,7 @@ public class Post {
     private int id;
     private String title;
     private int cate_id;
+    private int favorites;
     private String author_id;
     private String image;
     private String content;
@@ -41,8 +42,8 @@ public class Post {
         this.author_id = author_id;
         this.content = content;
     }
-
-    public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at, Date updated_at, String image) {
+    
+    public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at, Date updated_at, String image, int favorites) {
         this.id = id;
         this.title = title;
         this.cate_id = cate_id;
@@ -53,6 +54,7 @@ public class Post {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.image = image;
+        this.favorites = favorites;
     }
     
     public Post(int id, String title, int cate_id, String author_id, String content, String status, String rejected_reason, Date created_at) {
@@ -78,6 +80,14 @@ public class Post {
         return image;
     }
 
+    public int getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(int favorites) {
+        this.favorites = favorites;
+    }
+    
     public void setImage(String image) {
         this.image = image;
     }

@@ -24,7 +24,7 @@ public class PostDAO {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at], [image]\n"
+            String sql = "SELECT [id], [title], [category_id], [author_id], [content], [status], [rejected_reason], [created_at], [updated_at], [image], [favorites]\n"
                     + "FROM [dbo].[Post]\n"
                     + "WHERE [status] = 'Created'";
             Statement st = cn.createStatement();
@@ -34,6 +34,7 @@ public class PostDAO {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
+                    int favorites = rs.getInt("favorites");
                     String author_id = rs.getString("author_id");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
@@ -41,7 +42,7 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites));
                 }
             }
             cn.close();
@@ -64,6 +65,7 @@ public class PostDAO {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
+                    int favorites = rs.getInt("favorites");
                     String author_id = rs.getString("author_id");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
@@ -71,7 +73,7 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites));
                 }
             }
             cn.close();
@@ -103,9 +105,10 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
+                    int favorites = rs.getInt("favorites");
                     int comment_count = rs.getInt("comment_count");
                     // Create a Post object with the retrieved data
-                    Post post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image);
+                    Post post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites);
                     post.setAmountComment(comment_count);
                     posts.add(post);
                 }
@@ -114,7 +117,7 @@ public class PostDAO {
         }
         return posts;
     }
-    
+
     public static ArrayList<Post> getAllPostWithCommentCount(String status, int cate_id) throws Exception {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
@@ -139,9 +142,10 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
+                    int favorites = rs.getInt("favorites");
                     int comment_count = rs.getInt("comment_count");
                     // Create a Post object with the retrieved data
-                    Post post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image);
+                    Post post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites);
                     post.setAmountComment(comment_count);
                     posts.add(post);
                 }
@@ -166,13 +170,14 @@ public class PostDAO {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
+                    int favorites = rs.getInt("favorites");
                     String author_id = rs.getString("author_id");
                     String content = rs.getString("content");
                     String rejected_reason = rs.getString("rejected_reason");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites));
                 }
             }
             cn.close();
@@ -180,13 +185,39 @@ public class PostDAO {
         return posts;
     }
 
+    public static void updatePostFavorites(int postId, int newFavoritesCount) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DBUtils.makeConnection();
+            if (connection != null) {
+                String sql = "UPDATE [dbo].[Post] SET favorites = ? WHERE ID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, newFavoritesCount);
+                statement.setInt(2, postId);
+                statement.executeUpdate();
+            }
+        } finally {
+            // Close resources in the finally block
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
     public static ArrayList<Post> getAllPostByCate(String status, int cate_id) throws Exception {
         ArrayList<Post> posts = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT *\n"
-                    + "FROM [dbo].[Post]\n"
-                    + "WHERE [status] = ? AND [category_id] = ?";
+            String sql = "SELECT p.id, p.title, p.category_id, p.content, p.favorites, p.updated_at, p.rejected_reason, p.image, p.status, p.author_id, p.created_at, COUNT(c.id) AS comment_count\n"
+                    + "FROM [dbo].[Post] p\n"
+                    + "LEFT JOIN Comment c ON p.id = c.post_id\n"
+                    + "WHERE p.status = ? AND p.category_id = ?\n"
+                    + "GROUP BY p.id, p.title, p.category_id, p.content, p.favorites, p.updated_at, p.rejected_reason, p.image, p.status, p.author_id, p.created_at";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, status);
             pst.setInt(2, cate_id);
@@ -194,6 +225,7 @@ public class PostDAO {
             if (rs != null) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
+                    int favorites = rs.getInt("favorites");
                     String title = rs.getString("title");
                     String author_id = rs.getString("author_id");
                     String content = rs.getString("content");
@@ -201,7 +233,10 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    int comment_count = rs.getInt("comment_count");
+                    Post post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites);
+                    post.setAmountComment(comment_count);
+                    posts.add(post);
                 }
             }
             cn.close();
@@ -274,13 +309,14 @@ public class PostDAO {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
+                    int favorites = rs.getInt("favorites");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
                     String rejected_reason = rs.getString("rejected_reason");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites));
                 }
             }
             cn.close();
@@ -310,7 +346,8 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image);
+                    int favorites = rs.getInt("favorites");
+                    post = new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites);
                 }
             }
         }
@@ -396,6 +433,7 @@ public class PostDAO {
                     int id = rs.getInt("id");
                     String title = rs.getString("title");
                     int cate_id = rs.getInt("category_id");
+                    int favorites = rs.getInt("favorites");
                     String author_id = rs.getString("author_id");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
@@ -403,7 +441,7 @@ public class PostDAO {
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
                     String image = rs.getString("image");
-                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image));
+                    posts.add(new Post(id, title, cate_id, author_id, content, status, rejected_reason, created_at, updated_at, image, favorites));
                 }
             }
             cn.close();

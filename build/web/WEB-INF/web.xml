@@ -173,6 +173,10 @@
         <servlet-name>LoadAllPostInCateController</servlet-name>
         <servlet-class>controllers.LoadAllPostInCateController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HandleLikePostController</servlet-name>
+        <servlet-class>controllers.HandleLikePostController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/DispatcherServlet</url-pattern>
@@ -320,5 +324,9 @@
     <servlet-mapping>
         <servlet-name>LoadAllPostInCateController</servlet-name>
         <url-pattern>/LoadAllPostInCateController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HandleLikePostController</servlet-name>
+        <url-pattern>/HandleLikePostController</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -42,6 +42,7 @@ public class LoadPostController extends HttpServlet {
             String edit = request.getParameter("edit");
             String url = "DispatcherController?action=thread-page";
             Post post = PostDAO.getPost(id);
+            System.out.println("fafories: " + post.getFavorites());
                 Post_Category cate = Post_CategoryDAO.getPostCategory(post.getCate_id());
             if (edit == null || edit.isEmpty()) {
                 ArrayList<Comment> comments = CommentDAO.getAllComment(id);
