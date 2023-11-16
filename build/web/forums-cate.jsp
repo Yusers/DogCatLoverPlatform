@@ -150,7 +150,7 @@
                             <h5 class="card-title">Mục Lục</h5>
                             <ul class="list-group">
                                 <c:forEach var="c" items="${requestScope.CATEGORYS}">
-                                    <li class="list-group-item"><a href="#thread-${c.id}">${c.name}</a></li>
+                                    <li class="list-group-item"><a href="DispatcherController?action=forums-cate&id=${c.id}">${c.name}</a></li>
                                     </c:forEach>
                             </ul>
                         </div>
@@ -162,186 +162,200 @@
                     <div id="thread-${cate.name}" class="card">
                         <div class="card-body">
                             <h5 class="card-title">${cate.name}</h5>
-                            <ul class="list-group">
-                                <c:set var="pageSize" value="10" />
-                                <c:set var="currentPage" value="${param.pageNumber != null ? param.pageNumber : 1}" />
-                                <c:set var="startIndex" value="${(currentPage - 1) * pageSize}" />
-                                <c:set var="endIndex" value="${currentPage * pageSize}" />
-                                <c:forEach var="p" begin="${startIndex}" end="${endIndex}" items="${listPost}" varStatus="loop">
-                                    <c:if test="${loop.index >= startIndex && loop.index < endIndex}">
-                                        <li class="list-group-item">
-                                            <a href="DispatcherController?action=thread&id=${p.id}">
-                                                ${p.title} | tác giả : ${p.author_id}
-                                            </a>
-                                        </li>
-                                    </c:if>
-                                </c:forEach>
-                            </ul>
-                            <br/>
-                            <!-- Bootstrap Pagination -->
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <fmt:formatNumber var="totalPages" value="${(listPost.size() + pageSize - 1) / pageSize}" maxFractionDigits="0" />
-                                    <c:set var="totalPagesInt" value="${totalPages}" />
-                                    <c:if test="${totalPagesInt > 1}">
-                                        <c:choose>
-                                            <c:when test="${currentPage == 1}">
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">1</span>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+1}">
-                                                        ${currentPage+1}
-                                                    </a>
-                                                </li>
-                                                <div class="collapse" id="collapsedPages">
-                                                    <nav aria-label="Page navigation">
-                                                        <ul class="pagination justify-content-center">
-                                                            <c:forEach var="page" begin="${currentPage+2}" end="${totalPages-1}">
-                                                                <li class="page-item">
-                                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
-                                                                        ${page}
-                                                                    </a>
-                                                                </li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
-                                                        <span aria-hidden="true">...</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${totalPagesInt}">
-                                                        ${totalPagesInt}
-                                                    </a>
-                                                </li>
-                                            </c:when>
-                                            <c:when test="${currentPage == totalPagesInt}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=1">1</a>
-                                                </li>
-                                                <div class="collapse" id="collapsedPages">
-                                                    <nav aria-label="Page navigation">
-                                                        <ul class="pagination justify-content-center">
-                                                            <c:forEach var="page" begin="${2}" end="${currentPage-3}" step="1">
-                                                                <c:set var="decr" value="${totalPagesInt-page}"/>
-                                                                <li class="page-item">
-                                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
-                                                                        ${page}
-                                                                    </a>
-                                                                </li>
-                                                            </c:forEach>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
-                                                        <span aria-hidden="true">...</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-2}">
-                                                        ${currentPage-2}
-                                                    </a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-1}">
-                                                        ${currentPage-1}
-                                                    </a>
-                                                </li>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">${param.pageNumber}</span>
-                                                </li>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage - 1}" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                </li>
-                                                <c:if test="${currentPage-3 >= 1}">
-                                                    <div class="collapse" id="collapsedPages">
-                                                        <nav aria-label="Page navigation">
-                                                            <ul class="pagination justify-content-center">
-                                                                <c:forEach var="page" begin="${1}" end="${currentPage-3}" step="1">
-                                                                    <c:set var="decr" value="${totalPagesInt-page}"/>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
-                                                                            ${page}
-                                                                        </a>
-                                                                    </li>
-                                                                </c:forEach>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
-                                                            <span aria-hidden="true">...</span>
-                                                        </a>
-                                                    </li>
-                                                </c:if>
-                                                <c:if test="${currentPage-2 ne 0}">
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-2}">
-                                                            ${currentPage-2}
-                                                        </a>
-                                                    </li>
-                                                </c:if>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-1}">
-                                                        ${currentPage-1}
-                                                    </a>
-                                                </li>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">${currentPage}</span>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+1}">
-                                                        ${currentPage+1}
-                                                    </a>
-                                                </li>
-                                                <c:if test="${currentPage+2 < totalPagesInt}">
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+2}">
-                                                            ${currentPage+2}
-                                                        </a>
-                                                    </li>
 
-                                                </c:if>
-                                                <c:if test="${currentPage+3 <= totalPagesInt}">
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages2" aria-expanded="false" aria-controls="collapsedPages2">
-                                                            <span aria-hidden="true">...</span>
-                                                        </a>
-                                                    </li>
-                                                    <div class="collapse" id="collapsedPages2">
-                                                        <nav aria-label="Page navigation">
-                                                            <ul class="pagination justify-content-center">
-                                                                <c:forEach var="page" begin="${currentPage+3}" end="${totalPages}">
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
-                                                                            ${page}
-                                                                        </a>
-                                                                    </li>
-                                                                </c:forEach>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </c:if>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage + 1}" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                        <span class="sr-only">Next</span>
+                            <c:choose>
+                                <c:when test="${empty listPost}">
+                                    <p class="ml-4 mt-4">Chưa có bài viết nào</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <ul class="list-group">
+                                        <c:set var="pageSize" value="10" />
+                                        <c:set var="currentPage" value="${param.pageNumber != null ? param.pageNumber : 1}" />
+                                        <c:set var="startIndex" value="${(currentPage - 1) * pageSize}" />
+                                        <c:set var="endIndex" value="${currentPage * pageSize}" />
+                                        <c:forEach var="p" begin="${startIndex}" end="${endIndex}" items="${listPost}" varStatus="loop">
+                                            <c:if test="${loop.index >= startIndex && loop.index < endIndex}">
+                                                <li class="list-group-item">
+                                                    <a href="DispatcherController?action=thread&id=${p.id}">
+                                                        ${p.title} | tác giả : ${p.author_id}
                                                     </a>
                                                 </li>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:if>
-                                </ul>
-                            </nav>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                    <br/>
+                                    <!-- Bootstrap Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center">
+                                            <fmt:formatNumber var="totalPages" value="${(listPost.size() + pageSize - 1) / pageSize}" maxFractionDigits="0" />
+                                            <c:set var="totalPagesInt" value="${totalPages}" />
+                                            <c:if test="${totalPagesInt > 1}">
+                                                <c:choose>
+                                                    <c:when test="${currentPage == 1}">
+                                                        <li class="page-item disabled">
+                                                            <span class="page-link">1</span>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+1}">
+                                                                ${currentPage+1}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+2}">
+                                                                ${currentPage+2}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
+                                                                <span aria-hidden="true">...</span>
+                                                            </a>
+                                                        </li>
+                                                        
+                                                        <div class="collapse" id="collapsedPages">
+                                                            <nav aria-label="Page navigation">
+                                                                <ul class="pagination justify-content-center">
+                                                                    <c:forEach var="page" begin="${currentPage+3}" end="${totalPages-1}">
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
+                                                                                ${page}
+                                                                            </a>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${totalPagesInt}">
+                                                                ${totalPagesInt}
+                                                            </a>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:when test="${currentPage == totalPagesInt}">
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=1">1</a>
+                                                        </li>
+                                                        <div class="collapse" id="collapsedPages">
+                                                            <nav aria-label="Page navigation">
+                                                                <ul class="pagination justify-content-center">
+                                                                    <c:forEach var="page" begin="${2}" end="${currentPage-3}" step="1">
+                                                                        <c:set var="decr" value="${totalPagesInt-page}"/>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
+                                                                                ${page}
+                                                                            </a>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
+                                                                <span aria-hidden="true">...</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-2}">
+                                                                ${currentPage-2}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-1}">
+                                                                ${currentPage-1}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item disabled">
+                                                            <span class="page-link">${param.pageNumber}</span>
+                                                        </li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage - 1}" aria-label="Previous">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                                <span class="sr-only">Previous</span>
+                                                            </a>
+                                                        </li>
+                                                        <c:if test="${currentPage-3 >= 1}">
+                                                            <div class="collapse" id="collapsedPages">
+                                                                <nav aria-label="Page navigation">
+                                                                    <ul class="pagination justify-content-center">
+                                                                        <c:forEach var="page" begin="${1}" end="${currentPage-3}" step="1">
+                                                                            <c:set var="decr" value="${totalPagesInt-page}"/>
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
+                                                                                    ${page}
+                                                                                </a>
+                                                                            </li>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages" aria-expanded="false" aria-controls="collapsedPages">
+                                                                    <span aria-hidden="true">...</span>
+                                                                </a>
+                                                            </li>
+                                                        </c:if>
+                                                        <c:if test="${currentPage-2 ne 0}">
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-2}">
+                                                                    ${currentPage-2}
+                                                                </a>
+                                                            </li>
+                                                        </c:if>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage-1}">
+                                                                ${currentPage-1}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item disabled">
+                                                            <span class="page-link">${currentPage}</span>
+                                                        </li>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+1}">
+                                                                ${currentPage+1}
+                                                            </a>
+                                                        </li>
+                                                        <c:if test="${currentPage+2 < totalPagesInt}">
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage+2}">
+                                                                    ${currentPage+2}
+                                                                </a>
+                                                            </li>
+
+                                                        </c:if>
+                                                        <c:if test="${currentPage+3 <= totalPagesInt}">
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="#" data-toggle="collapse" data-target="#collapsedPages2" aria-expanded="false" aria-controls="collapsedPages2">
+                                                                    <span aria-hidden="true">...</span>
+                                                                </a>
+                                                            </li>
+                                                            <div class="collapse" id="collapsedPages2">
+                                                                <nav aria-label="Page navigation">
+                                                                    <ul class="pagination justify-content-center">
+                                                                        <c:forEach var="page" begin="${currentPage+3}" end="${totalPages}">
+                                                                            <li class="page-item">
+                                                                                <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${page}">
+                                                                                    ${page}
+                                                                                </a>
+                                                                            </li>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </c:if>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="DispatcherController?action=forums-cate&id=${cate.id}&pageNumber=${currentPage + 1}" aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                                <span class="sr-only">Next</span>
+                                                            </a>
+                                                        </li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
