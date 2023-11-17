@@ -188,7 +188,7 @@
                                     <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Đăng bài</button>
                             </form>
                         </c:when>
                         <c:when test="${param.type eq 'fee'}">
@@ -236,7 +236,7 @@
                                     <label for="content">Nội dung bài viết</label>
                                     <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Đăng bài</button>
                             </form>
                         </c:when>
                     </c:choose>
