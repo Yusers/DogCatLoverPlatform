@@ -35,22 +35,24 @@ public class DeleteTradeController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String id = request.getParameter("id");
+            String s = request.getParameter("s").trim();
             int post_id = Integer.parseInt(id.trim());
             String url = "DispatcherController?action=my-post";
             int rs = 0;
             if (post_id > 0) {
-                rs = Trade_MediaDAO.deleteTradeMedia(post_id);
-                request.setAttribute("ACTION", "Delete");
+                request.setAttribute("ACTION", "Update");
+                if (s.equals("not")) {
+                    rs = TradeDAO.updateTradePost(post_id, "Approved");
+                } else {
+                    rs = TradeDAO.updateTradePost(post_id, "Done");
+                }
                 if (rs > 0) {
-                    MediaDAO.deleteMedia();
-                    TradeDAO.deleteTrade(post_id);
                     request.setAttribute("STATUS", true);
-                    request.setAttribute("MSG", "delete successfully!");
+                    request.setAttribute("MSG", "update successfully!");
                 } else {
                     request.setAttribute("STATUS", false);
-                    request.setAttribute("MSG", "delete failed!");
+                    request.setAttribute("MSG", "update failed!");
                 }
-
             }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception ex) {

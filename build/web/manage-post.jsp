@@ -160,19 +160,24 @@
                             <!-- Thread 1 -->
                             <c:forEach var="post" items="${posts}">
                                 <div class="card shadow p-1 bg-black rounded">
-                                    <div class="card-header custom-title-post" id="trade${post.id}" data-toggle="collapse" data-target="#collapseTrade${post.id}" aria-expanded="true" aria-controls="collapseTrade${post.id}">
-                                        <h6>
-                                            Bài viết: <strong>${post.title}</strong>
-                                        </h6>
-                                        <c:if test="${post.status eq 'Created'}">
-                                            <p>Trạng thái: <strong style="color: blue;">Đang chờ duyệt</strong></p>
-                                        </c:if>
-                                        <c:if test="${post.status eq 'Rejected'}">
-                                            <p>Trạng thái: <strong style="color: red;">Bị từ chối</strong></p>
-                                        </c:if>
-                                        <c:if test="${post.status eq 'Approved'}">
-                                            <p>Trạng thái: <strong style="color: green;">Đã duyệt</strong></p>
-                                        </c:if>
+                                    <div class="card-header justify-content-between custom-title-post" id="trade${post.id}" data-toggle="collapse" data-target="#collapseTrade${post.id}" aria-expanded="true" aria-controls="collapseTrade${post.id}">
+                                        <div class="card-info">
+                                            <h6>
+                                                Bài viết: <strong>${post.title}</strong>
+                                            </h6>
+                                            <c:if test="${post.status eq 'Created'}">
+                                                <p>Trạng thái: <strong style="color: blue;">Đang chờ duyệt</strong></p>
+                                            </c:if>
+                                            <c:if test="${post.status eq 'Rejected'}">
+                                                <p>Trạng thái: <strong style="color: red;">Bị từ chối</strong></p>
+                                            </c:if>
+                                            <c:if test="${post.status eq 'Approved'}">
+                                                <p>Trạng thái: <strong style="color: green;">Đã duyệt</strong></p>
+                                            </c:if>
+                                            <c:if test="${post.status eq 'Done'}">
+                                                <p>Trạng thái: <strong style="color: #686868;">Đã Bán!</strong></p>
+                                            </c:if>
+                                        </div>
                                     </div>
 
                                     <div id="collapseTrade${post.id}" class="collapse" aria-labelledby="trade${post.id}" data-parent="#threadAccordion">
@@ -194,13 +199,22 @@
                                                             <c:if test="${post.status eq 'Approved'}">
                                                             <p><strong>Trạng thái:</strong> <strong style="color: green;">Đã duyệt</strong></p>
                                                         </c:if>
+                                                        <c:if test="${post.status eq 'Done'}">
+                                                            <p><strong>Trạng thái:</strong> <strong style="color: #686868;">Đã Bán!</strong></p>
+                                                        </c:if>
                                                     </div>
 
                                                     <!-- Thread Actions (e.g., Delete, Edit) -->
                                                     <div class="row d-flex">
                                                         <div class="btn-group col-md-6 d-flex justify-content-start">
-                                                            <a href="DispatcherController?action=trade-details&id=${post.id}&edit=true" class="btn btn-primary">Chỉnh sửa</a>
-                                                            <a href="DispatcherController?action=trade-delete&id=${post.id}" class="btn btn-danger">Xóa</a>
+                                                            <c:if test="${post.status eq 'Created' || post.status eq 'Approved'}">
+                                                                <a href="DispatcherController?action=trade-details&id=${post.id}&edit=true&type=${post.type}" class="btn btn-primary">Chỉnh sửa</a>
+                                                            </c:if>
+                                                            <c:if test="${post.status ne 'Created' && post.status ne 'Done'}">
+                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal">
+                                                                    Bán rồi
+                                                                </button>
+                                                            </c:if>
                                                         </div>
                                                         <div class="col-md-2"></div>
                                                         <div class="col-md-4 d-flex align-bottom justify-content-end">
@@ -211,7 +225,28 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="rejectTradeModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectTradeModalLabel" aria-hidden="true">
+
+                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận đã bán!</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Bạn đã bán được hàng rồi đúng không?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                        <a href="DispatcherController?action=trade-delete&id=${post.id}&s=${post.status eq 'Done' ? 'not' : 'yes'}" class="btn btn-danger">Mình đã bán được rồi</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="rejectTradeModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectTradeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <form action="DispatcherController" method="POST">

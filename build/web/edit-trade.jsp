@@ -162,6 +162,7 @@
                 <c:set var="categorys" value="${Trade_CategoryDAO.getAllTradeCate()}"/>
                 <input type="hidden" name="author" value="${trade.author_id}" />
                 <input type="hidden" name="id" value="${trade.id}" />
+                <input type="hidden" name="type" value="${param.type}" />
                 <input type="hidden" name="cate_id" value="${cate.id}" />
                 <span>
                     <label for="title"><strong>Chỉnh sửa tiêu đề ở đây</strong></label>
@@ -236,12 +237,21 @@
                                 <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="DispatcherController?action=login-page">Nhắn tin cho người bán</a></c:if>
                                 </div>
                             </div>
-                            <br>
+                            <hr/>
                             <div class="trade-post-details">
-                                <h5>Mô tả</h5>
-                                <div class="form-floating">
-                                    <label for="content"><strong>Chỉnh sửa nội dung bấm vào đây</strong></label>
-                                    <textarea rows='${trade.content.length() > 300 ? 15 : 6} ' class="form-control custom-input" placeholder="${trade.content}" name="content" id="content">${trade.content}</textarea>
+                                <h5>Loại: <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=fee">Trả phí</a> | <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=gift">Quà tặng</a></h5>
+                                <hr/>
+
+                            <c:if test="${param.type eq 'fee'}">
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price}" placeholder="Nhập giá"></h5>
+                                <hr/>    
+                            </c:if>
+                            <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
+                            <hr/>
+                            <h5>Mô tả</h5>
+                            <div class="form-floating">
+                                <label for="content"><strong>Chỉnh sửa nội dung bấm vào đây</strong></label>
+                                <textarea rows='${trade.content.length() > 300 ? 15 : 6} ' class="form-control custom-input" placeholder="${trade.content}" name="content" id="content">${trade.content}</textarea>
                             </div>
                         </div>
                         <br/>
@@ -309,6 +319,26 @@
         <!-- Footer End -->
 
         <script>
+            document.getElementById('price').addEventListener('input', function (event) {
+                let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                value = formatAsVietnamdong(value); // Format the input as Vietnamdong
+                event.target.value = value;
+            });
+
+            document.getElementById('price').addEventListener('blur', function (event) {
+                let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                value = formatAsVietnamdong(value); // Format the input as Vietnamdong
+                event.target.value = value;
+            });
+
+            function formatAsVietnamdong(value) {
+                if (!value)
+                    return ''; // Return empty string if no value
+
+                const formatter = new Intl.NumberFormat('en-US');
+                return formatter.format(value);
+            }
+
             function previewFile(index) {
                 var preview = document.getElementById('previewImage' + index);
                 var fileInput = document.getElementById('inputfile' + index);

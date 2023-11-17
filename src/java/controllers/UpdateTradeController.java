@@ -54,22 +54,42 @@ public class UpdateTradeController extends HttpServlet {
             int cate_id = Integer.parseInt(request.getParameter("cate_id"));
             String content = request.getParameter("content");
             String author = request.getParameter("author");
+            String condition = request.getParameter("condition");
+            String type = request.getParameter("type");
+            String priceString = request.getParameter("price");
             String url = "DispatcherController?action=my-post";
             String listValues = request.getParameter("listValues");
             List<String> listMedia = List.of(listValues.split(","));
             List<Integer> listMediaId = parseNumericList(listMedia);
             Trade_Category existed = Trade_CategoryDAO.getTradeCategory(category);
+
+            int price = 0;
+            boolean flag = false;
+
             request.setAttribute("ACTION", "Update");
-            
-            String type = "";
-            long price = 1233;
-            String condition = "";
-            
             int rs = 0;
             String urlImg;
-            boolean flag = false;
             out.print("List media: " + listMediaId + "<br/>");
             if (content.length() >= 20) {
+                if (category.trim().length() < 10) {
+                    request.setAttribute("ERR_CONTENT", "Phần loại bài viết không đc để trống và khoảng trắng và trên 10 ký tự!");
+                    flag = true;
+                } else if (condition.trim().length() < 10) {
+                    request.setAttribute("ERR_CONTENT", "Phần tình trạng không đc để trống và khoảng trắng và trên 10 ký tự!");
+                    flag = true;
+                } else if (type.equals("fee")) {
+                    if (priceString.trim().length() < 1) {
+                        request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
+                        flag = true;
+                    } else {
+                        String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
+                        price = Integer.parseInt(formattedPrice); // Parse the integer
+                    }
+                }
+                if (flag) {
+                    request.getRequestDispatcher("DispatcherController?action=trade-edit-page").forward(request, response);
+                }
+                flag = false;
                 ArrayList<String> urls = new ArrayList<>();
                 ArrayList<String> fileNames = new ArrayList<>();
                 Collection<Part> fileParts = request.getParts();
@@ -110,15 +130,15 @@ public class UpdateTradeController extends HttpServlet {
                             rs = Trade_MediaDAO.updateTradeMedia(Trade_MediaDAO.getTradeMediaByTradeIdAndMediaId(post_id, listMediaId.get(i)).getId(), post_id, listMediaId.get(i));
                         }
                     }
-                    
+
                     for (Media media : listM) {
                         rs = Trade_MediaDAO.insertTradeMedia(post_id, media.getId());
                     }
                 }
                 if (rs > 0) {
-                    request.setAttribute("ERR_CONTENT", "Tạo thành công!");
+                    request.setAttribute("MSG", "Tạo thành công!");
                 } else {
-                    request.setAttribute("ERR_CONTENT", "Tạo thất bại!");
+                    request.setAttribute("MSG", "Tạo thất bại!");
                 }
 
                 if (existed != null) {
@@ -135,6 +155,7 @@ public class UpdateTradeController extends HttpServlet {
                 }
             } else {
                 flag = false;
+                url = "DispatcherController?action=trade-edit-page";
             }
             if (flag) {
                 request.setAttribute("STATUS", true);

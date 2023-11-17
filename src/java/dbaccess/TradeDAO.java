@@ -47,7 +47,7 @@ public class TradeDAO {
         }
         return trades;
     }
-    
+
     public static ArrayList<Trade> getAllTrade(String status) throws Exception {
         ArrayList<Trade> trades = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
@@ -77,7 +77,7 @@ public class TradeDAO {
         }
         return trades;
     }
-    
+
     public static ArrayList<Trade> getAllTradeByAuthor(String author_id) throws Exception {
         ArrayList<Trade> trades = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
@@ -108,7 +108,7 @@ public class TradeDAO {
         }
         return trades;
     }
-    
+
     public static int createTradePost(Trade trade) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
@@ -124,9 +124,23 @@ public class TradeDAO {
         }
         return rs;
     }
-    
-    
-    
+
+    public static int updateTradePost(int id, String status) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "UPDATE [dbo].[Trade]\n"
+                    + "SET [status] = ?\n"
+                    + "WHERE [id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, status.trim());
+            pst.setInt(2, id);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+
     public static int ApproveTradePost(int id) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
@@ -141,7 +155,7 @@ public class TradeDAO {
         }
         return rs;
     }
-    
+
     public static int RejectTradePost(int id, String reason) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
@@ -157,26 +171,28 @@ public class TradeDAO {
         }
         return rs;
     }
-    
+
     public static int updateTrade(Trade updatedTrade) throws Exception {
         int rowsAffected = 0;
 
-        try (Connection cn = DBUtils.makeConnection();
-             PreparedStatement pst = cn.prepareStatement("UPDATE [dbo].[Trade] SET [author_id] = ?, [title] = ?, [content] = ?, [status] = ?, [category] = ? WHERE [id] = ?")) {
+        try (Connection cn = DBUtils.makeConnection(); PreparedStatement pst = cn.prepareStatement("UPDATE [dbo].[Trade] SET [author_id] = ?, [title] = ?, [content] = ?, [status] = ?, [category] = ?, [price] = ?, [condition] = ?, [type] = ? WHERE [id] = ?")) {
 
             pst.setString(1, updatedTrade.getAuthor_id());
             pst.setString(2, updatedTrade.getTitle());
             pst.setString(3, updatedTrade.getContent());
             pst.setString(4, updatedTrade.getStatus());
             pst.setInt(5, updatedTrade.getCate_id());
-            pst.setInt(6, updatedTrade.getId());
+            pst.setLong(6, updatedTrade.getPrice());
+            pst.setString(7, updatedTrade.getCondition());
+            pst.setString(8, updatedTrade.getType());
+            pst.setInt(9, updatedTrade.getId());
 
             rowsAffected = pst.executeUpdate();
         }
 
         return rowsAffected;
     }
-    
+
     public static Trade getTrade(int trade_id) throws Exception {
         Trade trade = null;
         Connection cn = DBUtils.makeConnection();
@@ -207,7 +223,7 @@ public class TradeDAO {
         }
         return trade;
     }
-    
+
     public static int getTradeId(String title, String author_id) throws Exception {
         Trade trade = null;
         Connection cn = DBUtils.makeConnection();
@@ -237,7 +253,7 @@ public class TradeDAO {
         }
         return trade.getId();
     }
-    
+
     public static boolean hasTrades(String author) throws Exception {
         boolean rs = false;
         Connection cn = DBUtils.makeConnection();
@@ -256,7 +272,7 @@ public class TradeDAO {
         }
         return rs;
     }
-    
+
     public static int deleteTrade(String author) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
@@ -270,7 +286,7 @@ public class TradeDAO {
         }
         return rs;
     }
-    
+
     public static int deleteTrade(int id) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();

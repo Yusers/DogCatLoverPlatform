@@ -38,6 +38,34 @@
                 top: 10px; /* Adjust this value as needed to position the text */
                 left: 10px; /* Adjust this value as needed to position the text */
             }
+            .dark-overlay {
+                position: relative;
+            }
+
+            .dark-overlay::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity here */
+                z-index: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .overlay-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white; /* Text color */
+                font-size: 24px; /* Adjust font size */
+                /* You can add more styles as needed */
+            }
+
         </style>
     </head>
     <body>
@@ -136,7 +164,7 @@
         <!-- Navbar End -->
         <c:set var="trade" value="${requestScope.TRADE}" />
         <!-- Trading Start -->
-        <div class="container mt-5 mb-5">
+        <div class="container pt-5 pb-5 ${trade.status eq 'Done' ? 'dark-overlay' : ''}" id="tradeContainer">
             <h2 class="mb-4">${trade.title}</h2>
             <hr/>
             <div class="row">
@@ -153,7 +181,7 @@
                             </c:forEach>
                         </div>
                         <div class="top-left-text">
-                            <p class="btn ${trade.type eq 'FEE' ? 'btn-danger' : 'btn-success'}" style="color: #fff;">${trade.type eq 'FEE' ? 'Có Phí' : 'Quà Tặng'}</p>
+                            <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
                         </div>
                         <a style="color: black" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -187,8 +215,10 @@
                         <hr/>
                     <c:set var="price" value="${trade.getPriceInVND()}" />
                     <div class="trade-post-details">
-                        <h5>Giá: ${price}</h5>
-                        <hr/>
+                        <c:if test="${trade.type eq 'fee'}">
+                            <h5>Giá: ${price}</h5>
+                            <hr/>
+                        </c:if>
                         <h5>Tình Trạng: ${trade.getCondition()}</h5>
                         <hr/>
                         <h5>Mô tả</h5>
@@ -196,8 +226,12 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${trade.status eq 'Done'}">
+                <div class="overlay-text">
+                    Bài này đã bán mất rồi :(
+                </div>
+            </c:if>
         </div>
-
         <!-- Trading End -->
 
         <!-- Footer Start -->
@@ -258,6 +292,13 @@
 
 
         <script>
+            const tradeStatus = "${trade.status}"; // Assuming you're getting trade status from a backend
+
+            if (tradeStatus === 'Done') {
+                const overlay = document.getElementById('overlay');
+                overlay.style.display = 'block';
+            }
+
             function showLoginPrompt() {
                 var confirmation = confirm("You must be logged in to Chat. Do you want to go to the login page?");
                 if (confirmation) {

@@ -188,7 +188,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <div class="top-left-text">
-                                <p class="btn ${trade.type eq 'FEE' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'FEE' ? 'Có Phí' : 'Quà Tặng'}</p>
+                                <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
                             </div>
                             <div class="card-body bg-light p-3">
                                 <h4 class="card-title text-truncate">${trade.title}</h4>

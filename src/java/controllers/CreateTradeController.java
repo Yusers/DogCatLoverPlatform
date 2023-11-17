@@ -40,7 +40,7 @@ public class CreateTradeController extends HttpServlet {
         String condition = request.getParameter("condition");
         String type = request.getParameter("type");
         String priceString = request.getParameter("price");
-        int price = 0;
+        long price = 0;
         String page = "create-trade.jsp";
         boolean flag = false;
 
@@ -60,9 +60,14 @@ public class CreateTradeController extends HttpServlet {
             } else if (condition.trim().length() < 1) {
                 request.setAttribute("ERR_CONTENT", "Phần tình trạng không đc để trống và khoảng trắng!");
                 flag = true;
-            } else if (priceString.trim().length() < 1) {
-                request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
-                flag = true;
+            } else if (type.equals("fee")) {
+                if (priceString.trim().length() < 1) {
+                    request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
+                    flag = true;
+                } else {
+                    String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
+                    price = Integer.parseInt(formattedPrice); // Parse the integer
+                }
             }
             if (flag) {
                 request.getRequestDispatcher("create-trade.jsp").forward(request, response);
