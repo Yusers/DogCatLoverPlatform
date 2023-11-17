@@ -38,6 +38,12 @@
                 border: 1px solid black;
                 color: black;
             }
+
+            .top-left-text {
+                position: absolute;
+                top: 10px; /* Adjust this value as needed to position the text */
+                left: 10px; /* Adjust this value as needed to position the text */
+            }
         </style>
     </head>
 
@@ -171,30 +177,36 @@
             <div class="row pb-3">
                 <c:forEach var="trade" items="${requestScope.TRADES}">
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 mb-2">
+                        <div class="card border-0 mb-2 position-relative">
                             <c:set var="media" value="${MediaDAO.getFirstMedia(trade.id)}" />
                             <c:choose>
-                                <c:when test="${not empty media.url}">
+                                <c:when test="${not empty media.url && media.url ne 'NULL'}">
                                     <img class="card-img-top img-fluid" style="object-fit: cover;" src="${media.url}" alt="${trade.title}">
                                 </c:when>
                                 <c:otherwise>
-                                    <img class="card-img-top img-fluid" src="assets/img/no-image.jpg" alt="${trade.title}">
+                                    <img class="card-img-top img-fluid" src="assets/img/no-img.jpg" alt="${trade.title}">
                                 </c:otherwise>
                             </c:choose>
-                            <div class="card-body bg-light p-4">
+                            <div class="top-left-text">
+                                <p class="btn ${trade.type eq 'FEE' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'FEE' ? 'Có Phí' : 'Quà Tặng'}</p>
+                            </div>
+                            <div class="card-body bg-light p-3">
                                 <h4 class="card-title text-truncate">${trade.title}</h4>
                                 <div class="d-flex mb-3">
                                     <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
                                         <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${trade.author_id}</a></c:if></small>
                                     <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
                                 </div>
+                                <c:set var="price" value="${trade.getPriceInVND()}" />
                                 <p class="text-truncate">${trade.content}</p>
-                                <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p style="color: black; font-weight: 800; margin-bottom: 0" class="text">Giá: ${price}</p>
+                                    <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-
             </div>
         </div>
 

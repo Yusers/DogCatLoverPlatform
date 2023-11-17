@@ -60,6 +60,11 @@ public class UpdateTradeController extends HttpServlet {
             List<Integer> listMediaId = parseNumericList(listMedia);
             Trade_Category existed = Trade_CategoryDAO.getTradeCategory(category);
             request.setAttribute("ACTION", "Update");
+            
+            String type = "";
+            long price = 123;
+            String condition = "";
+            
             int rs = 0;
             String urlImg;
             boolean flag = false;
@@ -117,12 +122,12 @@ public class UpdateTradeController extends HttpServlet {
                 }
 
                 if (existed != null) {
-                    TradeDAO.updateTrade(new Trade(post_id, author, title, content, "Created", existed.getId()));
+                    TradeDAO.updateTrade(new Trade(post_id, author, title, content, "Created", existed.getId(), type, price, condition));
                     flag = true;
                 } else {
                     rs = Trade_CategoryDAO.createTradeCategory(category);
                     if (rs > 0) {
-                        TradeDAO.updateTrade(new Trade(post_id, author, title, content, "Created", Trade_CategoryDAO.getTradeCategory(category).getId()));
+                        TradeDAO.updateTrade(new Trade(post_id, author, title, content, "Created", Trade_CategoryDAO.getTradeCategory(category).getId(), type, price, condition));
                         flag = true;
                     } else {
                         flag = false;

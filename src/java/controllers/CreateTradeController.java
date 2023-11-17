@@ -38,6 +38,9 @@ public class CreateTradeController extends HttpServlet {
         String author_id = request.getParameter("author_id");
         String content = request.getParameter("content");
         String page = "create-trade.jsp";
+        
+        String type = "";
+        long price = 123;
 
         try {
             Trade_Category existed = Trade_CategoryDAO.getTradeCategory(category);
@@ -46,12 +49,12 @@ public class CreateTradeController extends HttpServlet {
             if (title.length() > 10) {
                 if (content.length() >= 20) {
                     if (existed != null) {
-                        trade = new Trade(author_id, title, content, existed.getId());
+                        trade = new Trade(author_id, title, content, existed.getId(), type, price);
                         rs = TradeDAO.createTradePost(trade);
                     } else {
                         rs = Trade_CategoryDAO.createTradeCategory(category);
                         if (rs > 0) {
-                            trade = new Trade(author_id, title, content, Trade_CategoryDAO.getTradeCategory(category).getId());
+                            trade = new Trade(author_id, title, content, Trade_CategoryDAO.getTradeCategory(category).getId(), type, price);
                             rs = TradeDAO.createTradePost(trade);
                         }
                     }

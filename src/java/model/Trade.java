@@ -16,6 +16,9 @@ public class Trade {
     private String title;
     private String content;
     private String status;
+    private long price;
+    private String type;
+    private String condition;
     private String rejected_reason;
     private int cate_id;
     private String image;
@@ -25,23 +28,29 @@ public class Trade {
     public Trade() {
     }
 
-    public Trade(String author_id, String title, String content, int cate_id) {
+    public Trade(String author_id, String title, String content, int cate_id, String type, long price, String condition) {
         this.author_id = author_id;
         this.title = title;
         this.content = content;
         this.cate_id = cate_id;
+        this.type = type;
+        this.price = price;
+        this.condition = condition;
     }
     
-    public Trade(int id, String author_id, String title, String content, String status, int cate_id) {
+    public Trade(int id, String author_id, String title, String content, String status, int cate_id, String type, long price, String condition) {
         this.id = id;
         this.author_id = author_id;
         this.title = title;
         this.content = content;
         this.status = status;
         this.cate_id = cate_id;
+        this.type = type;
+        this.price = price;
+        this.condition = condition;
     }
     
-    public Trade(int id, String author_id, String title, String content, String status, int cate_id, String rejected_reason) {
+    public Trade(int id, String author_id, String title, String content, String status, int cate_id, String rejected_reason, String type, long price, String condition) {
         this.id = id;
         this.author_id = author_id;
         this.title = title;
@@ -49,6 +58,9 @@ public class Trade {
         this.status = status;
         this.cate_id = cate_id;
         this.rejected_reason = rejected_reason;
+        this.type = type;
+        this.price = price;
+        this.condition = condition;
     }
     
     public Trade(int id, String author_id, String title, String content, String status, int cate_id, String image, Date created_at, Date updated_at) {
@@ -63,6 +75,26 @@ public class Trade {
         this.updated_at = updated_at;
     }
 
+    public long getPrice() {
+        return price;
+    }
+    
+    public String getPriceInVND() {
+        return String.format("%,d VND", price); // Formats the long value as VND
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public String getRejected_reason() {
         return rejected_reason;
     }

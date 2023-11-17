@@ -32,7 +32,13 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
+        <style>
+            .top-left-text {
+                position: absolute;
+                top: 10px; /* Adjust this value as needed to position the text */
+                left: 10px; /* Adjust this value as needed to position the text */
+            }
+        </style>
     </head>
     <body>
         <!-- Topbar Start -->
@@ -132,6 +138,7 @@
         <!-- Trading Start -->
         <div class="container mt-5 mb-5">
             <h2 class="mb-4">${trade.title}</h2>
+            <hr/>
             <div class="row">
                 <div class="col-md-8">
                     <div id="carouselExampleIndicators" class="carousel slide">
@@ -145,7 +152,9 @@
                                 </div>
                             </c:forEach>
                         </div>
-
+                        <div class="top-left-text">
+                            <p class="btn ${trade.type eq 'FEE' ? 'btn-danger' : 'btn-success'}" style="color: #fff;">${trade.type eq 'FEE' ? 'Có Phí' : 'Quà Tặng'}</p>
+                        </div>
                         <a style="color: black" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
@@ -175,10 +184,13 @@
                                 </div>
                             </div>
                         </form>
-                        <br>
-                        <div class="trade-post-details">
-                            <h5>Mô tả</h5>
-                            <p>${trade.content}</p>
+                        <hr/>
+                    <c:set var="price" value="${trade.getPriceInVND()}" />
+                    <div class="trade-post-details">
+                        <h5>Giá: ${price}</h5>
+                        <hr/>
+                        <h5>Mô tả</h5>
+                        <p>${trade.content}</p>
                     </div>
                 </div>
             </div>

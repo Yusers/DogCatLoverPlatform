@@ -23,7 +23,7 @@ public class TradeDAO {
         ArrayList<Trade> trades = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [author_id], [title], [content], [status], [category], [created_at], [updated_at]\n"
+            String sql = "SELECT *\n"
                     + "FROM [dbo].[Trade]";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -34,10 +34,13 @@ public class TradeDAO {
                     String title = rs.getString("title");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
+                    String type = rs.getString("type");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
                     int category = rs.getInt("category");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
-                    trades.add(new Trade(id, author_id, title, content, status, category));
+                    trades.add(new Trade(id, author_id, title, content, status, category, type, price, condition));
                 }
             }
             cn.close();
@@ -49,7 +52,7 @@ public class TradeDAO {
         ArrayList<Trade> trades = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [author_id], [title], [content], [status], [category], [created_at], [updated_at]\n"
+            String sql = "SELECT *\n"
                     + "FROM [dbo].[Trade]\n"
                     + "WHERE [status] = ?";
             PreparedStatement st = cn.prepareStatement(sql);
@@ -61,10 +64,13 @@ public class TradeDAO {
                     String author_id = rs.getString("author_id");
                     String title = rs.getString("title");
                     String content = rs.getString("content");
+                    String type = rs.getString("type");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
                     int category = rs.getInt("category");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
-                    trades.add(new Trade(id, author_id, title, content, status, category));
+                    trades.add(new Trade(id, author_id, title, content, status, category, type, price, condition));
                 }
             }
             cn.close();
@@ -90,9 +96,12 @@ public class TradeDAO {
                     String content = rs.getString("content");
                     String rejected_reason = rs.getString("rejected_reason");
                     int category = rs.getInt("category");
+                    String type = rs.getString("type");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
-                    trades.add(new Trade(id, author_id, title, content, status, category, rejected_reason));
+                    trades.add(new Trade(id, author_id, title, content, status, category, rejected_reason, type, price, condition));
                 }
             }
             cn.close();
@@ -172,7 +181,7 @@ public class TradeDAO {
         Trade trade = null;
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [author_id], [title], [content], [status], [category], [created_at], [updated_at]\n"
+            String sql = "SELECT *\n"
                     + "FROM [dbo].[Trade]\n"
                     + "WHERE [id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -185,10 +194,13 @@ public class TradeDAO {
                     String title = rs.getString("title");
                     String content = rs.getString("content");
                     String status = rs.getString("status");
+                    String type = rs.getString("type");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
                     int category = rs.getInt("category");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
-                    trade = new Trade(id, author_id, title, content, status, category);
+                    trade = new Trade(id, author_id, title, content, status, category, type, price, condition);
                 }
             }
             cn.close();
@@ -213,9 +225,12 @@ public class TradeDAO {
                     String content = rs.getString("content");
                     String status = rs.getString("status");
                     int category = rs.getInt("category");
+                    String type = rs.getString("type");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
                     Date created_at = rs.getDate("created_at");
                     Date updated_at = rs.getDate("updated_at");
-                    trade = new Trade(id, author_id, title, content, status, category);
+                    trade = new Trade(id, author_id, title, content, status, category, type, price, condition);
                 }
             }
             cn.close();
