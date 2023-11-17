@@ -244,7 +244,7 @@
                             <c:if test="${empty posts}">
                                 <h4>Chưa có bài viết</h4>
                                 <c:if test="${us.role ne 'STAFF'}">
-                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
+                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'DispatcherController?action=create-post-page' : 'DispatcherController?action=login-page'}">Create post...</a>
                                 </c:if>
                             </c:if>
                         </div>
@@ -341,7 +341,7 @@
                             <c:if test="${empty posts}">
                                 <h4>Chưa có bài viết</h4>
                                 <c:if test="${us.role ne 'STAFF'}">
-                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
+                                    <a class="custom-btn form-control" href="${us.user_id != null ? 'DispatcherController?action=create-post-page' : 'DispatcherController?action=login-page'}">Create post...</a>
                                 </c:if>
                             </c:if>
                         </div>
