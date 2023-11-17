@@ -20,7 +20,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
         <!-- Flaticon Font -->
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
         <!-- Customized Bootstrap Stylesheet -->
