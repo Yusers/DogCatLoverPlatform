@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Diễn Đàn | Cat Dog Lover Website</title>
         <!-- Favicon -->
-        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -188,7 +188,7 @@
                                     <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Đăng bài</button>
                             </form>
                         </c:when>
                         <c:when test="${param.type eq 'fee'}">
@@ -236,7 +236,7 @@
                                     <label for="content">Nội dung bài viết</label>
                                     <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Đăng bài</button>
                             </form>
                         </c:when>
                     </c:choose>
