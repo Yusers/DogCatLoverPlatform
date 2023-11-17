@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Diễn Đàn | Cat Dog Lover Website</title>
         <!-- Favicon -->
-        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
