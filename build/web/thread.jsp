@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${post.title}</title>
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="img/icons8-pet-lover-16.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -207,6 +207,9 @@
             <!-- Sidebar with Replies -->
             <div class="row">
                 <!-- Replies Section -->
+                <c:if test="${not empty requestScope.ERR}">
+                    <h4 class="text-center col-12">${requestScope.ERR}</h4>
+                </c:if>
                 <div class="col-md-12 replies">
                     <div class="comment">
                         <div class="user-info">
@@ -214,7 +217,7 @@
                             <span><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${us.user_id}">${us.user_id != null ? us.user_id : "Guess"}</a></c:if>
                                 <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${us.user_id != null ? us.user_id : "Guess"}</a></c:if></span>
                             </div>
-                            <form action="DispatcherController" method="POST">
+                            <form id="commentForm" action="DispatcherController" method="POST">
                                 <input type="hidden" name="action" value="comment" />
                                 <input type="hidden" name="post-id" value="${post.id}" />
                             <input type="hidden" name="author-id" value="${us.user_id}" />
@@ -232,7 +235,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                    <button class="btn btn-primary mt-2" type="submit">Comment</button>
+                                    <button id="commentButton" class="btn btn-primary mt-2" type="submit">Comment</button>
                                 </c:otherwise>
                             </c:choose>
                         </form>
@@ -257,7 +260,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                                             <span><a href="DispatcherController?action=manage&actions=viewprofile&usname=NhatNTM">${us.user_id != null ? us.user_id : "Guess"}</a></span>
                                         </div>
-                                        <form action="DispatcherController" method="POST">
+                                        <form id="commentForm" action="DispatcherController" method="POST">
                                             <input type="hidden" name="action" value="comment" />
                                             <input type="hidden" name="post-id" value="${post.id}" />
                                             <input type="hidden" name="author-id" value="${us.user_id}" />
@@ -275,7 +278,7 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                                    <button class="btn btn-primary mt-2" type="submit">Comment</button>
+                                                    <button id="commentButton" class="btn btn-primary mt-2" type="submit">Comment</button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </form>
@@ -295,14 +298,14 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                                             <span><a href="DispatcherController?action=manage&actions=viewprofile&usname=NhatNTM">${us.user_id != null ? us.user_id : "Guess"}</a></span>
                                         </div>
-                                        <form action="DispatcherController" method="POST">
+                                        <form id="commentForm" action="DispatcherController" method="POST">
                                             <input type="hidden" name="action" value="comment" />
                                             <input type="hidden" name="post-id" value="${post.id}" />
                                             <input type="hidden" name="author-id" value="${us.user_id}" />
                                             <input type="hidden" name="parent-id" value="${comment.id}" />
                                             <c:choose>
                                                 <c:when test="${empty us.role}">
-                                                    <input placeholder="Write a comment..." value="" type="text" class="form-control" aria-label="Sizing example input" disabled aria-describedby="inputGroup-sizing-sm">
+                                                    <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                                     <button class="btn btn-primary mt-2" type="button" onclick="showLoginPrompt()">Comment</button>
                                                 </c:when>
                                                 <c:when test="${post.status eq 'Created' or post.status eq 'Rejected'}">
@@ -313,7 +316,7 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <input id="commentInput" name="content" required="*" placeholder="Write a comment..." type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-                                                    <button class="btn btn-primary mt-2" type="submit">Comment</button>
+                                                    <button id="commentButton" class="btn btn-primary mt-2" type="submit">Comment</button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </form>
@@ -384,6 +387,17 @@
         <!-- Footer End -->
 
         <script>
+            document.getElementById('commentForm').addEventListener('submit', function (event) {
+                var commentInput = document.getElementById('commentInput');
+                var commentValue = commentInput.value.trim();
+                console.log(commentInput);
+                console.log(commentValue);
+                if (commentValue === '' || commentValue.length === 0) {
+                    alert('Please enter a non-empty comment!');
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+
             $(document).ready(function () {
                 $(".show-sub-replies").click(function () {
                     $(this).siblings(".sub-replies").toggle();

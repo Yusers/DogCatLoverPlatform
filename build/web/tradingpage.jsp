@@ -189,6 +189,8 @@
                     <div class="trade-post-details">
                         <h5>Giá: ${price}</h5>
                         <hr/>
+                        <h5>Tình Trạng: ${trade.getCondition()}</h5>
+                        <hr/>
                         <h5>Mô tả</h5>
                         <p>${trade.content}</p>
                     </div>

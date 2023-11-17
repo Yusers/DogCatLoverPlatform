@@ -37,18 +37,45 @@ public class CreateTradeController extends HttpServlet {
         String category = request.getParameter("category");
         String author_id = request.getParameter("author_id");
         String content = request.getParameter("content");
+        String condition = request.getParameter("condition");
+        String type = request.getParameter("type");
+        String priceString = request.getParameter("price");
+        int price = 0;
         String page = "create-trade.jsp";
-        
-        String type = "";
-        long price = 123;
-        String condition = "";
+        boolean flag = false;
 
+//        out.print("title: " + title + "<br/>");
+//        out.print("cate: " + category + "<br/>");
+//        out.print("cate-size: " + category.trim().length() + "<br/>");
+//        out.print("author: " + author_id + "<br/>");
+//        out.print("content: " + content + "<br/>");
+//        out.print("condition: " + condition + "<br/>");
+//        out.print("condition-size: " + condition.trim().length() + "<br/>");
+//        out.print("price: " + price + "<br/>");
+//        out.print("type: " + type + "<br/>");
         try {
+            if (category.trim().length() < 1) {
+                request.setAttribute("ERR_CONTENT", "Phần loại bài viết không đc để trống và khoảng trắng!");
+                flag = true;
+            } else if (condition.trim().length() < 1) {
+                request.setAttribute("ERR_CONTENT", "Phần tình trạng không đc để trống và khoảng trắng!");
+                flag = true;
+            } else if (priceString.trim().length() < 1) {
+                request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
+                flag = true;
+            }
+            if (flag) {
+                request.getRequestDispatcher("create-trade.jsp").forward(request, response);
+            }
+            if (type.equals("fee")) {
+                String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
+                price = Integer.parseInt(formattedPrice); // Parse the integer
+            }
             Trade_Category existed = Trade_CategoryDAO.getTradeCategory(category);
             Trade trade = null;
             int rs = 0;
-            if (title.length() > 10) {
-                if (content.length() >= 20) {
+            if (title.trim().length() > 10) {
+                if (content.trim().length() >= 20) {
                     if (existed != null) {
                         trade = new Trade(author_id, title, content, existed.getId(), type, price, condition);
                         rs = TradeDAO.createTradePost(trade);
@@ -101,11 +128,10 @@ public class CreateTradeController extends HttpServlet {
             } else {
                 request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 10 kí tự!!!");
             }
-            request.getRequestDispatcher(page).forward(request, response);
+            request.getRequestDispatcher(page + "&type=" + type.trim()).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     private String getFileName(Part part) {

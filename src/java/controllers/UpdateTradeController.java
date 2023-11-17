@@ -62,7 +62,7 @@ public class UpdateTradeController extends HttpServlet {
             request.setAttribute("ACTION", "Update");
             
             String type = "";
-            long price = 123;
+            long price = 1233;
             String condition = "";
             
             int rs = 0;

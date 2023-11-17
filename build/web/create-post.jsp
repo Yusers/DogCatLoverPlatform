@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Diễn Đàn | Cat Dog Lover Website</title>
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="img/icons8-pet-lover-16.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -31,6 +31,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link href="assets/css/forums.css" rel="stylesheet">
     </head>
     <body>
         <!-- Topbar Start -->
@@ -128,12 +129,12 @@
         <!-- Navbar End -->
         <div class="container mt-5">
             <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <c:choose>
-                        <c:when test="${us.status ne 'Active' or empty us.user_id}">
-                            <h1>Bạn không có quyền vào trang này</h1>
-                        </c:when>
-                        <c:otherwise>
+                <c:choose>
+                    <c:when test="${us.status ne 'Active' or empty us.user_id}">
+                        <h1>Bạn không có quyền vào trang này</h1>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="col-md-12">
                             <h1 style="color: red;">${empty requestScope.ERR_CONTENT? 'Tạo bài viết trên diễn đàn' : requestScope.ERR_CONTENT}</h1>
                             <form action="CreatePostController" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="author_id" value="${us.user_id}" />
@@ -161,79 +162,79 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
-        <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
-            <div class="row pt-5">
-                <div class="col-lg-4 col-md-12 mb-5">
-                    <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Dog&Cat</span>Lover</h1>
-                    <p class="m-0">Chung toi hi vong nen tang nay se giup ban trong viec cham soc thu cung va hay tham gia dien dan de ban co the tham gia trao doi voi nha nhu trao doi cho, meo, do dung cua cho hoac meo va dich vu cham soc thu cung</p>
-                </div>
-                <div class="col-lg-8 col-md-12">
-                    <div class="row">
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-primary mb-4">Get In Touch</h5>
-                            <p><i class="fa fa-map-marker-alt mr-2"></i>Nha van hoa sinh vien, Tp.Thu Duc, VN</p>
-                            <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                            <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
-                        </div>
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-primary mb-4">Popular Links</h5>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Forums</a>
-                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trade</a>
-                                <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                            </div>
+    </div>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Dog&Cat</span>Lover</h1>
+                <p class="m-0">Chung toi hi vong nen tang nay se giup ban trong viec cham soc thu cung va hay tham gia dien dan de ban co the tham gia trao doi voi nha nhu trao doi cho, meo, do dung cua cho hoac meo va dich vu cham soc thu cung</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Get In Touch</h5>
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>Nha van hoa sinh vien, Tp.Thu Duc, VN</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Popular Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Forums</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trade</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid text-white py-4 px-sm-3 px-md-5" style="background: #111111;">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
-                    <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
-                    </p>
-                </div>
-                <div class="col-md-6 text-center text-md-right">
-                    <ul class="nav d-inline-flex">
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Terms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">FAQs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white py-0" href="#">Help</a>
-                        </li>
-                    </ul>
-                </div>
+    </div>
+    <div class="container-fluid text-white py-4 px-sm-3 px-md-5" style="background: #111111;">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                <p class="m-0 text-white">
+                    &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <ul class="nav d-inline-flex">
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Help</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!-- Footer End -->
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    </div>
+    <!-- Footer End -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Contact Javascript File -->
-        <script src="mail/jqBootstrapValidation.min.js"></script>
-        <script src="mail/contact.js"></script>
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
 </html>

@@ -127,10 +127,31 @@
                         <c:when test="${us.status ne 'Active' or empty us.user_id}">
                             <h1>Bạn không có quyền vào trang này</h1>
                         </c:when>
-                        <c:otherwise>
-                            <h1 style="color: red;">${empty requestScope.ERR_CONTENT? 'Tạo bài Trao đổi và mua bán' : requestScope.ERR_CONTENT}</h1>
+                        <c:when test="${param.type eq null || empty param.type}">
+                            <div class="col-md-12 d-flex justify-content-around">
+                                <a href="DispatcherController?action=create-trade-page&type=fee" style="text-decoration: none;">
+                                    <div class="card p-3" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Hình thức trả phí <svg style="color: #fff" xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M160 0c17.7 0 32 14.3 32 32V67.7c1.6 .2 3.1 .4 4.7 .7c.4 .1 .7 .1 1.1 .2l48 8.8c17.4 3.2 28.9 19.9 25.7 37.2s-19.9 28.9-37.2 25.7l-47.5-8.7c-31.3-4.6-58.9-1.5-78.3 6.2s-27.2 18.3-29 28.1c-2 10.7-.5 16.7 1.2 20.4c1.8 3.9 5.5 8.3 12.8 13.2c16.3 10.7 41.3 17.7 73.7 26.3l2.9 .8c28.6 7.6 63.6 16.8 89.6 33.8c14.2 9.3 27.6 21.9 35.9 39.5c8.5 17.9 10.3 37.9 6.4 59.2c-6.9 38-33.1 63.4-65.6 76.7c-13.7 5.6-28.6 9.2-44.4 11V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V445.1c-.4-.1-.9-.1-1.3-.2l-.2 0 0 0c-24.4-3.8-64.5-14.3-91.5-26.3c-16.1-7.2-23.4-26.1-16.2-42.2s26.1-23.4 42.2-16.2c20.9 9.3 55.3 18.5 75.2 21.6c31.9 4.7 58.2 2 76-5.3c16.9-6.9 24.6-16.9 26.8-28.9c1.9-10.6 .4-16.7-1.3-20.4c-1.9-4-5.6-8.4-13-13.3c-16.4-10.7-41.5-17.7-74-26.3l-2.8-.7 0 0C119.4 279.3 84.4 270 58.4 253c-14.2-9.3-27.5-22-35.8-39.6c-8.4-17.9-10.1-37.9-6.1-59.2C23.7 116 52.3 91.2 84.8 78.3c13.3-5.3 27.9-8.9 43.2-11V32c0-17.7 14.3-32 32-32z"/></svg></h5>
+                                            <p class="card-text">Bài đăng với hình thức trả phí là hình thức bạn sẽ đăng bài sẽ có giá tiền</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="DispatcherController?action=create-trade-page&type=gift" style="text-decoration: none;">
+                                    <div class="card p-3" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Hình thức quà tặng <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M190.5 68.8L225.3 128H224 152c-22.1 0-40-17.9-40-40s17.9-40 40-40h2.2c14.9 0 28.8 7.9 36.3 20.8zM64 88c0 14.4 3.5 28 9.6 40H32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H480c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H438.4c6.1-12 9.6-25.6 9.6-40c0-48.6-39.4-88-88-88h-2.2c-31.9 0-61.5 16.9-77.7 44.4L256 85.5l-24.1-41C215.7 16.9 186.1 0 154.2 0H152C103.4 0 64 39.4 64 88zm336 0c0 22.1-17.9 40-40 40H288h-1.3l34.8-59.2C329.1 55.9 342.9 48 357.8 48H360c22.1 0 40 17.9 40 40zM32 288V464c0 26.5 21.5 48 48 48H224V288H32zM288 512H432c26.5 0 48-21.5 48-48V288H288V512z"/></svg></h5>
+                                            <p class="card-text">Bài đăng với hình thức quà tặng là bài đăng sẽ không có giá tiền.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </c:when>
+                        <c:when test="${param.type eq 'gift'}">
+                            <h1 style="color: red;">${empty requestScope.ERR_CONTENT? 'Tạo bài Trao đổi và mua bán với hình thức quà tặng' : requestScope.ERR_CONTENT}</h1>
                             <form action="CreateTradeController" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="author_id" value="${us.user_id}" />
+                                <input type="hidden" name="type" value="gift" />
                                 <div class="form-group">
                                     <label for="title">Tiêu đề</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Nhập tiêu đề bài viết">
@@ -143,6 +164,15 @@
                                         <c:forEach var="c" items="${categorys}">
                                             <option value="${c.name}">
                                             </c:forEach>
+                                    </datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="condition">Tình Trạng</label>
+                                    <input required="" class="form-control" list="datalistOptionsCondition" id="condition" name="condition" placeholder="Nhập tình trạng...">
+                                    <datalist id="datalistOptionsCondition">
+                                        <option value="Cũ">
+                                        <option value="Mới">
+                                        <option value="Đã qua sử dụng (còn mới)">
                                     </datalist>
                                 </div>
                                 <div class="form-group">
@@ -160,7 +190,55 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
-                        </c:otherwise>
+                        </c:when>
+                        <c:when test="${param.type eq 'fee'}">
+                            <h1 style="color: red;">${empty requestScope.ERR_CONTENT? 'Tạo bài Trao đổi và mua bán với hình thức trả phí' : requestScope.ERR_CONTENT}</h1>
+                            <form action="CreateTradeController" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="action" value="create-trade" />
+                                <input type="hidden" name="author_id" value="${us.user_id}" />
+                                <input type="hidden" name="type" value="fee" />
+                                <div class="form-group">
+                                    <label for="title">Tiêu đề</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="Nhập tiêu đề bài viết">
+                                </div>
+                                <c:set var="categorys" value="${Trade_CategoryDAO.getAllTradeCate()}"/>
+                                <div class="form-group">
+                                    <label for="exampleDataList" class="form-label">Loại bài viết về</label>
+                                    <input required="" class="form-control" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
+                                    <datalist id="datalistOptions">
+                                        <c:forEach var="c" items="${categorys}">
+                                            <option value="${c.name}">
+                                            </c:forEach>
+                                    </datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="condition">Tình Trạng</label>
+                                    <input required="" class="form-control" list="datalistOptionsCondition" id="condition" name="condition" placeholder="Nhập tình trạng...">
+                                    <datalist id="datalistOptionsCondition">
+                                        <option value="Cũ">
+                                        <option value="Mới">
+                                        <option value="Đã qua sử dụng (còn mới)">
+                                    </datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Giá (Vietnamdong)</label>
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá">
+                                </div>
+                                <div class="form-group">
+                                    <label for="images">Chọn nhiều hình ảnh</label>
+                                    <input type="file" class="form-control-file" id="images" name="images[]" multiple>
+                                    <br/>
+                                    <button type="button" onclick="previewFiles()" class="btn btn-primary col-4" data-toggle="modal" data-target="#filePreviewModal">
+                                        Xem trước hình ảnh
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Nội dung bài viết</label>
+                                    <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </c:when>
                     </c:choose>
                 </div>
             </div>
@@ -243,6 +321,26 @@
         </div>
 
         <script>
+            document.getElementById('price').addEventListener('input', function (event) {
+                let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                value = formatAsVietnamdong(value); // Format the input as Vietnamdong
+                event.target.value = value;
+            });
+
+            document.getElementById('price').addEventListener('blur', function (event) {
+                let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
+                value = formatAsVietnamdong(value); // Format the input as Vietnamdong
+                event.target.value = value;
+            });
+
+            function formatAsVietnamdong(value) {
+                if (!value)
+                    return ''; // Return empty string if no value
+
+                const formatter = new Intl.NumberFormat('en-US');
+                return formatter.format(value);
+            }
+
             function previewFiles() {
                 var previewsContainer = document.getElementById('filePreviews');
                 previewsContainer.innerHTML = ''; // Clear previous previews
@@ -269,6 +367,8 @@
             }
         </script>
         <!-- JavaScript Libraries -->
+        <!-- Inputmask library CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>

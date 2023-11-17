@@ -75,6 +75,14 @@ public class Trade {
         this.updated_at = updated_at;
     }
 
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+    
     public long getPrice() {
         return price;
     }

@@ -212,7 +212,7 @@ public class TradeDAO {
         Trade trade = null;
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT [id], [author_id], [title], [content], [status], [category], [created_at], [updated_at]\n"
+            String sql = "SELECT *\n"
                     + "FROM [dbo].[Trade]\n"
                     + "WHERE [title] = ? AND [author_id] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
