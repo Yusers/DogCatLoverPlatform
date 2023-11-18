@@ -48,7 +48,7 @@
     </head>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link href="img/icons8-pet-lover-16.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -169,7 +169,7 @@
                 </ol>
                 <div class="input-group breadcrumb">
                     <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
-                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-trade.jsp' : 'DispatcherController?action=login-page'}">Tạo bài trao đổi...</a>
+                    <a class="custom-btn form-control" href="${us.user_id != null ? 'create-trade.jsp' : 'DispatcherController?action=login-page'}">Create trading post...</a>
                 </div>
 
             </nav>
@@ -199,8 +199,10 @@
                                 </div>
                                 <c:set var="price" value="${trade.getPriceInVND()}" />
                                 <p class="text-truncate">${trade.content}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <p style="color: black; font-weight: 800; margin-bottom: 0" class="text">Giá: ${price}</p>
+                                <div class="d-flex ${trade.type eq 'fee' ? 'justify-content-between' : 'justify-content-end'} align-items-center">
+                                    <c:if test="${trade.type eq 'fee'}">
+                                        <p style="color: black; font-weight: 800; margin-bottom: 0" class="text">Giá: ${price}</p>
+                                    </c:if>
                                     <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
                                 </div>
                             </div>

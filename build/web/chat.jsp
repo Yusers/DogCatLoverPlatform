@@ -10,7 +10,7 @@
         <title>Giới Thiệu | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -168,9 +168,9 @@
                             <input type="hidden" name="receiver_id" value="${listMess.get(0).receiver_id}" />
                             <input type="hidden" name="conversation_id" value="${listMess.get(0).conversation_id}" />
                             <div class="input-group">
-                                <input type="text" name="content" required="*" id="msg" class="form-control" placeholder="Type a message...">
+                                <input type="text" name="content" name="msg" required="*" id="msg" class="form-control" placeholder="Type a message...">
                                 <div class="input-group-append">
-                                    <button type="submit" class="btn btn-primary">Send</button>
+                                    <button onclick="return sendMsg()" class="btn btn-primary">Send</button>
                                 </div>
                             </div>
                         </form>
@@ -242,7 +242,7 @@
             } else {
                 wsUrl = 'wss://';
             }
-            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform");
+            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
 
             var username = '<c:out value="${sessionScope.USER.user_id}" />';
 
