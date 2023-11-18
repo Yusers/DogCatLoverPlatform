@@ -168,7 +168,7 @@
                             <input type="hidden" name="receiver_id" value="${listMess.get(0).receiver_id}" />
                             <input type="hidden" name="conversation_id" value="${listMess.get(0).conversation_id}" />
                             <div class="input-group">
-                                <input type="text" name="content" name="msg" required="*" id="msg" class="form-control" placeholder="Type a message...">
+                                <input type="text" name="content" required="*" id="msg" class="form-control" placeholder="Type a message...">
                                 <div class="input-group-append">
                                     <button onclick="return sendMsg()" class="btn btn-primary">Send</button>
                                 </div>
@@ -242,14 +242,12 @@
             } else {
                 wsUrl = 'wss://';
             }
-            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
+            var topic = '<c:out value="${TOPIC}" />'; // Retrieve the topic from JSP
 
-            var username = '<c:out value="${sessionScope.USER.user_id}" />';
+            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat?room=" + topic);
 
-            ws.onmessage = function (event) {
-                var mySpan = document.getElementById("chat");
-                mySpan.innerHTML += event.data + "<br/>";
-            };
+            var currentUserID = '<c:out value="${sessionScope.USER.user_id}" />';
+
 
             ws.onerror = function (event) {
                 console.log("Error ", event)
@@ -258,11 +256,23 @@
             function sendMsg() {
                 var msg = document.getElementById("msg").value;
                 if (msg) {
-                    ws.send(username + ": " + msg);
-                    appendMessage(username + ": " + msg, true);
+                    ws.send(currentUserID + ": " + msg);
                 }
                 document.getElementById("msg").value = "";
+                return false; // Prevent form submission
             }
+
+            ws.onmessage = function (event) {
+                var messageData = event.data.split(': '); // Split the data into sender ID and message
+                var senderID = messageData[0];
+
+                if (senderID === currentUserID) {
+                    // Don't append my message here, it's already added in sendMsg()
+                    appendMessage(messageData[1], true); // My message
+                } else {
+                    appendMessage(event.data, false); // Other's message
+                }
+            };
 
             function appendMessage(message, isMyMessage) {
                 var chatBox = document.getElementById('chat');
