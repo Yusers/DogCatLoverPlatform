@@ -201,6 +201,8 @@
                                                             <p>Tác giả: <strong>${trade.author_id}</strong></p>
                                                             <p class="text-truncate">${trade.content}</p>
                                                             <p>Thể Loại: ${Trade_CategoryDAO.getTradeCategory(trade.cate_id).name}</p>
+                                                            <p>Hình thức: ${trade.type eq 'fee' ? 'Trả phí' : 'Quà tặng'}</p>
+                                                            <p>Giá: ${trade.getPriceInVND()}</p>
                                                             <p>Trạng thái: ${trade.status}</p>
                                                         </div>
 

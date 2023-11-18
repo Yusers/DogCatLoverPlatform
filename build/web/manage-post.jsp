@@ -202,6 +202,9 @@
                                                         <c:if test="${post.status eq 'Done'}">
                                                             <p><strong>Trạng thái:</strong> <strong style="color: #686868;">Đã Bán!</strong></p>
                                                         </c:if>
+
+                                                        <p><strong>Hình thức:</strong> ${post.type eq 'fee' ? 'Trả phí' : 'Quà tặng'}</p>
+                                                        <p><strong>Giá:</strong> ${post.getPriceInVND()}</p>
                                                     </div>
 
                                                     <!-- Thread Actions (e.g., Delete, Edit) -->
