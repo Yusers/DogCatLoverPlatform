@@ -133,7 +133,7 @@ public class CreateTradeController extends HttpServlet {
             } else {
                 request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 10 kí tự!!!");
             }
-            request.getRequestDispatcher(page + "&type=" + type.trim()).forward(request, response);
+            request.getRequestDispatcher(page).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

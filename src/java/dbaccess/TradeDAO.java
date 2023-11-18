@@ -113,13 +113,16 @@ public class TradeDAO {
         int rs = 0;
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "INSERT INTO [dbo].[Trade] ([author_id],[title],[content],[status],[category],[created_at])\n"
-                    + "VALUES(?,?,?,'Created',?,GETDATE())";
+            String sql = "INSERT INTO [dbo].[Trade] ([author_id],[title],[content],[status],[category],[created_at], [price], [condition], [type])\n"
+                    + "VALUES(?,?,?,'Created',?,GETDATE(), ?, ? ,?)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, trade.getAuthor_id());
             pst.setString(2, trade.getTitle());
             pst.setString(3, trade.getContent());
             pst.setInt(4, trade.getCate_id());
+            pst.setLong(5, trade.getPrice());
+            pst.setString(6, trade.getCondition());
+            pst.setString(7, trade.getType());
             rs = pst.executeUpdate();
         }
         return rs;

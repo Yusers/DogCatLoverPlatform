@@ -219,6 +219,10 @@
                             <h5>Giá: ${price}</h5>
                             <hr/>
                         </c:if>
+                        <c:if test="${trade.type ne 'fee'}">
+                            <h5 class="text-secondary">Quà tặng không bán</h5>
+                            <hr/>
+                        </c:if>
                         <h5>Tình Trạng: ${trade.getCondition()}</h5>
                         <hr/>
                         <h5>Mô tả</h5>

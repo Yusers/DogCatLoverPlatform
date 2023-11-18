@@ -32,7 +32,13 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
+        <style>
+            .top-left-text {
+                position: absolute;
+                top: 10px; /* Adjust this value as needed to position the text */
+                left: 10px; /* Adjust this value as needed to position the text */
+            }
+        </style>
     </head>
     <body>
         <!-- Topbar Start -->
@@ -157,6 +163,10 @@
                             </c:choose>
                         </div>
 
+                        <div class="top-left-text">
+                            <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
+                        </div>
+
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
@@ -181,15 +191,25 @@
                                 <p>Số điện thoại: ${author.phone_number}</p>    
                             </div>
                             <div class="user-action">
-                                <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block" ${(trade.status eq 'Created' || trade.status eq 'Rejected') ? 'disabled' : ''}>Nhắn tin cho người bán</button></c:if>
+                                <c:if test="${not empty us.role}"><button type="submit" class="btn btn-primary btn-block" ${(us.user_id == trade.author_id || us.status ne 'Active')? 'disabled' : ''}>${us.status ne 'Active' ? 'Có vẻ bạn đã bị cấm chat' : 'Nhắn tin cho người bán'}</button></c:if>
                                 <c:if test="${empty us.role}"><a class="btn btn-primary btn-block" href="DispatcherController?action=login-page">Nhắn tin cho người bán</a></c:if>
                                 </div>
                             </div>
+                            <hr/>
                         </form>
-                        <br>
                         <div class="trade-post-details">
-                            <h5>Mô tả</h5>
-                            <p>${trade.content}</p>
+                        <c:if test="${trade.type eq 'fee'}">
+                            <h5>Giá: ${price}</h5>
+                            <hr/>
+                        </c:if>
+                        <c:if test="${trade.type ne 'fee'}">
+                            <h5 class="text-secondary">Quà tặng không bán</h5>
+                            <hr/>
+                        </c:if>
+                        <h5>Tình Trạng: ${trade.getCondition()}</h5>
+                        <hr/>
+                        <h5>Mô tả</h5>
+                        <p>${trade.content}</p>
                     </div>
                     <div class="btn-group mb-3 d-flex justify-content-center">
                         <a class="btn btn-success" href="DispatcherController?action=handle-trade&btn=approve&id=${trade.id}"}>Chấp nhận</a>
