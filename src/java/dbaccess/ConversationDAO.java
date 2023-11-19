@@ -7,6 +7,8 @@ package dbaccess;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime; // For Java 8 or later
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +45,7 @@ public class ConversationDAO {
 
         return conversation;
     }
-    
+
     public static Conversation getConversation(int id) throws Exception {
         Conversation conversation = null;
 
@@ -73,23 +75,27 @@ public class ConversationDAO {
 
         Connection cn = DBUtils.makeConnection();
         if (cn != null) {
-            String sql = "SELECT DISTINCT [dbo].[Message].sender_id, [dbo].[Message].receiver_id,[dbo].[Conversation].[id], [dbo].[Conversation].[topic], [dbo].[Conversation].[created_at], [dbo].[Conversation].[updated_at]\n"
+            String sql = "SELECT [dbo].[Conversation].id AS conversation_id, [dbo].[Conversation].topic, [dbo].[Conversation].created_at, [dbo].[Conversation].updated_at,\n"
+                    + "[dbo].[Message].content AS latest_message, [dbo].[Message].receiver_id, [dbo].[Message].sender_id AS latest_sender, [dbo].[Message].created_at AS latest_message_time\n"
                     + "FROM [dbo].[Conversation]\n"
-                    + "JOIN [dbo].[Message] ON [dbo].[Conversation].[id] = [dbo].[Message].[conversation_id]\n"
-                    + "WHERE sender_id = ? or receiver_id = ?";
+                    + "JOIN [dbo].[Message] ON [dbo].[Conversation].id = [dbo].[Message].conversation_id\n"
+                    + "WHERE ([dbo].[Message].sender_id = ? OR [dbo].[Message].receiver_id = ?)\n"
+                    + "AND [dbo].[Message].created_at = (SELECT MAX(created_at) FROM [dbo].[Message] WHERE conversation_id = [dbo].[Conversation].id)\n"
+                    + "ORDER BY [dbo].[Message].created_at DESC";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, user_id);
             pst.setString(2, user_id);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    String sender_id = rs.getString("sender_id");
-                    String receiver_id = rs.getString("receiver_id");
-                    int conver_id = rs.getInt("id");
+                    int conversation_id = rs.getInt("conversation_id");
                     String topic = rs.getString("topic");
-                    Date created_at = rs.getDate("created_at");
+                    Timestamp created_at = rs.getTimestamp("latest_message_time");
                     Date updated_at = rs.getDate("updated_at");
-                    conversation.add(new Chat(sender_id, receiver_id, conver_id, topic, created_at, updated_at));
+                    String latest_message = rs.getString("latest_message");
+                    String receiver_id = rs.getString("receiver_id");
+                    String latest_sender = rs.getString("latest_sender");
+                    conversation.add(new Chat(conversation_id, topic, latest_message, receiver_id, latest_sender, created_at, updated_at));
                 }
             }
             cn.close();

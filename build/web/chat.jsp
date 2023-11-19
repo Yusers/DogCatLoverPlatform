@@ -242,9 +242,8 @@
             } else {
                 wsUrl = 'wss://';
             }
-            var topic = '<c:out value="${TOPIC}" />'; // Retrieve the topic from JSP
 
-            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat?room=" + topic);
+            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
 
             var currentUserID = '<c:out value="${sessionScope.USER.user_id}" />';
 
@@ -256,29 +255,34 @@
             function sendMsg() {
                 var msg = document.getElementById("msg").value;
                 if (msg) {
-                    ws.send(currentUserID + ": " + msg);
+                    ws.send(currentUserID + ": " + msg + ": " + '<c:out value="${requestScope.CONVER_ID}" />');
                 }
                 document.getElementById("msg").value = "";
                 return false; // Prevent form submission
             }
 
+            // Usage in ws.onmessage
             ws.onmessage = function (event) {
-                var messageData = event.data.split(': '); // Split the data into sender ID and message
-                var senderID = messageData[0];
+                var messageData = event.data;
+                var senderID = messageData.split(':')[0];
 
                 if (senderID === currentUserID) {
-                    // Don't append my message here, it's already added in sendMsg()
-                    appendMessage(messageData[1], true); // My message
+                    appendMessage(messageData, true); // My message
                 } else {
-                    appendMessage(event.data, false); // Other's message
+                    appendMessage(messageData, false); // Other's message
                 }
             };
 
-            function appendMessage(message, isMyMessage) {
+            function appendMessage(messageData, isMyMessage) {
                 var chatBox = document.getElementById('chat');
                 var messageContainer = document.createElement('div');
                 var messageContent = document.createElement('div');
-                messageContent.innerText = message;
+
+                var splitIndex = messageData.indexOf(':');
+                var sender = messageData.substring(0, splitIndex);
+                var message = messageData.substring(splitIndex + 1);
+
+                messageContent.innerHTML = "<strong>" + sender + "</strong>: " + message;
                 messageContainer.appendChild(messageContent);
 
                 if (isMyMessage) {

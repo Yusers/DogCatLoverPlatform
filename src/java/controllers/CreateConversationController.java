@@ -54,10 +54,11 @@ public class CreateConversationController extends HttpServlet {
 
                 }
             } else {
+                System.out.println("Existed conversation: " + existed.getId());
                 request.setAttribute("CONVER_ID", existed.getId());
             }
             request.setAttribute("TOPIC", topic);
-            request.getRequestDispatcher("DispatcherController?action=trade-chat&room=" + topic.trim()).forward(request, response);
+            request.getRequestDispatcher("DispatcherController?action=trade-chat").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

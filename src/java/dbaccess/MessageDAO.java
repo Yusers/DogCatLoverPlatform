@@ -45,6 +45,33 @@ public class MessageDAO {
 
         return list;
     }
+    
+    public static Message getMessage(int conversation_id) throws Exception {
+        Message mes = null;
+
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT [id], [sender_id], [receiver_id], [content], [conversation_id], [created_at]\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE [conversation_id] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, conversation_id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String sender_id = rs.getString("sender_id");
+                    String receiver_id = rs.getString("receiver_id");
+                    String content = rs.getString("content");
+                    Date created_at = rs.getDate("created_at");
+                    mes = new Message(id, sender_id, receiver_id, content, conversation_id, created_at);
+                }
+            }
+            cn.close();
+        }
+
+        return mes;
+    }
 
     public static int createMessage(Message mess) throws Exception {
         int rs = 0;

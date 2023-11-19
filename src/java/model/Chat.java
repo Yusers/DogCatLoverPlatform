@@ -5,45 +5,35 @@
 package model;
 
 import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 
 /**
  *
  * @author overw
  */
 public class Chat {
-    private String sender_id;
-    private String receiver_id;
+
     private int id;
     private String topic;
-    private Date created_at;
+    private String receiver_id;
+    private String latest_message;
+    private String lastest_sender;
+    private Timestamp created_at;
     private Date updated_at;
 
     public Chat() {
     }
 
-    public Chat(String sender_id, String receiver_id, int id, String topic, Date created_at) {
-        this.sender_id = sender_id;
-        this.receiver_id = receiver_id;
+    public Chat(int id, String topic, String latest_message, String receiver_id, String lastest_sender, Timestamp created_at, Date updated_at) {
         this.id = id;
         this.topic = topic;
-        this.created_at = created_at;
-    }
-    
-    public Chat(String sender_id, String receiver_id, int id, String topic, Date created_at, Date updated_at) {
-        this.sender_id = sender_id;
+        this.latest_message = latest_message;
         this.receiver_id = receiver_id;
-        this.id = id;
-        this.topic = topic;
+        this.lastest_sender = lastest_sender;
         this.created_at = created_at;
         this.updated_at = updated_at;
-    }
-
-    public String getSender_id() {
-        return sender_id;
-    }
-
-    public void setSender_id(String sender_id) {
-        this.sender_id = sender_id;
     }
 
     public String getReceiver_id() {
@@ -52,6 +42,30 @@ public class Chat {
 
     public void setReceiver_id(String receiver_id) {
         this.receiver_id = receiver_id;
+    }
+
+    public String getLastest_message() {
+        return latest_message;
+    }
+
+    public void setLastest_message(String lastest_message) {
+        this.latest_message = lastest_message;
+    }
+
+    public String getLatest_message() {
+        return latest_message;
+    }
+
+    public void setLatest_message(String lastest_message) {
+        this.latest_message = lastest_message;
+    }
+
+    public String getLastest_sender() {
+        return lastest_sender;
+    }
+
+    public void setLastest_sender(String lastest_sender) {
+        this.lastest_sender = lastest_sender;
     }
 
     public int getId() {
@@ -70,11 +84,11 @@ public class Chat {
         this.topic = topic;
     }
 
-    public Date getCreated_at() {
+    public Timestamp getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
 
@@ -86,9 +100,18 @@ public class Chat {
         this.updated_at = updated_at;
     }
 
+    public long getCreatedAtTime() {
+        return created_at.getTime();
+    }
+
+    public String getFormattedCreatedAtTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        return formatter.format(created_at.getTime());
+    }
+
     @Override
     public String toString() {
-        return "Chat{" + "sender_id=" + sender_id + ", receiver_id=" + receiver_id + ", id=" + id + ", topic=" + topic + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
+        return "Chat{" + "id=" + id + ", topic=" + topic + ", receiver_id=" + receiver_id + ", latest_message=" + latest_message + ", lastest_sender=" + lastest_sender + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
     }
-    
+
 }

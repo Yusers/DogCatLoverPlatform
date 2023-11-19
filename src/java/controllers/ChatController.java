@@ -8,12 +8,14 @@ import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
-import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import model.Message;
+import model.Conversation;
 import dbaccess.MessageDAO;
+import jakarta.websocket.EndpointConfig;
+import jakarta.websocket.server.PathParam;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -28,82 +30,64 @@ import java.util.Map;
 @ServerEndpoint("/chat")
 public class ChatController {
 
-    private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<>());
-    private static Map<String, Set<Session>> rooms = new HashMap<>();
+    private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<Session, Boolean>());
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("room") String roomName) {
-        // Add the user to the appropriate room based on the passed roomName
-        rooms.computeIfAbsent(roomName, k -> new HashSet<>()).add(session);
-        System.out.println("User joined room: " + roomName);
+    public void onOpen(Session curSession) {
+        // Use roomName as needed
+        userSessions.add(curSession);
     }
 
     @OnClose
     public void onClose(Session session) {
         // Remove the user from all rooms upon disconnecting
-        rooms.values().forEach(room -> room.remove(session));
-        System.out.println("User disconnected");
+        userSessions.remove(session);
     }
 
     @OnMessage
     public void onMessage(String message, Session userSession) {
         System.out.println("Received message: " + message);
 
-        String[] messageParts = message.split(":");
-
+        String[] messageParts = message.split(": ");
+        System.out.println("messageParts[0]: " + messageParts[0]);;
+        System.out.println("messageParts[1]: " + messageParts[1]);
+        System.out.println("messageParts[2]: " + messageParts[2]);;
+        System.out.println("length: " + messageParts.length);
         try {
-            if (messageParts.length == 2) {
-                String roomName = getRoomName(userSession);
+            if (messageParts.length > 2) {
+                String roomName = messageParts[2];
                 System.out.println("Message received in room: " + roomName);
 
                 String content = messageParts[1];
 
-                String[] roomParts = roomName.split("\\|");
+                int conversationId = Integer.parseInt(roomName.trim()); // Implement your method to get conversation ID
+                Conversation con = ConversationDAO.getConversation(conversationId);
+                System.out.println("name room: " + con.getTopic());
+                String[] topicParts = con.getTopic().split("\\|");
 
-                if (roomParts.length == 3) {
-                    String receiverId = roomParts[1].trim(); // Receiver ID
-                    String senderId = roomParts[2].trim(); // Sender ID
-
-                    int conversationId = ConversationDAO.getConversation(roomName).getId(); // Implement your method to get conversation ID
-
-                    Message newMessage = new Message(senderId, receiverId, content, conversationId);
-                    MessageDAO.createMessage(newMessage);
-
-                    broadcast(message);
-                    System.out.println("Message broadcasted");
-                }
+                // Trim the spaces from the extracted parts
+                String receiverId = topicParts[1].trim();
+                String senderId = topicParts[2].trim();
+                System.out.println("Receiver: " + receiverId);
+                System.out.println("Sender: " + senderId);
+                System.out.println("Logic: senderRealTime: " + (messageParts[0].equals(senderId.trim()) ? senderId : receiverId) + " receiverRealtime: " + (messageParts[0].equals(senderId.trim()) ? receiverId : senderId));
+                System.out.println("Conversation ID: " + conversationId);
+                String senderRealTime = (messageParts[0].equals(senderId.trim()) ? senderId : receiverId);
+                String receiverRealTime = (messageParts[0].equals(senderId.trim()) ? receiverId : senderId);
+                Message newMessage = new Message(senderRealTime, receiverRealTime, content, conversationId);
+                MessageDAO.createMessage(newMessage);
+                System.out.println(messageParts[0].concat(": " + messageParts[1]));
+                broadcast(messageParts[0].concat(": " + messageParts[1]), userSession);
+                System.out.println("Message broadcasted");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void broadcast(String message) {
-        for (Session session : userSessions) {
-            if (session.isOpen()) {
-                try {
-                    session.getBasicRemote().sendText(message);
-                } catch (Exception e) {
-                    // Handle exception (log or ignore)
-                }
-            }
+    private void broadcast(String message, Session userSession) {
+        for (Session ses : userSessions) {
+            ses.getAsyncRemote().sendText(message);
         }
-    }
-
-    private String getRoomName(Session session) {
-        // Get the room name associated with the user session
-        for (Map.Entry<String, Set<Session>> entry : rooms.entrySet()) {
-            if (entry.getValue().contains(session)) {
-                return entry.getKey();
-            }
-        }
-        return "default"; // Return default room if not found
-    }
-
-    // Method to retrieve conversation ID based on topic (customize this according to your logic)
-    private int getConversationIdForTopic(String topic) {
-        // Implement your logic to retrieve conversation ID from the topic
-        // For example, querying the database or using a mapping
-        return 0; // Replace with the actual conversation ID
     }
 }
