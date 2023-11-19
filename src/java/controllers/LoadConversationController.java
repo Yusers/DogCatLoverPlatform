@@ -37,7 +37,7 @@ public class LoadConversationController extends HttpServlet {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("USER");
             session.setAttribute("CHAT", ConversationDAO.getChatConversation(acc.getUser_id()));
-            response.sendRedirect("conversation.jsp");
+            response.sendRedirect("DispatcherController?action=view-conversation");
         } catch(Exception ex) {
             ex.printStackTrace();
         }

@@ -57,7 +57,7 @@ public class CreateConversationController extends HttpServlet {
                 request.setAttribute("CONVER_ID", existed.getId());
             }
             request.setAttribute("TOPIC", topic);
-            request.getRequestDispatcher("DispatcherController?action=trade-chat").forward(request, response);
+            request.getRequestDispatcher("DispatcherController?action=trade-chat&room=" + topic.trim()).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

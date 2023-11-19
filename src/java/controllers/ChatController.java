@@ -1,3 +1,4 @@
+package controllers;
 
 import dbaccess.ConversationDAO;
 import java.util.Collections;
@@ -34,35 +35,42 @@ public class ChatController {
     public void onOpen(Session session, @PathParam("room") String roomName) {
         // Add the user to the appropriate room based on the passed roomName
         rooms.computeIfAbsent(roomName, k -> new HashSet<>()).add(session);
+        System.out.println("User joined room: " + roomName);
     }
 
     @OnClose
     public void onClose(Session session) {
         // Remove the user from all rooms upon disconnecting
         rooms.values().forEach(room -> room.remove(session));
+        System.out.println("User disconnected");
     }
 
     @OnMessage
     public void onMessage(String message, Session userSession) {
+        System.out.println("Received message: " + message);
+
         String[] messageParts = message.split(":");
 
         try {
             if (messageParts.length == 2) {
-                String topic = getRoomName(rooms);
+                String roomName = getRoomName(userSession);
+                System.out.println("Message received in room: " + roomName);
+
                 String content = messageParts[1];
 
-                String[] topicParts = topic.split("\\|");
+                String[] roomParts = roomName.split("\\|");
 
-                if (topicParts.length == 3) {
-                    String receiverId = topicParts[1].trim(); // Receiver ID
-                    String senderId = topicParts[2].trim(); // Sender ID
+                if (roomParts.length == 3) {
+                    String receiverId = roomParts[1].trim(); // Receiver ID
+                    String senderId = roomParts[2].trim(); // Sender ID
 
-                    int conversationId = ConversationDAO.getConversation(topic).getId(); // Implement your method to get conversation ID
+                    int conversationId = ConversationDAO.getConversation(roomName).getId(); // Implement your method to get conversation ID
 
                     Message newMessage = new Message(senderId, receiverId, content, conversationId);
                     MessageDAO.createMessage(newMessage);
 
                     broadcast(message);
+                    System.out.println("Message broadcasted");
                 }
             }
         } catch (Exception ex) {
