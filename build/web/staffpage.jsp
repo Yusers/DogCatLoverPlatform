@@ -20,7 +20,7 @@
         <title>JSP Page</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -176,7 +176,7 @@
                             <h5 class="card-title">Manage Members</h5>
                             <form action="SearchMemberController" method="post">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="search" class="form-control ml-2" placeholder="Type fullname ..." aria-describedby="button-addon2">
+                                    <input type="text" name="search" class="form-control ml-2" placeholder="Nhập đầy đủ họ tên..." aria-describedby="button-addon2">
                                     <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                                 </div>
                             </form>
@@ -210,7 +210,7 @@
                                                 <td><a href="DispatcherController?action=my-post&us=${m.user_id}">Post</a></td>
                                                 <td>${m.status}</td>
                                                 <td class="text-center">
-                                                    <form action="ActionController" method="post" onsubmit="return confirmAction('${m.status}', '${m.user_id}');">
+                                                    <form action="ActionController" method="post">
                                                         <input type="hidden" name="username" value="${m.user_id}"/>
                                                         <button name="action" value="delete" class="btn btn-danger">
                                                             <i class="fas fa-trash"></i>
@@ -222,13 +222,6 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
-
-                                    <script>
-                                        function confirmAction(status, userId) {
-                                            var action = (status === 'Active') ? 'cấm' : 'hủy cấm';
-                                            return confirm("Bạn có chắc chắn muốn " + action + ": " + userId + " ?");
-                                        }
-                                    </script>
                                     </tbody>
                                 </table>
                             </c:if>
@@ -240,6 +233,12 @@
         <!-- Staff Dashboard End -->
 
 
+        <script>
+            function confirmAction(status, userId) {
+                var action = (status === 'Active') ? 'cấm' : 'hủy cấm';
+                return confirm("Bạn có chắc chắn muốn " + action + ": " + userId + " ?");
+            }
+        </script>
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
