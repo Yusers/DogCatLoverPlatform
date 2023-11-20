@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/conversation.jsp</file>
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/controllers/StaffManagerController.java</file>
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/model/Media.java</file>
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/model/Message.java</file>
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/web/chat.jsp</file>
             <file>file:/C:/Users/overw/Documents/DogCatLoverPlatform/src/java/controllers/ChatController.java</file>
+=======
+            <file>file:/D:/SWP391/DogCatLoverPlatform/web/staffpage.jsp</file>
+>>>>>>> 3fc5eaff205ff19a5cdb4af2db0f6251752ca217
         </group>
     </open-files>
 </project-private>
