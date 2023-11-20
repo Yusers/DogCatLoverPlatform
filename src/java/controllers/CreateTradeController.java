@@ -67,14 +67,14 @@ public class CreateTradeController extends HttpServlet {
                 } else {
                     String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
                     price = Integer.parseInt(formattedPrice); // Parse the integer
+                    if (price <= 1000) {
+                        request.setAttribute("ERR_CONTENT", "Vui lòng điền giá trên 1000 vì đây là hình thức trả phí!");
+                        flag = true;
+                    }
                 }
             }
             if (flag) {
                 request.getRequestDispatcher("create-trade.jsp").forward(request, response);
-            }
-            if (type.equals("fee")) {
-                String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
-                price = Integer.parseInt(formattedPrice); // Parse the integer
             }
             Trade_Category existed = Trade_CategoryDAO.getTradeCategory(category);
             Trade trade = null;

@@ -77,6 +77,36 @@ public class TradeDAO {
         }
         return trades;
     }
+    
+    public static ArrayList<Trade> getAllTradeByType(String type, String status) throws Exception {
+        ArrayList<Trade> trades = new ArrayList<>();
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Trade]\n"
+                    + "WHERE [type] = ? AND [status] = ?";
+            PreparedStatement st = cn.prepareStatement(sql);
+            st.setString(1, type);
+            st.setString(2, status);
+            ResultSet rs = st.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String author_id = rs.getString("author_id");
+                    String title = rs.getString("title");
+                    String content = rs.getString("content");
+                    String condition = rs.getString("condition");
+                    long price = rs.getLong("price");
+                    int category = rs.getInt("category");
+                    Date created_at = rs.getDate("created_at");
+                    Date updated_at = rs.getDate("updated_at");
+                    trades.add(new Trade(id, author_id, title, content, status, category, type, price, condition));
+                }
+            }
+            cn.close();
+        }
+        return trades;
+    }
 
     public static ArrayList<Trade> getAllTradeByAuthor(String author_id) throws Exception {
         ArrayList<Trade> trades = new ArrayList<>();

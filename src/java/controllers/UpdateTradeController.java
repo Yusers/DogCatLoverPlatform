@@ -71,7 +71,7 @@ public class UpdateTradeController extends HttpServlet {
             String urlImg;
             out.print("List media: " + listMediaId + "<br/>");
             if (content.length() >= 20) {
-                if (category.trim().length() < 10) {
+                if (category.trim().length() < 1) {
                     request.setAttribute("ERR_CONTENT", "Phần loại bài viết không đc để trống và khoảng trắng và trên 10 ký tự!");
                     flag = true;
                 } else if (condition.trim().length() < 10) {
@@ -84,10 +84,14 @@ public class UpdateTradeController extends HttpServlet {
                     } else {
                         String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
                         price = Integer.parseInt(formattedPrice); // Parse the integer
+                        if (price <= 1000) {
+                            request.setAttribute("ERR_CONTENT", "Vui lòng điền giá trên 1000 vì đây là hình thức trả phí!");
+                            flag = true;
+                        }
                     }
                 }
                 if (flag) {
-                    request.getRequestDispatcher("DispatcherController?action=trade-edit-page").forward(request, response);
+                    request.getRequestDispatcher("DispatcherController?action=trade-details&id=" + id + "&edit=true&type=" + type).forward(request, response);
                 }
                 flag = false;
                 ArrayList<String> urls = new ArrayList<>();

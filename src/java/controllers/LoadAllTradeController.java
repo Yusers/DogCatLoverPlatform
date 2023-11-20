@@ -40,8 +40,18 @@ public class LoadAllTradeController extends HttpServlet {
             String status = request.getParameter("status");
             ArrayList<Trade> listTrade = new ArrayList<>();
             String url = "DispatcherController?action=trade-page";
-            if(status == null || status.isEmpty()) {
-                listTrade = TradeDAO.getAllTrade("Approved");
+            if (status == null || status.isEmpty()) {
+                String type = request.getParameter("type");
+                if (type == null || type.isEmpty()) {
+                    listTrade = TradeDAO.getAllTrade("Approved");
+                    System.out.println("type = null");
+                } else if (type.equals("fee")) {
+                    listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
+                    System.out.println("type = " + type);
+                } else if (type.equals("gift")) {
+                    listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
+                    System.out.println("type = " + type);
+                }
                 request.setAttribute("TRADES", listTrade);
             } else {
                 listTrade = TradeDAO.getAllTrade("Created");
@@ -49,7 +59,7 @@ public class LoadAllTradeController extends HttpServlet {
                 url = "DispatcherController?action=staff-manage-trade";
             }
             request.getRequestDispatcher(url).forward(request, response);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

@@ -17,7 +17,7 @@
         <title>JSP Page</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -158,6 +158,7 @@
         <c:set var="cate" value="${requestScope.CATE}" />
         <!-- Trading Start -->
         <div class="container mt-5 mb-5">
+            <h2 class="text-center text-danger">${requestScope.ERR_CONTENT}</h2>
             <form action="UpdateTradeController" method="POST" enctype="multipart/form-data">
                 <c:set var="categorys" value="${Trade_CategoryDAO.getAllTradeCate()}"/>
                 <input type="hidden" name="author" value="${trade.author_id}" />
@@ -243,7 +244,7 @@
                                 <hr/>
 
                             <c:if test="${param.type eq 'fee'}">
-                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price}" placeholder="Nhập giá"></h5>
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.getPriceInVND()}" placeholder="Nhập giá"></h5>
                                 <hr/>    
                             </c:if>
                             <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
