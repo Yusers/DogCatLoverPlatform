@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin | Cat Dog Lover Website</title>
-
+ 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 

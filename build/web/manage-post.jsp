@@ -10,7 +10,7 @@
         <title>Bài viết của tôi | DogCatLoverPlatform</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 

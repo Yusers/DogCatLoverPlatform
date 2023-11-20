@@ -176,7 +176,7 @@
                                     </c:if>
                                     <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </c:forEach>
