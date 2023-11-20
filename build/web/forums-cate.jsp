@@ -207,9 +207,9 @@
                                     <!-- Bootstrap Pagination -->
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center">
-                                            <fmt:formatNumber var="totalPages" value="${(listPost.size() + pageSize - 1) / pageSize}" maxFractionDigits="0" />
+                                            <fmt:formatNumber var="totalPages" value="${Mat.ceil((listPost.size() + pageSize - 1) / pageSize)}" maxFractionDigits="0" />
                                             <c:set var="totalPagesInt" value="${totalPages}" />
-                                            <c:if test="${totalPagesInt > 1}">
+                                            <c:if test="${totalPages > 1}">
                                                 <c:choose>
                                                     <c:when test="${currentPage == 1}">
                                                         <li class="page-item disabled">
