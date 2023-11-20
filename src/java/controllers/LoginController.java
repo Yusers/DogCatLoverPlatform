@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("USER", a);
             } else {
-                request.setAttribute("ERROR", "UserName or Password incorrect!!");
+                request.setAttribute("ERROR", "Tài khoản hoặc mật khẩu không chính xác");
                 url += "login-page";
             }
                 request.getRequestDispatcher(url).forward(request, response);
