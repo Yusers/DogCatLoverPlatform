@@ -31,21 +31,6 @@
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <style>
-            .my-message {
-                text-align: right;
-                background-color: #cceeff; /* Light blue for your messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
-
-            .other-message {
-                text-align: left;
-                background-color: #f0f0f0; /* Light gray for others' messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
 
             .card-body {
                 height: 400px;
