@@ -237,7 +237,7 @@
                                     <textarea class="form-control" name="content" id="content" rows="4" placeholder="Nhập nội dung bài viết..."></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Đăng bài</button>
-                            </form>
+                            </form> 
                         </c:when>
                     </c:choose>
                 </div>
