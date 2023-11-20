@@ -170,7 +170,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
-                        <div class="card-body">
+                        <article>
                             <div class="alert alert-secondary" role="alert">
                                 Chúng tôi rất vui mừng khi chào đón bạn vào cộng đồng của chúng tôi. Đây là nơi để chia sẻ ý kiến, hỏi đáp và kết nối với những người có sở thích tương tự. 
                                 Hãy không ngần ngại tham gia vào các cuộc trò chuyện và đóng góp ý kiến của bạn.
@@ -183,7 +183,7 @@
                                 ${post.content.trim()}
                             </p>
                             <!--<img src="./assets/img/blog-2.jpg" class="card-img-top thread-img" alt="blog-1"><br>-->
-                        </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -223,6 +223,7 @@
                             </c:choose>
                         </form>
                     </div>
+                            <br>
                     <!-- Reply 1 -->
                     <c:forEach items="${requestScope.COMMENTS}" var="comment">
                         <c:choose>
