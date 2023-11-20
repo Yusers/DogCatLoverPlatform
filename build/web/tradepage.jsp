@@ -15,40 +15,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
-        <style>
-            .my-message {
-                text-align: right;
-                background-color: #cceeff; /* Light blue for your messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
 
-            .other-message {
-                text-align: left;
-                background-color: #f0f0f0; /* Light gray for others' messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
-
-            .custom-btn:hover {
-                cursor: text;
-                text-decoration: none;
-                border: 1px solid black;
-                color: black;
-            }
-
-            .top-left-text {
-                position: absolute;
-                top: 10px; /* Adjust this value as needed to position the text */
-                left: 10px; /* Adjust this value as needed to position the text */
-            }
-        </style>
     </head>
 
     <!-- Favicon -->
-    <link href="img/icons8-pet-lover-16.ico" rel="icon">
+   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -205,7 +176,7 @@
                                     </c:if>
                                     <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </c:forEach>

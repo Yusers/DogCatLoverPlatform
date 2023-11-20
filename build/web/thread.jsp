@@ -21,7 +21,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Flaticon Font -->
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet"> 
 
         <!-- Libraries Stylesheet -->
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -32,24 +32,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .cus-comment {
-                margin-left: 4rem;
-            }
 
-            .cus-comment:hover {
-                cursor: pointer;
-            }
-
-            .comment__user-content{
-                border: 1px solid #454d55;
-                border-radius: 10px;
-                background-color: #ededed;
-            }
-            .comment__user-content p{
-                margin: 0.5rem;
-            }
-        </style>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1" nonce="YOUR_NONCE"></script>
     </head>
 

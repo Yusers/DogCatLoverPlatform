@@ -10,7 +10,7 @@
         <title>Bài viết của tôi | DogCatLoverPlatform</title>
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -27,27 +27,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .custom-btn:hover {
-                cursor: text;
-                text-decoration: none;
-                border: 1px solid black;
-                color: black;
-            }
 
-            .custom-title-post:hover {
-                cursor: pointer;
-                opacity: 0.8;
-            }
-
-            .toast-container {
-                position: absolute;
-                bottom: 2%;
-                right: 0;
-                z-index: 9999; /* Adjust this value if necessary */
-                padding: 0.5rem 2rem;
-            }
-        </style>
     </head>
     <body>
         <!-- Topbar Start -->

@@ -12,7 +12,7 @@
         <title>Trang Chủ | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -287,4 +287,4 @@
         <script src="js/main.js"></script>
     </body>
 
-</html>
+</html> 
