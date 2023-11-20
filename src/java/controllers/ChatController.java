@@ -12,7 +12,7 @@ import jakarta.websocket.server.ServerEndpoint;
 import model.Message;
 import model.Conversation;
 import dbaccess.MessageDAO;
-import jakarta.websocket.EndpointConfig;
+import jakarta.websocket.CloseReason;
 import jakarta.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Map;
  *
  * @author Learn new here
  */
-@ServerEndpoint("/chat")
+@ServerEndpoint("/chat/{topic}/{sender}")
 public class ChatController {
 
     private static Set<Session> userSessions = Collections.newSetFromMap(new ConcurrentHashMap<Session, Boolean>());

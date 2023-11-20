@@ -242,14 +242,17 @@
             } else {
                 wsUrl = 'wss://';
             }
-
-            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
-
+            
             var currentUserID = '<c:out value="${sessionScope.USER.user_id}" />';
+            var topic = "${requestScope.CONVER_ID}";
 
+            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat/" + topic + "/" + currentUserID);
+
+            
+            var isMyMessage = false;
 
             ws.onerror = function (event) {
-                console.log("Error ", event)
+                console.log("Error ", event.type)
             }
 
             function sendMsg() {
@@ -267,9 +270,11 @@
                 var senderID = messageData.split(':')[0];
 
                 if (senderID === currentUserID) {
-                    appendMessage(messageData, true); // My message
+                    isMyMessage = true;
+                    appendMessage(messageData, isMyMessage); // My message
                 } else {
-                    appendMessage(messageData, false); // Other's message
+                    isMyMessage = false;
+                    appendMessage(messageData, isMyMessage); // Other's message
                 }
             };
 
