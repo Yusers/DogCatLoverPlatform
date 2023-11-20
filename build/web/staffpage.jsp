@@ -146,7 +146,7 @@
                         <div class="col-md-4 text-center">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tổng thành viên</h5>
+                                    <h5 class="card-title">Tổng số thành viên</h5>
                                     <p class="card-text">${listOfMember.size()}</p>
                                     <a class="btn btn-primary btn-block" href="#member">Xem tất cả</a>
                                 </div>
@@ -155,7 +155,7 @@
                         <div class="col-md-4 text-center">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tổng bài viết trên diễn đàn</h5>
+                                    <h5 class="card-title">Tổng bài viết cần duyệt</h5>
                                     <p class="card-text">${listOfPost.size()}</p>
                                     <a class="btn btn-primary btn-block" href="DispatcherController?action=forums&status=created">Xem tất cả</a>
                                 </div>
@@ -164,7 +164,7 @@
                         <div class="col-md-4 text-center">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tổng bài viết trao đổi và mua bán</h5>
+                                    <h5 class="card-title">Tổng bài viết trao đổi cần duyệt</h5>
                                     <p class="card-text">${listOfTrade.size()}</p>
                                     <a class="btn btn-primary btn-block" href="DispatcherController?action=trade&status=created">Xem tất cả</a>
                                 </div>
@@ -176,8 +176,8 @@
                             <h5 class="card-title">Manage Members</h5>
                             <form action="SearchMemberController" method="post">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="search" class="form-control ml-2" placeholder="type fullname ..." aria-describedby="button-addon2">
-                                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Button<i class="fas fa-search"></i></button>
+                                    <input type="text" name="search" class="form-control ml-2" placeholder="Type fullname ..." aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                                 </div>
                             </form>
                             <c:if test="${not empty listOfMember}">
@@ -210,19 +210,25 @@
                                                 <td><a href="DispatcherController?action=my-post&us=${m.user_id}">Post</a></td>
                                                 <td>${m.status}</td>
                                                 <td class="text-center">
-                                                    <!--<button class="btn btn-warning"><a href="editprofileuser.jsp">Edit</a></button>-->
-                                                    <form action="ActionController" method="post">
+                                                    <form action="ActionController" method="post" onsubmit="return confirmAction('${m.status}', '${m.user_id}');">
                                                         <input type="hidden" name="username" value="${m.user_id}"/>
                                                         <button name="action" value="delete" class="btn btn-danger">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                         <button name="action" value="ban" class="btn btn-danger" data-toggle="modal" data-target="#modal-promote">
-                                                            <i class="fas fa-lock"></i>
+                                                            <i class="fas ${m.status eq 'Active' ? 'fa-lock' : 'fa-unlock'}"></i>
                                                         </button>
                                                     </form>
                                                 </td>
                                             </tr>
                                         </c:forEach>
+
+                                    <script>
+                                        function confirmAction(status, userId) {
+                                            var action = (status === 'Active') ? 'cấm' : 'hủy cấm';
+                                            return confirm("Bạn có chắc chắn muốn " + action + ": " + userId + " ?");
+                                        }
+                                    </script>
                                     </tbody>
                                 </table>
                             </c:if>
