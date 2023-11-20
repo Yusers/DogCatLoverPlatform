@@ -4503,7 +4503,7 @@ input[type="button"].btn-block {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem;
-    height: 400px;
+    max-height: 250px;
     overflow-y: scroll;
 }
 
