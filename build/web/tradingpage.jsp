@@ -15,7 +15,7 @@
         <title>JSP Page</title>
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -32,41 +32,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .top-left-text {
-                position: absolute;
-                top: 10px; /* Adjust this value as needed to position the text */
-                left: 10px; /* Adjust this value as needed to position the text */
-            }
-            .dark-overlay {
-                position: relative;
-            }
 
-            .dark-overlay::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity here */
-                z-index: 1;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .overlay-text {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                color: white; /* Text color */
-                font-size: 24px; /* Adjust font size */
-                /* You can add more styles as needed */
-            }
-
-        </style>
     </head>
     <body>
         <!-- Topbar Start -->

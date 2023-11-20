@@ -38,39 +38,6 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .cus-comment {
-                margin-left: 4rem;
-            }
-
-            .cus-comment:hover {
-                cursor: pointer;
-            }
-
-            .custom-input {
-                border: none;
-            }
-
-            .custom-input-img {
-                position: relative;
-            }
-
-            .custom-input-img:hover::after {
-                content: 'Click here to edit';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                color: white;
-                font-size: 18px;
-                text-align: center;
-                cursor: pointer;
-            }
-
-            .custom-input-img:hover img {
-                filter: brightness(70%); /* Adjust the brightness level as needed */
-            }
-        </style>
     </head>
 
     <body>

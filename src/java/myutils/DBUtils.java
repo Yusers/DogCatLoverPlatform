@@ -16,7 +16,7 @@ public class DBUtils {
     public static Connection makeConnection() throws Exception {
         Connection cn = null;
         String IP = "localhost";
-        String instanceName = "DESKTOP-E7C7O15\\SQLEXPRESS";
+        String instanceName = "NTK2k2\\SQLEXPRESS";
         String port = "1433";
         String uid = "sa";
         String pwd = "12345";
