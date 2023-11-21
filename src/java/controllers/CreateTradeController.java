@@ -54,14 +54,14 @@ public class CreateTradeController extends HttpServlet {
 //        out.print("price: " + price + "<br/>");
 //        out.print("type: " + type + "<br/>");
         try {
-            if (category.trim().length() < 1) {
-                request.setAttribute("ERR_CONTENT", "Phần loại bài viết không đc để trống và khoảng trắng!");
+            if (category.trim().length() < 2 || category.trim().isBlank()) {
+                request.setAttribute("ERR_CONTENT", "Phần loại bài viết phải trên 1 ký tự, không đc để trống và khoảng trắng!");
                 flag = true;
-            } else if (condition.trim().length() < 1) {
-                request.setAttribute("ERR_CONTENT", "Phần tình trạng không đc để trống và khoảng trắng!");
+            } else if (condition.trim().length() < 10 || condition.trim().isBlank()) {
+                request.setAttribute("ERR_CONTENT", "Phần tình trạng phải trên 10 ký tự, không được để trống và khoảng trắng!");
                 flag = true;
             } else if (type.equals("fee")) {
-                if (priceString.trim().length() < 1) {
+                if (priceString.trim().length() < 1 || priceString.trim().isBlank()) {
                     request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
                     flag = true;
                 } else {

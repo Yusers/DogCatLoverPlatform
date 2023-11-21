@@ -36,7 +36,19 @@ public class CreatePostController extends HttpServlet {
 
             Post post = null;
             int rs = 0;
-            if (content.length() >= 20) {
+            boolean flag = false;
+            if (content.length() >= 20 || !content.trim().isBlank()) {
+                if (title.trim().length() <= 10 || title.trim().isBlank()) {
+                    flag = true;
+                    request.setAttribute("ERR_CONTENT", "Tiêu đề bài viết phải có ít nhất 10 kí tự và không được để trống!!!");
+                } else if (category.trim().length() <= 5 || category.trim().isBlank()) {
+                    flag = true;
+                    request.setAttribute("ERR_CONTENT", "Loại bài viết phải có ít nhất 5 kí tự và không được để trống!!!");
+                }
+                if (flag) {
+                    request.getRequestDispatcher("create-post.jsp").forward(request, response);
+                }
+
                 Part part = request.getPart("image");
                 String imageUrl;
                 if (part != null && part.getSize() > 0) {
@@ -62,7 +74,7 @@ public class CreatePostController extends HttpServlet {
                 }
                 request.setAttribute("ERR_CONTENT", "Tạo Thành Công!");
             } else {
-                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 20 kí tự!!!");
+                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 20 kí tự và không được để trống!!!");
             }
             request.getRequestDispatcher("create-post.jsp").forward(request, response);
         } catch (Exception ex) {

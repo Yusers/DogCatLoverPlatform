@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -126,108 +126,115 @@
 
         <!-- Staff Dashboard Start -->
         <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Staff Dashboard</h1>
-                    <div class="row mb-3">
-                        <div class="col-md-12 text-center">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Tổng bài viết</h5>
-                                    <p class="card-text">${listOfPost.size()}</p>
-                                    <a class="btn btn-primary btn-block" href="DispatcherController?action=staff-manage">Quay lại</a>
+            <c:choose>
+                <c:when test="${us.role eq 'STAFF'}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Staff Dashboard</h1>
+                            <div class="row mb-3">
+                                <div class="col-md-12 text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Tổng bài viết</h5>
+                                            <p class="card-text">${listOfPost.size()}</p>
+                                            <a class="btn btn-primary btn-block" href="DispatcherController?action=staff-manage">Quay lại</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Manage Threads Start -->
-                    <!-- Thread List -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="accordion" id="threadAccordion">
-                                <!-- Thread 1 -->
-                                <c:forEach var="post" items="${listOfPost}">
-                                    <div class="card">
-                                        <div class="card-header d-flex align-content-center justify-content-between" id="thread${post.id}">
-                                            <div class="header-post">
-                                                <h4 class="ml-2">
-                                                    Bài viết của: ${post.author_id}
-                                                </h4>
-                                                <h2 class="mb-0">
-                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThread${post.id}" aria-expanded="true" aria-controls="collapseThread${post.id}">
-                                                        ${post.title}
-                                                    </button>
-                                                </h2>
-                                            </div>
-                                            <div class="header-action">
-                                                <a class="btn btn-success" href="DispatcherController?action=handle-post&btn=approve&id=${post.id}"}>Chấp nhận</a>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#rejectPostModal${post.id}">Từ chối</button>
-                                            </div>
-                                        </div>
-                                        <div class="modal fade" id="rejectPostModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectPostModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <form action="DispatcherController" method="POST">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="rejectPostModalLabel">Từ chối bài viết</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
+                            <!-- Manage Threads Start -->
+                            <!-- Thread List -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="accordion" id="threadAccordion">
+                                        <!-- Thread 1 -->
+                                        <c:forEach var="post" items="${listOfPost}">
+                                            <div class="card">
+                                                <div class="card-header d-flex align-content-center justify-content-between" id="thread${post.id}">
+                                                    <div class="header-post">
+                                                        <h4 class="ml-2">
+                                                            Bài viết của: ${post.author_id}
+                                                        </h4>
+                                                        <h2 class="mb-0">
+                                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThread${post.id}" aria-expanded="true" aria-controls="collapseThread${post.id}">
+                                                                ${post.title}
                                                             </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="action" value="handle-post" />
-                                                            <input type="hidden" name="id" value="${post.id}"/>
-                                                            <div class="form-group">
-                                                                <label for="rejectReason">Lí do</label>
-                                                                <textarea name="reason" class="form-control" id="rejectReason" rows="3"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" value="reject" name="btn" class="btn btn-danger">Từ chối</button>
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                                        </div>
-                                                    </form>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="header-action">
+                                                        <a class="btn btn-success" href="DispatcherController?action=handle-post&btn=approve&id=${post.id}"}>Chấp nhận</a>
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#rejectPostModal${post.id}">Từ chối</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div id="collapseThread${post.id}" class="collapse" aria-labelledby="thread${post.id}" data-parent="#threadAccordion">
-                                            <div class="card-body">
-                                                <div class="card">
-
-                                                    <div class="card-body">
-                                                        <!-- Thread Information -->
-                                                        <h5>${post.title}</h5>
-                                                        <div class="mb-3 ml-3">
-                                                            <p>Tác giả: <strong>${post.author_id}</strong></p>
-                                                            <p class="text-truncate">${post.content}</p>
-                                                            <p>Thể Loại: ${Post_CategoryDAO.getPostCategory(post.cate_id).name}</p>
-                                                            <p>Trạng thái: ${post.status}</p>
+                                                <div class="modal fade" id="rejectPostModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="rejectPostModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <form action="DispatcherController" method="POST">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="rejectPostModalLabel">Từ chối bài viết</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="action" value="handle-post" />
+                                                                    <input type="hidden" name="id" value="${post.id}"/>
+                                                                    <div class="form-group">
+                                                                        <label for="rejectReason">Lí do</label>
+                                                                        <textarea name="reason" class="form-control" id="rejectReason" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" value="reject" name="btn" class="btn btn-danger">Từ chối</button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div id="collapseThread${post.id}" class="collapse" aria-labelledby="thread${post.id}" data-parent="#threadAccordion">
+                                                    <div class="card-body">
+                                                        <div class="card">
 
-                                                        <!-- Thread Actions (e.g., Delete, Edit) -->
-                                                        <div class="row">
-                                                            <div class="col-md-10"></div>
-                                                            <div class="col-md-2 d-flex justify-content-end">
-                                                                <a href="DispatcherController?action=thread&edit=staff&id=${post.id}" class="text text-primary">Xem chi tiết</a>
+                                                            <div class="card-body">
+                                                                <!-- Thread Information -->
+                                                                <h5>${post.title}</h5>
+                                                                <div class="mb-3 ml-3">
+                                                                    <p>Tác giả: <strong>${post.author_id}</strong></p>
+                                                                    <p class="text-truncate">${post.content}</p>
+                                                                    <p>Thể Loại: ${Post_CategoryDAO.getPostCategory(post.cate_id).name}</p>
+                                                                    <p>Trạng thái: ${post.status}</p>
+                                                                </div>
+
+                                                                <!-- Thread Actions (e.g., Delete, Edit) -->
+                                                                <div class="row">
+                                                                    <div class="col-md-10"></div>
+                                                                    <div class="col-md-2 d-flex justify-content-end">
+                                                                        <a href="DispatcherController?action=thread&edit=staff&id=${post.id}" class="text text-primary">Xem chi tiết</a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </c:forEach>
+                                        <c:if test="${empty listOfPost}">
+                                            <h4>Chưa có bài viết</h4>
+                                            <c:if test="${us.role ne 'STAFF'}">
+                                                <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
+                                            </c:if>
+                                        </c:if>
                                     </div>
-                                </c:forEach>
-                                <c:if test="${empty listOfPost}">
-                                    <h4>Chưa có bài viết</h4>
-                                    <c:if test="${us.role ne 'STAFF'}">
-                                        <a class="custom-btn form-control" href="${us.user_id != null ? 'create-post.jsp' : 'DispatcherController?action=login-page'}">Create post...</a>
-                                    </c:if>
-                                </c:if>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </c:when>
+                <c:otherwise>
+                    <h1>Bạn không có quyền truy cập vào trang này!</h1>
+                </c:otherwise>
+            </c:choose>
         </div>
         <!-- Staff Dashboard End -->
 

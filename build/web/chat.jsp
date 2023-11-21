@@ -10,7 +10,7 @@
         <title>Giới Thiệu | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -28,7 +28,22 @@
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
         <style>
-            
+            .my-message {
+                text-align: right;
+                background-color: #cceeff; /* Light blue for your messages */
+                border-radius: 10px;
+                padding: 5px 10px;
+                margin: 5px 0;
+            }
+
+            .other-message {
+                text-align: left;
+                background-color: #f0f0f0; /* Light gray for others' messages */
+                border-radius: 10px;
+                padding: 5px 10px;
+                margin: 5px 0;
+            }
+
             .card-body {
                 height: 400px;
                 overflow-y: scroll;
@@ -227,13 +242,13 @@
             } else {
                 wsUrl = 'wss://';
             }
-            
+
             var currentUserID = '<c:out value="${sessionScope.USER.user_id}" />';
             var topic = "${requestScope.CONVER_ID}";
 
             var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat/" + topic + "/" + currentUserID);
 
-            
+
             var isMyMessage = false;
 
             ws.onerror = function (event) {
@@ -241,10 +256,14 @@
             }
 
             function sendMsg() {
-                var msg = document.getElementById("msg").value;
-                if (msg) {
-                    ws.send(currentUserID + ": " + msg + ": " + '<c:out value="${requestScope.CONVER_ID}" />');
+                var msg = document.getElementById("msg").value.trim(); // Trim to remove leading/trailing whitespace
+
+                if (msg === "") {
+                    alert("Please enter a message. Not blank message");
+                    return false; // Prevent form submission
                 }
+
+                ws.send(currentUserID + ": " + msg + ": " + '<c:out value="${requestScope.CONVER_ID}" />');
                 document.getElementById("msg").value = "";
                 return false; // Prevent form submission
             }

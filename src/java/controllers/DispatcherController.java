@@ -88,6 +88,10 @@ public class DispatcherController extends HttpServlet {
                 url = ADMIN_PAGE;
             } else if (action.equals("create-staff")) {
                 url = CREATE_STAFF;
+            } else if (action.equals("search-staff")) {
+                url = "SearchStaffController";
+            } else if (action.equals("search-member")) {
+                url = "SearchMemberController";
             } else if (action.equals("forums")) {
                 url = "LoadAllPostController";
             } else if (action.equals("forums-cate")) {

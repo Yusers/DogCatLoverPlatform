@@ -38,7 +38,7 @@ public class CreateCommentController extends HttpServlet {
             int post_id = Integer.parseInt(post_idString);
             String content = request.getParameter("content");
             String parent_idString = request.getParameter("parent-id").trim();
-            if(content.trim().length() < 1) {
+            if(content.trim().isBlank()) {
                 request.setAttribute("ERR", "Vui lòng không nhập khoảng trống!");
                 request.getRequestDispatcher("DispatcherController?action=thread&id=" + post_id).forward(request, response);
             }
