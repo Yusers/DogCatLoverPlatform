@@ -71,7 +71,7 @@ public class UpdateTradeController extends HttpServlet {
             String urlImg;
             out.print("List media: " + listMediaId + "<br/>");
             if (content.trim().length() >= 20 || !content.trim().isBlank()) {
-                if (category.trim().length() <= 5 || category.trim().isBlank()) {
+                if (category.trim().length() <= 2 || category.trim().isBlank()) {
                     request.setAttribute("ERR_CONTENT", "Phần loại bài viết trên 5 ký tự, không được để trống và khoảng trắng!");
                     flag = true;
                 } else if (condition.trim().length() <= 10 || condition.trim().isBlank()) {

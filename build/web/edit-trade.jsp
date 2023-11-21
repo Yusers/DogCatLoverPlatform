@@ -244,7 +244,7 @@
                                 <hr/>
 
                             <c:if test="${param.type eq 'fee'}">
-                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.getPriceInVND()}" placeholder="Nhập giá"></h5>
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price}" placeholder="Nhập giá"></h5>
                                 <hr/>    
                             </c:if>
                             <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
