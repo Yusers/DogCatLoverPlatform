@@ -9,6 +9,8 @@
 <%@ page import="dbaccess.AccountDAO" %>
 <%@ page import="dbaccess.Trade_CategoryDAO" %>
 <%@ page import="dbaccess.MediaDAO" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -177,41 +179,117 @@
                 </div>
             </nav>
             <!-- Item Listings -->
-            <div class="row pb-3">
-                <c:forEach var="trade" items="${requestScope.TRADES}">
-                    <div class="col-lg-4 mb-4">
-                        <div class="card border-0 mb-2 position-relative">
-                            <c:set var="media" value="${MediaDAO.getFirstMedia(trade.id)}" />
-                            <c:choose>
-                                <c:when test="${not empty media.url && media.url ne 'NULL'}">
-                                    <img class="card-img-top img-fluid" style="object-fit: cover;" src="${media.url}" alt="${trade.title}">
-                                </c:when>
-                                <c:otherwise>
-                                    <img class="card-img-top img-fluid" src="assets/img/no-img.jpg" alt="${trade.title}">
-                                </c:otherwise>
-                            </c:choose>
-                            <div class="top-left-text">
-                                <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
-                            </div>
-                            <div class="card-body bg-light p-3">
-                                <h4 class="card-title text-truncate">${trade.title}</h4>
-                                <div class="d-flex mb-3">
-                                    <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
-                                        <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${trade.author_id}</a></c:if></small>
-                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
-                                </div>
-                                <c:set var="price" value="${trade.getPriceInVND()}" />
-                                <p class="text-truncate">${trade.content}</p>
-                                <div class="d-flex ${trade.type eq 'fee' ? 'justify-content-between' : 'justify-content-end'} align-items-center">
-                                    <c:if test="${trade.type eq 'fee'}">
-                                        <p style="color: black; font-weight: 800; margin-bottom: 0" class="text">Giá: ${price}</p>
-                                    </c:if>
-                                    <a href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mục Lục</h5>
+                            <ul style="font-size: 14px" class="list-group">
+                                <c:forEach var="c" items="${requestScope.CATE}">
+                                    <li class="list-group-item"><a href="DispatcherController?action=trade&filter=${c.id}">${c.name}</a></li>
+                                    </c:forEach>
+                                <li class="list-group-item"><a href="DispatcherController?action=trade&filter=">Tất cả</a></li>
+                            </ul>
                         </div>
                     </div>
-                </c:forEach>
+                </div>
+                <c:set var="listOfTrade" value="${requestScope.TRADES}" />
+                <div class="col-md-10 row" style="padding: 0">
+                    <c:set var="itemsPerPage" value="6" /> <!-- Define items per page -->
+                    <c:set var="totalItems" value="${listOfTrade.size()}" /> <!-- Get total number of items -->
+
+                    <c:set var="currentPage" value="${param.pageNumber != null ? param.pageNumber : 1}" /> <!-- Get current page or default to 1 -->
+
+                    <c:choose>
+                        <c:when test="${empty requestScope.TRADES}">
+                            <h1 class="col-12 text-center">Không có</h1>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="trade" items="${requestScope.TRADES}" varStatus="loop">
+                                <c:if test="${loop.index >= (currentPage - 1) * itemsPerPage && loop.index < currentPage * itemsPerPage}">
+                                    <div class="col-md-4 pb-1">
+                                        <div class="card border-0 mb-2 position-relative">
+                                            <c:set var="media" value="${MediaDAO.getFirstMedia(trade.id)}" />
+                                            <c:choose>
+                                                <c:when test="${not empty media.url && media.url ne 'NULL'}">
+                                                    <img class="card-img-top img-fluid" style="object-fit: cover;" src="${media.url}" alt="${trade.title}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img class="card-img-top img-fluid" src="assets/img/no-img.jpg" alt="${trade.title}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <div class="top-left-text">
+                                                <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
+                                            </div>
+                                            <div class="card-body bg-light p-3">
+                                                <h5 class="card-title text-truncate">${trade.title}</h5>
+                                                <div class="d-flex mb-3">
+                                                    <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
+                                                        <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${trade.author_id}</a></c:if></small>
+                                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
+                                                </div>
+                                                <c:set var="price" value="${trade.getPriceInVND()}" />
+                                                <p class="text-truncate">${trade.content}</p>
+                                                <div class="d-flex ${trade.type eq 'fee' ? 'justify-content-between' : 'justify-content-end'} align-items-center">
+                                                    <c:if test="${trade.type eq 'fee'}">
+                                                        <p style="color: black; font-weight: 600; margin-bottom: 0" class="text">Giá: ${price}</p>
+                                                    </c:if>
+                                                    <a style="font-size: 12px" href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                    <!-- Pagination section -->
+                    <c:if test="${totalItems > itemsPerPage}">
+                        <nav class="col-12 d-flex justify-content-center" aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <fmt:formatNumber var="totalPages" value="${Math.ceil(totalItems / itemsPerPage)}" /> <!-- Calculate total pages -->
+
+                                <!-- Previous page button -->
+                                <li class="page-item">
+                                    <c:choose>
+                                        <c:when test="${currentPage > 1}">
+                                            <a class="page-link" href="DispatcherController?action=trade&pageNumber=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="page-link" tabindex="-1" aria-disabled="true">Previous</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+
+                                <!-- Generate page numbers -->
+                                <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+                                    <li class="page-item">
+                                        <c:choose>
+                                            <c:when test="${pageNumber == currentPage}">
+                                                <span class="page-link">${pageNumber}</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="page-link" href="DispatcherController?action=trade&pageNumber=${pageNumber}">${pageNumber}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
+                                </c:forEach>
+
+                                <!-- Next page button -->
+                                <li class="page-item">
+                                    <c:choose>
+                                        <c:when test="${currentPage < totalPages}">
+                                            <a class="page-link" href="DispatcherController?action=trade&pageNumber=${currentPage + 1}">Next</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </ul>
+                        </nav>
+                    </c:if>
+                </div>
             </div>
         </div>
 

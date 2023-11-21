@@ -39,18 +39,37 @@ public class LoadAllTradeController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String status = request.getParameter("status");
             ArrayList<Trade> listTrade = new ArrayList<>();
+            ArrayList<Trade_Category> listCate = Trade_CategoryDAO.getAllTradeCate();
+
             String url = "DispatcherController?action=trade-page";
             if (status == null || status.isEmpty()) {
+                request.setAttribute("CATE", listCate);
                 String type = request.getParameter("type");
+                String cateString = request.getParameter("filter");
+                int cate = 0;
+                if (cateString == null || cateString.isEmpty()) {
+                    cate = 1;
+                } else {
+                    cate = Integer.parseInt(cateString.trim());
+                }
                 if (type == null || type.isEmpty()) {
-                    listTrade = TradeDAO.getAllTrade("Approved");
-                    System.out.println("type = null");
+                    if (cateString == null || cateString.isEmpty()) {
+                        listTrade = TradeDAO.getAllTrade("Approved");
+                    } else {
+                        listTrade = TradeDAO.getAllTradeByCate(cate);
+                    }
                 } else if (type.equals("fee")) {
-                    listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
-                    System.out.println("type = " + type);
+                    if (cateString == null || cateString.isEmpty()) {
+                        listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
+                    } else {
+                        listTrade = TradeDAO.getAllTradeByTypeAndCate(type.trim(), "Approved", cate);
+                    }
                 } else if (type.equals("gift")) {
-                    listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
-                    System.out.println("type = " + type);
+                    if (cateString == null || cateString.isEmpty()) {
+                        listTrade = TradeDAO.getAllTradeByType(type.trim(), "Approved");
+                    } else {
+                        listTrade = TradeDAO.getAllTradeByTypeAndCate(type.trim(), "Approved", cate);
+                    }
                 }
                 request.setAttribute("TRADES", listTrade);
             } else {

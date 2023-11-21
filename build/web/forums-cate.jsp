@@ -179,7 +179,7 @@
                                                 <li class="list-group-item">
                                                     <div class="card" style="width: 100%;">
                                                         <div class="card-body d-flex align-items-center justify-content-between">
-                                                            <div class="col-md-10 d-flex flex-row align-items-center">
+                                                            <div class="col-md-9 d-flex flex-row align-items-center">
                                                                 <div style="width: 60px" class="user-info d-flex flex-column align-items-center">
                                                                     <img src="${(AccountDAO.getAccount(p.author_id).avatar ne 'NULL' && not empty AccountDAO.getAccount(p.author_id).avatar)?  AccountDAO.getAccount(p.author_id).avatar : 'assets/img/149071.png'}" alt="Avatar" class="rounded-circle img-thumbnail" style="width: 60px; height: 60px;">
                                                                     <p><strong>${p.author_id}</strong></p>
@@ -193,7 +193,7 @@
                                                                     <p><strong>${p.created_at}</strong></p>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-2">
+                                                            <div class="col-sm-3">
                                                                 <p><strong>Replies: ${p.amountComment}</strong></p>
                                                                 <p><strong>Lượt thích: ${p.favorites}</strong></p>
                                                             </div>
