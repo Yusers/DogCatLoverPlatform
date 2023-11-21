@@ -8,10 +8,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-<html>
+<html> 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Sign Up</title>
+        <title>Đăng Ký | Cat Dog Lover Website</title>
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
@@ -20,7 +20,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
         <!-- Flaticon Font -->
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
         <!-- Customized Bootstrap Stylesheet -->
@@ -140,9 +141,6 @@
                 text-decoration: none;
                 color: rgb(86 255 251 / 80%);
             }
-            
-            .error {
-                margin-left: 40%;
 
             label {
                 color: white;
@@ -169,7 +167,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -227,8 +225,8 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
                         <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
                         <!--                        
                         <div class="nav-item dropdown">
                             <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
@@ -257,38 +255,40 @@
             <form action="DispatcherController" method="post">
                 <input type="hidden" name="action" value="register"/>
                 <div>
-                    <label for="fullname">Tên tài khoản</label>
-                    <input type="text" id="fullname" class="text" name="userid" required>
+                    <label for="userid">Tên tài khoản</label>
+                    <input type="text" id="userid" class="text" name="userid" required>
+                    <label class="error">${requestScope.ERR_USERNAME}</label>
                 </div>
                 <br>
                 <div>
                     <label for="fullname">Họ và tên: </label>
                     <input type="text" id="fullname" class="text" name="fullname" required>
-                </div>
-                <br>
-                <div>
-                    <label for="username">Email: </label>
-                    <input type="text" id="username" class="text" name="email" required>
+                    <label class="error">${requestScope.ERR_FULLNAME}</label>
                 </div>
                 <br>
                 <div>
                     <label for="phonenumber">Số điện thoại: </label>
                     <input type="text" id="phonenumber" class="text" name="phonenumber" required>
+                    <label class="error">${requestScope.ERR_PHONE}</label>
+                </div>
+                <br>
+                <div>
+                    <label for="username">Email: </label>
+                    <input type="text" id="username" class="text" name="email" required>
+                    <label class="error">${requestScope.ERR_EMAIL}</label>
                 </div>
                 <br>
                 <div>
                     <label for="password">Mật khẩu:</label>
                     <input type="password" id="password" class="text" name="password" required>
+                    <label class="error">${requestScope.ERR_PASSWORD}</label>
                 </div>
-                <br>
-                <label class="error">${requestScope.ERROR}</label>
                 <br>
                 <hr>
                 <div>
                     <input class="signup" type="submit" value="Đăng Ký">
                 </div>
                 <br>
-                <a class="a-login col-md-6 mx-auto" href="login.jsp">Đăng nhập</a>
             </form>
         </div>
     </body>

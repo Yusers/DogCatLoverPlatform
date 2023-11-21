@@ -6,16 +6,21 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="dbaccess.AccountDAO" %>
+<%@ page import="dbaccess.Trade_CategoryDAO" %>
+<%@ page import="dbaccess.MediaDAO" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
     </head>
 
     <!-- Favicon -->
-    <link href="img/icons8-pet-lover-16.ico" rel="icon">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -53,7 +58,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -63,8 +68,15 @@
                                         <i class="fa fa-user"></i> ${us.user_id}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -110,19 +122,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link active">Trade</a>
-                        <!--                        <div class="nav-item dropdown">
-                                                    <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                                                    <div class="dropdown-menu rounded-0 m-0">
-                                                        <a href="#" class="dropdown-item">Dog</a>
-                                                        <a href="#" class="dropdown-item">Cat</a>
-                                                        <a href="#" class="dropdown-item">Items</a>
-                                                    </div>
-                                                </div>-->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link active">Trade</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -135,170 +139,229 @@
                     <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Trao Đổi Và Mua Bán</li>
                 </ol>
+                <div class="input-group breadcrumb">
+                    <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg></span>
+                    <a class="custom-btn form-control" href="${us.user_id != null ? 'DispatcherController?action=create-trade-page' : 'DispatcherController?action=login-page'}">Create trading post...</a>
+                </div>
+                <div class="breadcrumb justify-content-around">
+                    <a href="DispatcherController?action=trade&type=fee" class="btn btn-primary">Lọc theo trả phí</a>
+                    <a href="DispatcherController?action=trade&type=gift" class="btn btn-primary">Lọc theo quà tặng</a>
+                </div>
             </nav>
-            <!-- Page Title -->
-            <h1>Cat & Dog Trading</h1>
-
             <!-- Item Listings -->
-            <div class="row pb-3">
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/cat-1.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">American Cat</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">Nguyên</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">Cat</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mục Lục</h5>
+                            <ul style="font-size: 14px" class="list-group">
+                                <c:forEach var="c" items="${requestScope.CATE}">
+                                    <li class="list-group-item"><a href="DispatcherController?action=trade&filter=${c.id}">${c.name}</a></li>
+                                    </c:forEach>
+                                <li class="list-group-item"><a href="DispatcherController?action=trade&filter=">Tất cả</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/cat-2.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">British Longhair Cat</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=An&email=an@gmail.com">An</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#Cat">Cat</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/cat-3.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Munchkin Cat</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Kiet&email=kiet@gmail.com">Kiệt</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#Cat">Cat</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/dog-1.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Pug Dog</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Tan&email=tan@gmail.com">Tân</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#Dog">Dog</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/dog-2.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Alaska Dog</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Khang&email=khang@gmail.com">Khang</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#Dog">Dog</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-fluid" src="assets/img/dog-3.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Corgi Dog</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Phuoc&email=phuoc@gmail.com">Phước</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#Dog">Dog</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
-                            </div>
-                            <p>Welcome to our thread dedicated to keeping our furry friends in the best possible health!...</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postModal">View Details</button>
-                        </div>
-                    </div>
+                <c:set var="listOfTrade" value="${requestScope.TRADES}" />
+                <div class="col-md-10 row" style="padding: 0">
+                    <c:set var="itemsPerPage" value="6" /> <!-- Define items per page -->
+                    <c:set var="totalItems" value="${listOfTrade.size()}" /> <!-- Get total number of items -->
+
+                    <c:set var="currentPage" value="${param.pageNumber != null ? param.pageNumber : 1}" /> <!-- Get current page or default to 1 -->
+
+                    <c:choose>
+                        <c:when test="${empty requestScope.TRADES}">
+                            <h1 class="col-12 text-center">Không có</h1>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="trade" items="${requestScope.TRADES}" varStatus="loop">
+                                <c:if test="${loop.index >= (currentPage - 1) * itemsPerPage && loop.index < currentPage * itemsPerPage}">
+                                    <div class="col-md-4 pb-1">
+                                        <div class="card border-0 mb-2 position-relative">
+                                            <c:set var="media" value="${MediaDAO.getFirstMedia(trade.id)}" />
+                                            <c:choose>
+                                                <c:when test="${not empty media.url && media.url ne 'NULL'}">
+                                                    <img class="card-img-top img-fluid" style="object-fit: cover;" src="${media.url}" alt="${trade.title}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img class="card-img-top img-fluid" src="assets/img/no-img.jpg" alt="${trade.title}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <div class="top-left-text">
+                                                <p class="btn ${trade.type eq 'fee' ? 'btn-danger' : 'btn-success'}" style="color: #fff; font-weight: bold;">${trade.type eq 'fee' ? 'Có Phí' : 'Quà Tặng'}</p>
+                                            </div>
+                                            <div class="card-body bg-light p-3">
+                                                <h5 class="card-title text-truncate">${trade.title}</h5>
+                                                <div class="d-flex mb-3">
+                                                    <small class="mr-2"><i class="fa fa-user text-muted"></i><c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${trade.author_id}">${trade.author_id}</a></c:if>
+                                                        <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${trade.author_id}</a></c:if></small>
+                                                    <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#">${Trade_CategoryDAO.getTradeCateName(trade.cate_id)}</a></small>
+                                                </div>
+                                                <c:set var="price" value="${trade.getPriceInVND()}" />
+                                                <p class="text-truncate">${trade.content}</p>
+                                                <div class="d-flex ${trade.type eq 'fee' ? 'justify-content-between' : 'justify-content-end'} align-items-center">
+                                                    <c:if test="${trade.type eq 'fee'}">
+                                                        <p style="color: black; font-weight: 600; margin-bottom: 0" class="text">Giá: ${price}</p>
+                                                    </c:if>
+                                                    <a style="font-size: 12px" href="DispatcherController?action=trade-details&id=${trade.id}" class="btn btn-primary">Xem chi tiết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                    <!-- Pagination section -->
+                    <c:if test="${totalItems > itemsPerPage}">
+                        <nav class="col-12 d-flex justify-content-center" aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <fmt:formatNumber var="totalPages" value="${Math.ceil(totalItems / itemsPerPage)}" /> <!-- Calculate total pages -->
+
+                                <!-- Previous page button -->
+                                <li class="page-item">
+                                    <c:choose>
+                                        <c:when test="${currentPage > 1}">
+                                            <a class="page-link" href="DispatcherController?action=trade&pageNumber=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="page-link" tabindex="-1" aria-disabled="true">Previous</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+
+                                <!-- Generate page numbers -->
+                                <c:forEach var="pageNumber" begin="1" end="${totalPages}">
+                                    <li class="page-item">
+                                        <c:choose>
+                                            <c:when test="${pageNumber == currentPage}">
+                                                <span class="page-link">${pageNumber}</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="page-link" href="DispatcherController?action=trade&pageNumber=${pageNumber}">${pageNumber}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
+                                </c:forEach>
+
+                                <!-- Next page button -->
+                                <li class="page-item">
+                                    <c:choose>
+                                        <c:when test="${currentPage < totalPages}">
+                                            <a class="page-link" href="DispatcherController?action=trade&pageNumber=${currentPage + 1}">Next</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="page-link" tabindex="-1" aria-disabled="true">Next</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </ul>
+                        </nav>
+                    </c:if>
                 </div>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="postModalLabel">American Cat</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img src="assets/img/cat-1.jpg" class="img-fluid" alt="Big Image">
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>Minh Tan</h5>
-                                    <p>Email: tan@example.com</p>
-                                    <p>Phone: 123-456-7890</p>
-                                    <button type="button" class="btn btn-primary mt-2" id="contactUser">Chat</button>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <h5>Description</h5>
-                                    <p>Tiêm 1 mũi
-                                        Bảo hành sức khoẻ 7 ngày
-                                        Xem trực tiếp tại Hà Nội
-                                        Ship toàn quốc
-                                        Lh Zalo hoặc gọi trực</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div id="chatBox" class="chat-box">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    Chat with User
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
+            <div class="row pt-5">
+                <div class="col-lg-4 col-md-12 mb-5">
+                    <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Dog&Cat</span>Lover</h1>
+                    <p class="m-0">Chung toi hi vong nen tang nay se giup ban trong viec cham soc thu cung va hay tham gia dien dan de ban co the tham gia trao doi voi nha nhu trao doi cho, meo, do dung cua cho hoac meo va dich vu cham soc thu cung</p>
                 </div>
-                <div class="card-body">
-                    <div class="chat-messages">
-                        <!-- Messages will be added here dynamically using JavaScript -->
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type a message...">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">Send</button>
+                <div class="col-lg-8 col-md-12">
+                    <div class="row">
+                        <div class="col-md-4 mb-5">
+                            <h5 class="text-primary mb-4">Get In Touch</h5>
+                            <p><i class="fa fa-map-marker-alt mr-2"></i>Nha van hoa sinh vien, Tp.Thu Duc, VN</p>
+                            <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                            <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <h5 class="text-primary mb-4">Popular Links</h5>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Forums</a>
+                                <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trade</a>
+                                <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="container-fluid text-white py-4 px-sm-3 px-md-5" style="background: #111111;">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                    <p class="m-0 text-white">
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <ul class="nav d-inline-flex">
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Terms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Help</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
 
+        <script type="text/javascript">
+            var wsUrl;
+            if (window.location.protocol == 'http:') {
+                wsUrl = 'ws://';
+            } else {
+                wsUrl = 'wss://';
+            }
+            var ws = new WebSocket(wsUrl + window.location.host + "/DogCatLoverPlatform/chat");
+            var username = '<c:out value="${us.user_id}"/>'; // Get username from session
+
+            ws.onmessage = function (event) {
+                var messageData = JSON.parse(event.data);
+                var sender = messageData.sender;
+                var message = messageData.message;
+                var chat = document.getElementById("chat");
+                var messageElement = document.createElement('div');
+
+                if (sender === username) {
+                    messageElement.classList.add('my-message');
+                } else {
+                    messageElement.classList.add('other-message');
+                }
+
+                messageElement.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+                chat.appendChild(messageElement);
+                chat.scrollTop = chat.scrollHeight;
+            };
+
+            ws.onerror = function (event) {
+                console.log("Error ", event)
+            }
+
+            function sendMsg() {
+                var msg = document.getElementById("msg").value;
+                if (msg) {
+                    var messageData = {
+                        sender: username,
+                        message: msg
+                    };
+                    ws.send(JSON.stringify(messageData));
+                }
+                document.getElementById("msg").value = "";
+            }
+        </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

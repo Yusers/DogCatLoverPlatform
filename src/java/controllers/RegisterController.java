@@ -43,27 +43,27 @@ public class RegisterController extends HttpServlet {
             Account existed = AccountDAO.getAccount(userid);
             // Check duplicate User name
             if (existed != null) {
-                request.setAttribute("ERROR", "Username already exists!!");
+                request.setAttribute("ERR_USERNAME", "Username already exists!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 
             //Check valid fullname
             else if (!Pattern.matches("^[\\p{L}\\p{M} ']+$", fullname)) {
-                request.setAttribute("ERROR", "Invalid fullname!!");
+                request.setAttribute("ERR_FULLNAME", "Invalid fullname!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 
             //Check valid phone number
             else if (!Pattern.matches("^[0-9]{10}$", phone)) {
-                request.setAttribute("ERROR", "Invalid phone number!!");
+                request.setAttribute("ERR_PHONE", "Invalid phone number!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 
             //Check valid email
             else if (!Pattern.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", email)) {
-                request.setAttribute("ERROR", "Invalid E-mail!!");
+                request.setAttribute("ERR_EMAIL", "Invalid E-mail!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } 
             //Check valid password
             else if (password.length() < 6) {
-                request.setAttribute("ERROR", "Password must have at least 6 characters!!");
+                request.setAttribute("ERR_PASSWORD", "Password must have at least 6 characters!!");
                 request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
             } else {
                 Account account = new Account(userid.trim(), fullname.trim(), email.trim(), password.trim(), phone.trim());
@@ -74,7 +74,7 @@ public class RegisterController extends HttpServlet {
                     request.getRequestDispatcher("DispatcherController?action=register-page").forward(request, response);
                 }
             }
-        } catch (Exception ex) {
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
     }

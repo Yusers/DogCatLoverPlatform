@@ -21,6 +21,7 @@ svg {
 }
 
 .comment > p {
+    margin-bottom: 0rem;
     margin-left: 1rem;
 }
 

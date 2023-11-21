@@ -12,9 +12,9 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Profile | Cat Dog Lover Website</title>
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -31,103 +31,6 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .emp-profile{
-                padding: 3%;
-                margin-top: 3%;
-                margin-bottom: 3%;
-                border-radius: 1rem;
-                background: #FFF;
-                border: 1px solid black;
-            }
-            .profile-img{
-                width: 100px;
-                text-align: center;
-            }
-            .profile-img img{
-                width: 70%;
-                height: 100%;
-            }
-            .profile-img .file {
-                position: relative;
-                overflow: hidden;
-                margin-top: -20%;
-                width: 70%;
-                border: none;
-                border-radius: 0;
-                font-size: 15px;
-                background: #212529b8;
-            }
-            .profile-img .file input {
-                position: absolute;
-                opacity: 0;
-                right: 0;
-                top: 0;
-            }
-            .profile-head h5{
-                color: #333;
-            }
-            .profile-head h6{
-                color: #0062cc;
-            }
-            .profile-edit-btn{
-                border: none;
-                border-radius: 1.5rem;
-                width: 70%;
-                padding: 2%;
-                font-weight: 600;
-                color: #fff;
-                cursor: pointer;
-            }
-            .proile-rating{
-                font-size: 12px;
-                color: #818182;
-                margin-top: 5%;
-            }
-            .proile-rating span{
-                color: #495057;
-                font-size: 15px;
-                font-weight: 600;
-            }
-            .profile-head .nav-tabs{
-                margin-bottom:5%;
-            }
-            .profile-head .nav-tabs .nav-link{
-                font-weight:600;
-                border: none;
-            }
-            .profile-head .nav-tabs .nav-link.active{
-                border: none;
-                border-bottom:2px solid #0062cc;
-            }
-            .profile-work{
-                padding: 14%;
-                margin-top: -15%;
-            }
-            .profile-work p{
-                font-size: 12px;
-                color: #818182;
-                font-weight: 600;
-                margin-top: 10%;
-            }
-            .profile-work a{
-                text-decoration: none;
-                color: #495057;
-                font-weight: 600;
-                font-size: 14px;
-            }
-            .profile-work ul{
-                list-style: none;
-            }
-            .profile-tab label{
-                font-weight: 600;
-            }
-            .profile-tab p{
-                font-weight: 600;
-                color: #0062cc;
-            }
-
-        </style>
 
     </head>
     <body>
@@ -151,8 +54,15 @@
                             <i class="fa fa-user"></i> ${sessionScope.USER.user_id}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
-                            <a class="dropdown-item" href="#">My Posts</a>
+                            <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
+                            <c:if test="${sessionScope.USER.role eq 'ADMIN'}">
+                                <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                            </c:if>
+                            <c:if test="${sessionScope.USER.role eq 'STAFF'}">
+                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
+                            </c:if>
+                            <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                            <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
                             <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                         </div>
                     </div>
@@ -195,23 +105,12 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -221,8 +120,8 @@
             <form action="" method="post">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="profile-img">
-                            <img src="assets/img/149071.png" alt=""/>
+                        <div class="profile-img">                            
+                            <img style="width: 100px; height: 100px; border-radius: 50%" src="${(sessionScope.USER.avatar ne 'NULL' && not empty sessionScope.USER.avatar)? sessionScope.USER.avatar : 'assets/img/149071.png'}" alt=""/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -251,7 +150,7 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Full Name</label>
+                                        <label>User Id</label>
                                     </div>
                                     <div class="col-md-6">
                                         <p>${us.fullname}</p>
@@ -275,10 +174,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Created at</label>
+                                        <label>Description</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>${us.created_at}</p>
+                                        <p>${us.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -331,7 +230,6 @@
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
                         &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
-                        <a class="text-white font-weight-bold" href=""></a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">

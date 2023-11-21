@@ -6,15 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:set var="us" value="${requestScope.MEMBER}" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Website</title>
+        <title>Edit Profile User| Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -49,19 +49,34 @@
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
                     <div class="d-inline-flex align-items-center">
-                        <a style="text-align: center" class="text-white pl-3" href="login.jsp">
-                            <i class="fa fa-user"></i> <br> KietNT
-                        </a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link text-white dropdown-toggle active" data-toggle="dropdown">
-                                <i class="fa fa-fw fa-cog mr-1"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right rounded-0 m-0">
-                                <a href="profile.jsp" class="dropdown-item">View Profile</a>
-                                <a href="editprofile.jsp" class="dropdown-item">Edit Profile</a>
-                                <a href="#" class="dropdown-item">Log out</a>
-                            </div>
-                        </div>
+                        <!-- GET SESSION -->
+                        <c:set var="usnow" value="${sessionScope.USER}" />
+                        <c:choose>
+                            <c:when test="${usnow == null}">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
+                                    <i class="fa fa-user"></i> Log in
+                                </a>
+                            </c:when>
+                            <c:when test="${usnow != null}">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-user"></i> ${usnow.user_id}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
+                                        <c:if test="${usnow.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
+                                    </div>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -102,21 +117,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
 
                 </div>
@@ -132,52 +137,51 @@
                         <div class="col mb-3">
                             <div class="card w-75">
                                 <div class="card-body">
-                                    <div class="e-profile">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-auto mb-3">
-                                                <label for="avatarInput" class="mx-auto" style="width: 140px;">
-                                                    <div id="avatarContainer" class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                        <img id="avatar" src="path/to/default-avatar.jpg" alt="Avatar" style="max-width: 100%; max-height: 100%;">
+                                    <form class="form" action="UpdateProfileUserController" method="POST">
+                                        <div class="e-profile">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-auto mb-3">
+                                                    <label for="avatarInput" class="mx-auto" style="width: 140px;">
+                                                        <div id="avatarContainer" class="d-flex justify-content-center align-items-center" style="height: 140px; background-color: rgb(233, 236, 239); border-radius: 50%;">
+                                                            <img id="avatar" src="${(us.avatar eq 'NULL' or empty us.avatar) ? 'assets/img/149071.png' : us.avatar}" alt="Avatar" style="max-width: 100%; max-height: 100%; border-radius: 50%;">
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                                    <div class="text-center text-sm-left mt-3 mb-sm-0">
+                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${us.fullname}</h4>
+                                                        <p class="mb-0">@${us.user_id}</p>
                                                     </div>
-                                                </label>
-                                                <input type="file" id="avatarInput" style="display: none;" accept="image/*">
-                                            </div>
-                                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Kiet NT</h4>
-                                                    <p class="mb-0">@kietn17</p>
-                                                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+                                                </div>
+
+                                                <div class="text-center text-sm-right">
+                                                    <select name="role" class="custom-select bg-success text-light">
+                                                        <c:set var="roleNow" value="${us.role}"/>
+                                                        <option ${roleNow eq 'MEMBER' ? 'selected' : ''}>MEMBER</option>
+                                                        <option ${roleNow eq 'STAFF' ? 'selected' : ''}>STAFF</option>
+                                                    </select>
+                                                    <div class="text-muted"><small>Joined ${us.created_at}</small></div>
                                                 </div>
                                             </div>
-
-                                            <div class="text-center text-sm-right">
-                                                <select class="custom-select bg-success text-light">
-                                                    <option selected>Member</option>
-                                                    <option value="1">Staff</option>
-                                                </select>
-                                                <div class="text-muted"><small>Joined 02 Oct 2023</small></div>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item"><a href class="active nav-link">Settings</a></li>
-                                    </ul>
-                                    <div class="tab-content pt-3">
-                                        <div class="tab-pane active">
-                                            <form class="form" novalidate>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href class="active nav-link">Settings</a></li>
+                                        </ul>
+                                        <div class="tab-content pt-3">
+                                            <div class="tab-pane active">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Full Name</label>
-                                                                    <input class="form-control" type="text" name="name" placeholder="Kiet NT" value="Kiet NT">
+                                                                    <input class="form-control" type="text" name="name" placeholder="${us.fullname}" value="${us.fullname}">
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Username</label>
-                                                                    <input class="form-control" type="text" name="username" placeholder="kietnt17" value="kietnt17">
+                                                                    <input class="form-control" type="text" name="username" placeholder="${us.user_id}" value="${us.user_id}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -185,23 +189,82 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Email</label>
-                                                                    <input class="form-control" type="text" placeholder="user@gmail.com">
+                                                                    <input class="form-control" name="email" type="text" placeholder="${us.email}" value="${us.email}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Phone</label>
+                                                                    <input class="form-control" name="phone" type="text" placeholder="${us.phone_number}" value="${us.phone_number}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-group">
+                                                                    <label>About</label>
+                                                                    <textarea class="form-control" rows="5" name="bio" placeholder="${us.description == "" ? us.description : "My bio"}">${us.description == "" ? us.description : "My bio"}</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col d-flex justify-content-start">
-                                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                                    <div class="col-12 col-sm-6 mb-3">
+                                                        <div class="mb-2"><b>Change Password</b></div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Current Password</label>
+                                                                    <input class="form-control" name="current_password" type="password" placeholder="••••••" value="${us.password}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>New Password</label>
+                                                                    <input class="form-control" name="new_password" type="password" placeholder="••••••">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                                                                    <input class="form-control" name="confirm_password" type="password" placeholder="••••••"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                                                        <div class="mb-2"><b>Keeping in Touch</b></div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <label>Email Notifications</label>
+                                                                <div class="custom-controls-stacked px-2">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="notifications-blog" checked>
+                                                                        <label class="custom-control-label" for="notifications-blog">Blog posts</label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="notifications-news" checked>
+                                                                        <label class="custom-control-label" for="notifications-news">Newsletter</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col d-flex justify-content-end">
                                                         <button class="btn btn-primary" type="submit">Save Changes</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +307,6 @@
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
                         &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
-                        <a class="text-white font-weight-bold" href=""></a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">

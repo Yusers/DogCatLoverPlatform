@@ -1,15 +1,18 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="dbaccess.TradeDAO" %>
+<%@ page import="dbaccess.Trade_CategoryDAO" %>
+<%@ page import="dbaccess.MediaDAO" %>
 <!DOCTYPE html>
 <html>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Website</title>
+        <title>Trang Chủ | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -26,23 +29,19 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
-
     </head>
 
     <body>
-
-
         <!-- Topbar Start -->
         <div class="container-fluid">
             <div class="row bg-secondary py-2 px-lg-5">
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-white pr-3" href="">FAQs</a>
+                        <a class="text-white pr-3" href="DispatcherController?action=forums">FAQs</a>
                         <span class="text-white">|</span>
                         <a class="text-white px-3" href="">Help</a>
                         <span class="text-white">|</span>
-                        <a class="text-white pl-3" href="">Support</a>
+                        <a class="text-white pl-3" href="contact.jsp">Support</a>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right">
@@ -51,7 +50,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -61,8 +60,15 @@
                                         <i class="fa fa-user"></i> ${us.user_id}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
+                                        <c:if test="${us.role == 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -107,23 +113,12 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                        <a href="DispatcherController" class="nav-item nav-link active">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link">Contact</a>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -141,7 +136,7 @@
                                 <h2 class="display-3 text-white mb-3">  Diễn đàn giao lưu cho người yêu chó mèo    </h2>
                                 <br>
                                 <h4 class="text-white mb-3 d-none d-sm-block">Tại đây bạn có thể giao lưu, chia sẻ, hoặc sự hỗ trợ từ những người yêu chó mèo </h4>
-                                <a href="login.jsp" class="btn btn-lg btn-primary mt-3 mt-md-4 px-4">Tham gia</a>
+                                <a href="${empty us.role ? 'DispatcherController?action=login-page' : 'DispatcherController?action=forums'}" class="btn btn-lg btn-primary mt-3 mt-md-4 px-4">Tham gia</a>
                                 <a href="about.jsp" class="btn btn-lg btn-secondary mt-3 mt-md-4 px-4">Biết thêm</a>
                             </div>
                         </div>
@@ -154,7 +149,7 @@
                                 <h2 class="display-3 text-white mb-3"> Diễn đàn trao đổi chó và mèo</h2>
                                 <br>
                                 <h4 class="text-white mb-3 d-none d-sm-block">Đây là nơi bạn nếu không thể chăm sóc cho người bạn của mình được nữa và bạn không biết kiếm 1 ai đó để mình có thể giao phó người bạn của mình. Thì hãy đến đây.</h4> 
-                                <a href="login.jsp" class="btn btn-lg btn-primary mt-3 mt-md-4 px-4">Tham gia</a>
+                                <a href="${empty us.role ? 'DispatcherController?action=login-page' : 'DispatcherController?action=forums'}" class="btn btn-lg btn-primary mt-3 mt-md-4 px-4">Tham gia</a>
                                 <a href="about.jsp" class="btn btn-lg btn-secondary mt-3 mt-md-4 px-4">Biết thêm</a>
                             </div>
                         </div>
@@ -179,54 +174,37 @@
         <div class="container pt-5">
             <div class="d-flex flex-column text-center mb-5">
                 <h4 class="text-secondary mb-3">Pet Forums</h4>
-                <h1 class="display-4 m-0"><span class="text-primary">Cập nhật</span> từ Diễn đàn</h1>
+                <h1 class="display-4 m-0"><span class="text-primary">Cập nhật</span> từ Trao đổi và Mua bán</h1>
             </div>
             <div class="row pb-3">
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top" src="img/blog-1.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Triệt sản mèo – Nên hay Không và Các điều cần biết</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Nguyen&email=nguyen@gmail.com">Nguyen</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#health">Health</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
+                <c:forEach var="t" items="${TradeDAO.getAllTrade()}" >
+                    <c:if test="${t.id < 6 && t.status eq 'Approved'}">
+                        <div class="col-lg-4 mb-4">
+                            <div class="card border-0 mb-2">
+                                <c:set var="media" value="${MediaDAO.getFirstMedia(t.id)}" />
+                                <c:choose>
+                                    <c:when test="${not empty media.url}">
+                                        <img class="card-img-top img-fluid" style="object-fit: cover;" src="${media.url}" alt="${trade.title}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img class="card-img-top img-fluid" src="assets/img/no-image.jpg" alt="${trade.title}">
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="card-body bg-light p-4">
+                                    <h4 class="card-title text-truncate">${t.title}</h4>
+                                    <div class="d-flex mb-3">
+                                        <small class="mr-2"><i class="fa fa-user text-muted"></i> <c:if test="${us.role != null}"><a href="DispatcherController?action=manage&actions=viewprofile&usname=${t.author_id}">${t.author_id}</a></c:if>
+                                            <c:if test="${us.role == null}"><a href="DispatcherController?action=login-page">${t.author_id}</a></c:if></small>
+                                        <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#health">${Trade_CategoryDAO.getTradeCateName(t.cate_id)}</a></small>
+                                        <small class="mr-2"><i class="fa fa-comments text-muted"></i> 15</small>
+                                    </div>
+                                    <p class="text-truncate">${t.content}</p>
+                                    <a class="font-weight-bold" href="DispatcherController?action=trade-details&id=${t.id}">Đọc thêm</a>
+                                </div>
                             </div>
-                            <p>Triệt sản mèo là một trong những loại phẫu thuật ở mèo phổ biến nhất hiện nay. Tuy nhiên, lợi ích và các nguy cơ có thể xảy ra khi triệt sản mèo,...</p>
-                            <a class="font-weight-bold" href="thread.jsp">Đọc thêm</a>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top" src="img/blog-2.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Mọi điều cần biết chó con: Cách nuôi, chăm sóc và huấn luyện</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=An&email=an@gmail.com">An</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#care">Care</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 14</small>
-                            </div>
-                            <p>Nuôi chú chó con (cún con) không phải đơn giản, vì cơ thể chúng còn yếu, chưa thích nghi tốt. Mọi điều cần biết chó con: cách nuôi, chăm sóc và huấn luyện.....</p>
-                            <a class="font-weight-bold" href="thread.jsp">Đọc thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top" src="img/blog-5.jpg" alt="">
-                        <div class="card-body bg-light p-4">
-                            <h4 class="card-title text-truncate">Cách Chăm Sóc Và Điều Trị Cho Chó Bị Ốm</h4>
-                            <div class="d-flex mb-3">
-                                <small class="mr-2"><i class="fa fa-user text-muted"></i> <a href="viewprofile.jsp?username=Tan&email=tan@gmail.com">Tan</a></small>
-                                <small class="mr-2"><i class="fa fa-folder text-muted"></i> <a href="#health">Health</a></small>
-                                <small class="mr-2"><i class="fa fa-comments text-muted"></i> 12</small>
-                            </div>
-                            <p>Thật không vui vẻ gì khi nhìn thấy người bạn tốt nhất bị ốm. Chúng phụ thuộc vào sự chăm sóc của bạn, người chủ của chúng mỗi khi bị ốm....</p>
-                            <a class="font-weight-bold" href="thread.jsp">Đọc thêm</a>
-                        </div>
-                    </div>
-                </div>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
         <!-- Blog End -->
@@ -264,8 +242,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
-                        <&a class="text-white font-weight-bold" href=""></a>
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
@@ -310,4 +287,4 @@
         <script src="js/main.js"></script>
     </body>
 
-</html>
+</html> 

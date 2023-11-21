@@ -33,14 +33,11 @@ public class SearchStaffController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String search = request.getParameter("txtsearch");
+            String search = request.getParameter("search");
             ArrayList<Account> account = AccountDAO.searchStaff(search);
             if(account != null) {
-                request.setAttribute("result", account);
-                request.getRequestDispatcher("staffmanager.jsp").forward(request, response);
-            } else {
-                request.setAttribute("error", "Not Found!!!");
-                request.getRequestDispatcher("staffmanager.jsp").forward(request, response);
+                request.setAttribute("staffs", account);
+                request.getRequestDispatcher("DispatcherController?action=manage").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
