@@ -71,14 +71,14 @@ public class UpdateTradeController extends HttpServlet {
             String urlImg;
             out.print("List media: " + listMediaId + "<br/>");
             if (content.trim().length() >= 20 || !content.trim().isBlank()) {
-                if (category.trim().length() <= 5 || !category.trim().isBlank()) {
-                    request.setAttribute("ERR_CONTENT", "Phần loại bài viết trên 5 ký tự, không được để trống và khoảng trắng và trên 10 ký tự!");
+                if (category.trim().length() <= 5 || category.trim().isBlank()) {
+                    request.setAttribute("ERR_CONTENT", "Phần loại bài viết trên 5 ký tự, không được để trống và khoảng trắng!");
                     flag = true;
-                } else if (condition.trim().length() <= 10 || !condition.trim().isBlank()) {
-                    request.setAttribute("ERR_CONTENT", "Phần tình trạng trên 10 ký tự, không được để trống và khoảng trắng và trên 10 ký tự!");
+                } else if (condition.trim().length() <= 10 || condition.trim().isBlank()) {
+                    request.setAttribute("ERR_CONTENT", "Phần tình trạng trên 10 ký tự, không được để trống và khoảng trắng!");
                     flag = true;
                 } else if (type.equals("fee")) {
-                    if (priceString.trim().length() < 1 || !priceString.trim().isBlank()) {
+                    if (priceString.trim().length() < 1 || priceString.trim().isBlank()) {
                         request.setAttribute("ERR_CONTENT", "Vui lòng điền giá!");
                         flag = true;
                     } else {

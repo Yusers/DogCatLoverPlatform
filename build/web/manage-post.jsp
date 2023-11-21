@@ -10,7 +10,7 @@
         <title>Bài viết của tôi | DogCatLoverPlatform</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link href="img/favicon.ico" rel="icon">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -27,7 +27,27 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <style>
+            .custom-btn:hover {
+                cursor: text;
+                text-decoration: none;
+                border: 1px solid black;
+                color: black;
+            }
 
+            .custom-title-post:hover {
+                cursor: pointer;
+                opacity: 0.8;
+            }
+
+            .toast-container {
+                position: absolute;
+                bottom: 2%;
+                right: 0;
+                z-index: 9999; /* Adjust this value if necessary */
+                padding: 0.5rem 2rem;
+            }
+        </style>
     </head>
     <body>
         <!-- Topbar Start -->
@@ -190,10 +210,10 @@
                                                     <!-- Thread Actions (e.g., Delete, Edit) -->
                                                     <div class="row d-flex">
                                                         <div class="btn-group col-md-6 d-flex justify-content-start">
-                                                            <c:if test="${post.status eq 'Created' || post.status eq 'Approved'}">
+                                                            <c:if test="${post.status eq 'Created' || post.status eq 'Approved' || post.status eq 'Rejected'}">
                                                                 <a href="DispatcherController?action=trade-details&id=${post.id}&edit=true&type=${post.type}" class="btn btn-primary">Chỉnh sửa</a>
                                                             </c:if>
-                                                            <c:if test="${post.status ne 'Created' && post.status ne 'Done'}">
+                                                            <c:if test="${post.status ne 'Created' && post.status ne 'Done' && post.status ne 'Rejected'}">
                                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal">
                                                                     Bán rồi
                                                                 </button>
