@@ -10,7 +10,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+    <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quản Lý Bài Viết |Cat Dog Lover Website</title>
 

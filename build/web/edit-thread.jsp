@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <c:set var="post" value="${requestScope.POST}" />
 <c:set var="cate" value="${requestScope.CATE}" />
-<html>
+<html> 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${post.title} | Cat Dog Lover Website</title>

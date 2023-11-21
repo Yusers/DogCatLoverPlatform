@@ -12,7 +12,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+    <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
 

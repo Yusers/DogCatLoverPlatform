@@ -18,7 +18,7 @@
         <!-- Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-        <!-- Flaticon Font -->
+        <!-- Flaticon Font --> 
         <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
