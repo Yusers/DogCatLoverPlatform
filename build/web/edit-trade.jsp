@@ -12,9 +12,9 @@
 
 <!DOCTYPE html>
 <html>
-    <head> 
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
+        <title>Cat Dog Lover Website</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -244,7 +244,7 @@
                                 <hr/>
 
                             <c:if test="${param.type eq 'fee'}">
-                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price()}" placeholder="Nhập giá"></h5>
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.getPriceInVND()}" placeholder="Nhập giá"></h5>
                                 <hr/>    
                             </c:if>
                             <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
@@ -295,7 +295,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#">  2023 DCLP</a>.All Rights Reserved.
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
