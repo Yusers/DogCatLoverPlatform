@@ -241,10 +241,10 @@
                             <hr/>
                             <div class="trade-post-details">
                                 <h5>Loại: <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=fee">Trả phí</a> | <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=gift">Quà tặng</a></h5>
-                                <hr/>
+                            <hr/>
 
                             <c:if test="${param.type eq 'fee'}">
-                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.getPriceInVND()}" placeholder="Nhập giá"></h5>
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price}" placeholder="Nhập giá"></h5>
                                 <hr/>    
                             </c:if>
                             <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
@@ -256,7 +256,10 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="submit" class="btn btn-primary btn-block">Lưu thay đổi</button>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-block">Lưu thay đổi</button>
+                            <a class="btn btn-danger" href="DispatcherController?action=my-post">Hủy</a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -317,7 +320,17 @@
             </div>
         </div>
         <!-- Footer End -->
+        <script>
+            var priceInput = document.getElementById("price");
 
+            priceInput.addEventListener("input", function () {
+                var inputValue = priceInput.value;
+                var numericValue = inputValue.replace(/[^0-9]/g, "");
+                var formattedValue = new Intl.NumberFormat("vi-VN", {style: "currency", currency: "VND"}).format(numericValue);
+                priceInput.value = formattedValue;
+            });
+        </script>
+        
         <script>
             document.getElementById('price').addEventListener('input', function (event) {
                 let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
