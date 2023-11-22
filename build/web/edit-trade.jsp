@@ -169,7 +169,7 @@
                     <label for="title"><strong>Chỉnh sửa tiêu đề ở đây</strong></label>
                 </span>
                 <h2 class="mb-4 col-md-12"><input style="border: none; width: 100%" id="title" name="title" typtitlee="text" value="${trade.title}" /></h2>
-                <div class="form-group ml-5">
+                <div class="form-group">
                     <label for="exampleDataList" class="form-label"><strong>Loại bài viết về</strong></label>
                     <input class="form-control" value="${cate.name}" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
                     <datalist id="datalistOptions">
@@ -180,9 +180,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8">
-                        <div id="carouselExampleIndicators" class="carousel slide col-12">
+                        <div id="carouselExampleIndicators" class="carousel slide">
                             <div class="form-floating">
-                                <label for="addimg">Chọn thêm ảnh hoặc bạn có thể bấm vào ảnh dưới để chỉnh</label>
+                                <label for="addimg"><strong>Chọn thêm ảnh hoặc bạn có thể bấm vào ảnh dưới để chỉnh</strong></label>
                                 <input class="ml-3" id="addimg" type="file" name="images" multiple="true"/>
                             </div>
                             <c:set var="listMedia" value="${MediaDAO.getAllMedia(trade.id)}" />
@@ -394,4 +394,3 @@
         <script src="js/main.js"></script>
     </body>
 </html>
-

@@ -54,8 +54,8 @@ public class CreateTradeController extends HttpServlet {
 //        out.print("price: " + price + "<br/>");
 //        out.print("type: " + type + "<br/>");
         try {
-            if (category.trim().length() < 2 || category.trim().isBlank()) {
-                request.setAttribute("ERR_CONTENT", "Phần loại bài viết phải trên 1 ký tự, không đc để trống và khoảng trắng!");
+            if (category.trim().length() < 3 || category.trim().isBlank()) {
+                request.setAttribute("ERR_CONTENT", "Phần loại bài viết phải trên 2 ký tự, không đc để trống và khoảng trắng!");
                 flag = true;
             } else if (condition.trim().length() < 2 || condition.trim().isBlank()) {
                 request.setAttribute("ERR_CONTENT", "Phần tình trạng phải từ 2 ký tự hoặc hơn, không được để trống và khoảng trắng!");
@@ -128,10 +128,10 @@ public class CreateTradeController extends HttpServlet {
                         request.setAttribute("ERR_CONTENT", "Tạo thất bại!");
                     }
                 } else {
-                    request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 20 kí tự!!!");
+                    request.setAttribute("ERR_CONTENT", "Bài viết phải có nội dung ít nhất 20 kí tự!!!");
                 }
             } else {
-                request.setAttribute("ERR_CONTENT", "Bài viết phải có ít nhất 10 kí tự!!!");
+                request.setAttribute("ERR_CONTENT", "Bài viết phải có tiêu đề ít nhất 10 kí tự!!!");
             }
             request.getRequestDispatcher(page).forward(request, response);
         } catch (Exception ex) {
