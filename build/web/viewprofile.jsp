@@ -12,7 +12,7 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Profile | Cat Dog Lover Website</title>
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
@@ -23,7 +23,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Flaticon Font -->
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet"> 
 
         <!-- Libraries Stylesheet -->
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -31,103 +31,6 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .emp-profile{
-                padding: 3%;
-                margin-top: 3%;
-                margin-bottom: 3%;
-                border-radius: 1rem;
-                background: #FFF;
-                border: 1px solid black;
-            }
-            .profile-img{
-                width: 100px;
-                text-align: center;
-            }
-            .profile-img img{
-                width: 70%;
-                height: 100%;
-            }
-            .profile-img .file {
-                position: relative;
-                overflow: hidden;
-                margin-top: -20%;
-                width: 70%;
-                border: none;
-                border-radius: 0;
-                font-size: 15px;
-                background: #212529b8;
-            }
-            .profile-img .file input {
-                position: absolute;
-                opacity: 0;
-                right: 0;
-                top: 0;
-            }
-            .profile-head h5{
-                color: #333;
-            }
-            .profile-head h6{
-                color: #0062cc;
-            }
-            .profile-edit-btn{
-                border: none;
-                border-radius: 1.5rem;
-                width: 70%;
-                padding: 2%;
-                font-weight: 600;
-                color: #fff;
-                cursor: pointer;
-            }
-            .proile-rating{
-                font-size: 12px;
-                color: #818182;
-                margin-top: 5%;
-            }
-            .proile-rating span{
-                color: #495057;
-                font-size: 15px;
-                font-weight: 600;
-            }
-            .profile-head .nav-tabs{
-                margin-bottom:5%;
-            }
-            .profile-head .nav-tabs .nav-link{
-                font-weight:600;
-                border: none;
-            }
-            .profile-head .nav-tabs .nav-link.active{
-                border: none;
-                border-bottom:2px solid #0062cc;
-            }
-            .profile-work{
-                padding: 14%;
-                margin-top: -15%;
-            }
-            .profile-work p{
-                font-size: 12px;
-                color: #818182;
-                font-weight: 600;
-                margin-top: 10%;
-            }
-            .profile-work a{
-                text-decoration: none;
-                color: #495057;
-                font-weight: 600;
-                font-size: 14px;
-            }
-            .profile-work ul{
-                list-style: none;
-            }
-            .profile-tab label{
-                font-weight: 600;
-            }
-            .profile-tab p{
-                font-weight: 600;
-                color: #0062cc;
-            }
-
-        </style>
 
     </head>
     <body>
@@ -156,7 +59,7 @@
                                 <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                             </c:if>
                             <c:if test="${sessionScope.USER.role eq 'STAFF'}">
-                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                             </c:if>
                             <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                             <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>

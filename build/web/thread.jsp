@@ -10,9 +10,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${post.title}</title>
+        <title>${post.title} | Cat Dog Lover Website</title>
         <!-- Favicon -->
-        <link href="img/icons8-pet-lover-16.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -21,7 +21,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Flaticon Font -->
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet"> 
 
         <!-- Libraries Stylesheet -->
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -32,24 +32,6 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <style>
-            .cus-comment {
-                margin-left: 4rem;
-            }
-
-            .cus-comment:hover {
-                cursor: pointer;
-            }
-
-            .comment__user-content{
-                border: 1px solid #454d55;
-                border-radius: 10px;
-                background-color: #ededed;
-            }
-            .comment__user-content p{
-                margin: 0.5rem;
-            }
-        </style>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1" nonce="YOUR_NONCE"></script>
     </head>
 
@@ -87,7 +69,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <c:if test="${us.role eq 'STAFF'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
@@ -369,8 +351,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
-                        <&a class="text-white font-weight-bold" href=""></a>
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">

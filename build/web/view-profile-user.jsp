@@ -6,7 +6,7 @@
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>View Profile User</title>
+        <title>Xem Thông Tin User | Cat Dog Lover Website</title>
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
         <!-- Google Web Fonts -->
@@ -16,7 +16,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
         <!-- Flaticon Font -->
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet"> 
 
         <!-- Libraries Stylesheet -->
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -52,7 +52,7 @@
                                 <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                             </c:if>
                             <c:if test="${us.role eq 'STAFF'}">
-                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                             </c:if>
                             <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                             <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>

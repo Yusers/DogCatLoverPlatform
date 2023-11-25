@@ -50,9 +50,9 @@ public class UpdatePostController extends HttpServlet {
                 if (title.trim().length() <= 10 || title.trim().isBlank()) {
                     flag = true;
                     request.setAttribute("MSG", "Tiêu đề bài viết phải có ít nhất 10 kí tự và không được để trống!!!");
-                } else if (category.trim().length() <= 5 || category.trim().isBlank()) {
+                } else if (category.trim().length() < 3 || category.trim().isBlank()) {
                     flag = true;
-                    request.setAttribute("MSG", "Loại bài viết phải có ít nhất 5 kí tự và không được để trống!!!");
+                    request.setAttribute("MSG", "Loại bài viết phải có ít nhất 3 kí tự và không được để trống!!!");
                 }
                 if (flag) {
                     request.getRequestDispatcher(url).forward(request, response);

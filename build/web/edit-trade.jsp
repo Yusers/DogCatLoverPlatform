@@ -14,10 +14,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -94,7 +94,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <c:if test="${us.role eq 'STAFF'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
@@ -169,7 +169,7 @@
                     <label for="title"><strong>Chỉnh sửa tiêu đề ở đây</strong></label>
                 </span>
                 <h2 class="mb-4 col-md-12"><input style="border: none; width: 100%" id="title" name="title" typtitlee="text" value="${trade.title}" /></h2>
-                <div class="form-group ml-5">
+                <div class="form-group">
                     <label for="exampleDataList" class="form-label"><strong>Loại bài viết về</strong></label>
                     <input class="form-control" value="${cate.name}" list="datalistOptions" id="exampleDataList" name="category" placeholder="Nhập thể loại bài viết...">
                     <datalist id="datalistOptions">
@@ -180,9 +180,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8">
-                        <div id="carouselExampleIndicators" class="carousel slide col-12">
+                        <div id="carouselExampleIndicators" class="carousel slide">
                             <div class="form-floating">
-                                <label for="addimg">Chọn thêm ảnh hoặc bạn có thể bấm vào ảnh dưới để chỉnh</label>
+                                <label for="addimg"><strong>Chọn thêm ảnh hoặc bạn có thể bấm vào ảnh dưới để chỉnh</strong></label>
                                 <input class="ml-3" id="addimg" type="file" name="images" multiple="true"/>
                             </div>
                             <c:set var="listMedia" value="${MediaDAO.getAllMedia(trade.id)}" />
@@ -241,10 +241,10 @@
                             <hr/>
                             <div class="trade-post-details">
                                 <h5>Loại: <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=fee">Trả phí</a> | <a href="DispatcherController?action=trade-details&id=${trade.id}&edit=true&type=gift">Quà tặng</a></h5>
-                                <hr/>
+                            <hr/>
 
                             <c:if test="${param.type eq 'fee'}">
-                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.getPriceInVND()}" placeholder="Nhập giá"></h5>
+                                <h5>Giá: <input type="text" class="form-control" id="price" name="price" value="${trade.price}" placeholder="Nhập giá"></h5>
                                 <hr/>    
                             </c:if>
                             <h5>Tình Trạng: <input type="text" required="" class="form-control" name="condition" placeholder="${trade.condition}" value="${trade.condition}" /></h5>
@@ -256,7 +256,10 @@
                             </div>
                         </div>
                         <br/>
-                        <button type="submit" class="btn btn-primary btn-block">Lưu thay đổi</button>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-block">Lưu thay đổi</button>
+                            <a class="btn btn-danger" href="DispatcherController?action=my-post">Hủy</a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -295,8 +298,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
-                        <&a class="text-white font-weight-bold" href=""></a>
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
@@ -318,7 +320,17 @@
             </div>
         </div>
         <!-- Footer End -->
+        <script>
+            var priceInput = document.getElementById("price");
 
+            priceInput.addEventListener("input", function () {
+                var inputValue = priceInput.value;
+                var numericValue = inputValue.replace(/[^0-9]/g, "");
+                var formattedValue = new Intl.NumberFormat("vi-VN", {style: "currency", currency: "VND"}).format(numericValue);
+                priceInput.value = formattedValue;
+            });
+        </script>
+        
         <script>
             document.getElementById('price').addEventListener('input', function (event) {
                 let value = event.target.value.replace(/\D/g, ''); // Remove non-digit characters
@@ -382,4 +394,3 @@
         <script src="js/main.js"></script>
     </body>
 </html>
-

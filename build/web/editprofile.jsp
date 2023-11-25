@@ -10,10 +10,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Website</title>
+        <title>Edit Profile | Cat Dog Lover Website</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">  
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -64,10 +64,10 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
                                         <c:if test="${us.role == 'ADMIN'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <c:if test="${us.role eq 'STAFF'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
@@ -309,7 +309,6 @@
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
                         &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
-                        <a class="text-white font-weight-bold" href=""></a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">

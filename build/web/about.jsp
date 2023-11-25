@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Giới Thiệu | Cat Dog Lover Website</title> 
+        <title>Giới Thiệu | Cat Dog Lover Website</title>  
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -63,10 +63,10 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
                                         <c:if test="${us.role eq 'ADMIN'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <c:if test="${us.role eq 'STAFF'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
@@ -196,7 +196,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
+                        &copy; <a class="text-white font-weight-bold" href="#">  2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">

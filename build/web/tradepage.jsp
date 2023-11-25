@@ -17,40 +17,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trao Đổi & Mua Bán | Cat Dog Lover Website</title>
-        <style>
-            .my-message {
-                text-align: right;
-                background-color: #cceeff; /* Light blue for your messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
-
-            .other-message {
-                text-align: left;
-                background-color: #f0f0f0; /* Light gray for others' messages */
-                border-radius: 10px;
-                padding: 5px 10px;
-                margin: 5px 0;
-            }
-
-            .custom-btn:hover {
-                cursor: text;
-                text-decoration: none;
-                border: 1px solid black;
-                color: black;
-            }
-
-            .top-left-text {
-                position: absolute;
-                top: 10px; /* Adjust this value as needed to position the text */
-                left: 10px; /* Adjust this value as needed to position the text */
-            }
-        </style>
     </head>
 
     <!-- Favicon -->
-    <link href="img/icons8-pet-lover-16.ico" rel="icon">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">  
 
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -103,7 +73,7 @@
                                             <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
                                         </c:if>
                                         <c:if test="${us.role eq 'STAFF'}">
-                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dash board</a>
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
                                         </c:if>
                                         <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
                                         <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
@@ -325,7 +295,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
-                        &copy; <a class="text-white font-weight-bold" href="#"> Donate</a> de giup tui minh phat trien them nha. All Rights Reserved.
+                        &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
