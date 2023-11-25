@@ -214,7 +214,7 @@
                                                                 <a href="DispatcherController?action=trade-details&id=${post.id}&edit=true&type=${post.type}" class="btn btn-primary">Chỉnh sửa</a>
                                                             </c:if>
                                                             <c:if test="${post.status ne 'Created' && post.status ne 'Done' && post.status ne 'Rejected'}">
-                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal">
+                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationModal${post.id}">
                                                                     Bán rồi
                                                                 </button>
                                                             </c:if>
@@ -229,7 +229,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="confirmationModal${post.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -243,7 +243,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                                        <a href="DispatcherController?action=trade-delete&id=${post.id}&s=${post.status eq 'Done' ? 'not' : 'yes'}" class="btn btn-danger">Mình đã bán được rồi</a>
+                                                        <a href="DispatcherController?action=trade-delete&id=${post.id}&s=yes" class="btn btn-danger">Mình đã bán được rồi</a>
                                                 </div>
                                             </div>
                                         </div>
