@@ -174,8 +174,8 @@
                     <a class="custom-btn form-control" href="${us.user_id != null ? 'DispatcherController?action=create-trade-page' : 'DispatcherController?action=login-page'}">Create trading post...</a>
                 </div>
                 <div class="breadcrumb justify-content-around">
-                    <a href="DispatcherController?action=trade&type=${param.type ne 'fee' ? 'fee' : ''}" class="btn btn-primary">${param.type eq 'fee' ? "Bỏ lọc theo trả phí" : "Lọc theo trả phí" }</a>
-                    <a href="DispatcherController?action=trade&type=${param.type ne 'gift' ? 'gift' : ''}" class="btn btn-primary">${param.type eq 'gift' ? "Bỏ lọc theo quà tặng" : "Lọc theo quà tặng" }</a>
+                    <a href="DispatcherController?action=trade&type=${param.type ne 'fee' ? 'fee' : ''}&filter=${param.filter}" class="btn btn-primary">${param.type eq 'fee' ? "Bỏ lọc theo trả phí" : "Lọc theo trả phí" }</a>
+                    <a href="DispatcherController?action=trade&type=${param.type ne 'gift' ? 'gift' : ''}&filter=${param.filter}" class="btn btn-primary">${param.type eq 'gift' ? "Bỏ lọc theo quà tặng" : "Lọc theo quà tặng" }</a>
                 </div>
             </nav>
             <!-- Item Listings -->
