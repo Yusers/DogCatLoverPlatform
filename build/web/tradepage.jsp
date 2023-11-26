@@ -174,8 +174,8 @@
                     <a class="custom-btn form-control" href="${us.user_id != null ? 'DispatcherController?action=create-trade-page' : 'DispatcherController?action=login-page'}">Create trading post...</a>
                 </div>
                 <div class="breadcrumb justify-content-around">
-                    <a href="DispatcherController?action=trade&type=fee" class="btn btn-primary">Lọc theo trả phí</a>
-                    <a href="DispatcherController?action=trade&type=gift" class="btn btn-primary">Lọc theo quà tặng</a>
+                    <a href="DispatcherController?action=trade&type=${param.type ne 'fee' ? 'fee' : ''}" class="btn btn-primary">${param.type eq 'fee' ? "Bỏ lọc theo trả phí" : "Lọc theo trả phí" }</a>
+                    <a href="DispatcherController?action=trade&type=${param.type ne 'gift' ? 'gift' : ''}" class="btn btn-primary">${param.type eq 'gift' ? "Bỏ lọc theo quà tặng" : "Lọc theo quà tặng" }</a>
                 </div>
             </nav>
             <!-- Item Listings -->
@@ -186,9 +186,9 @@
                             <h5 class="card-title">Mục Lục</h5>
                             <ul style="font-size: 14px" class="list-group">
                                 <c:forEach var="c" items="${requestScope.CATE}">
-                                    <li class="list-group-item"><a href="DispatcherController?action=trade&filter=${c.id}">${c.name}</a></li>
+                                    <li class="list-group-item"><a href="DispatcherController?action=trade&type=${param.type}&filter=${c.id}">${c.name}</a></li>
                                     </c:forEach>
-                                <li class="list-group-item"><a href="DispatcherController?action=trade&filter=">Tất cả</a></li>
+                                <li class="list-group-item"><a href="DispatcherController?action=trade&type=${param.type}&filter=">Tất cả</a></li>
                             </ul>
                         </div>
                     </div>

@@ -148,6 +148,7 @@ public class TradeDAO {
             PreparedStatement st = cn.prepareStatement(sql);
             st.setString(1, type);
             st.setString(2, status);
+            st.setInt(3, cate_id);
             ResultSet rs = st.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
