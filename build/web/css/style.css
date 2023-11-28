@@ -10048,3 +10048,7 @@ h6 {
     font-weight: 600;
     color: #0062cc;
 }
+.trade-content {
+    white-space: pre-line;
+    text-align: justify;
+}

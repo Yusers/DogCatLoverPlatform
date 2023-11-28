@@ -1,9 +1,3 @@
-<%-- 
-    Document   : tradingpage
-    Created on : Oct 4, 2023, 2:16:48 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.MediaDAO" %>
@@ -193,7 +187,7 @@
                         </form>
                         <div class="trade-post-details">
                         <c:if test="${trade.type eq 'fee'}">
-                            <h5>Giá: ${price}</h5>
+                            <h5>Giá: ${trade.getPriceInVND()}</h5>
                             <hr/>
                         </c:if>
                         <c:if test="${trade.type ne 'fee'}">
@@ -203,7 +197,7 @@
                         <h5>Tình Trạng: ${trade.getCondition()}</h5>
                         <hr/>
                         <h5>Mô tả</h5>
-                        <p>${trade.content}</p>
+                        <p class="trade-content">${trade.content}</p>
                     </div>
                     <div class="btn-group mb-3 d-flex justify-content-center">
                         <a class="btn btn-success" href="DispatcherController?action=handle-trade&btn=approve&id=${trade.id}"}>Chấp nhận</a>

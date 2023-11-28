@@ -43,16 +43,7 @@ public class CreateTradeController extends HttpServlet {
         long price = 0;
         String page = "create-trade.jsp";
         boolean flag = false;
-
-//        out.print("title: " + title + "<br/>");
-//        out.print("cate: " + category + "<br/>");
-//        out.print("cate-size: " + category.trim().length() + "<br/>");
-//        out.print("author: " + author_id + "<br/>");
-//        out.print("content: " + content + "<br/>");
-//        out.print("condition: " + condition + "<br/>");
-//        out.print("condition-size: " + condition.trim().length() + "<br/>");
-//        out.print("price: " + price + "<br/>");
-//        out.print("type: " + type + "<br/>");
+        
         try {
             if (category.trim().length() < 3 || category.trim().isBlank()) {
                 request.setAttribute("ERR_CONTENT", "Phần loại bài viết phải trên 2 ký tự, không đc để trống và khoảng trắng!");
@@ -66,8 +57,8 @@ public class CreateTradeController extends HttpServlet {
                     flag = true;
                 } else {
                     String formattedPrice = priceString.replaceAll(",", "").trim(); // Remove commas
-                    price = Integer.parseInt(formattedPrice); // Parse the integer
-                    if (price <= 1000) {
+                    price = Long.parseLong(formattedPrice); // Parse the integer
+                    if (price <= 1000 || price > 100000000) {
                         request.setAttribute("ERR_CONTENT", "Vui lòng điền giá trên 1000 vì đây là hình thức trả phí!");
                         flag = true;
                     }

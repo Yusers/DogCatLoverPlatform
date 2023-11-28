@@ -37,15 +37,16 @@ public class CreatePostController extends HttpServlet {
             Post post = null;
             int rs = 0;
             boolean flag = false;
+            boolean validate = false;
             if (content.length() >= 20 || !content.trim().isBlank()) {
                 if (title.trim().length() <= 10 || title.trim().isBlank()) {
-                    flag = true;
+                    validate = true;
                     request.setAttribute("ERR_CONTENT", "Tiêu đề bài viết phải có ít nhất 10 kí tự và không được để trống!!!");
                 } else if (category.trim().length() < 3 || category.trim().isBlank()) {
-                    flag = true;
+                    validate = true;
                     request.setAttribute("ERR_CONTENT", "Loại bài viết phải có ít nhất 3 kí tự và không được để trống!!!");
                 }
-                if (flag) {
+                if (validate) {
                     request.getRequestDispatcher("create-post.jsp").forward(request, response);
                 }
 
@@ -62,14 +63,16 @@ public class CreatePostController extends HttpServlet {
                     // User did not upload a file
                     imageUrl = "NULL"; // or imageUrl = ""; // Set to a default value
                 }
-                if (existed != null) {
-                    post = new Post(title, existed.getId(), author_id, content, "Created", imageUrl);
-                    rs = PostDAO.createPost(post);
-                } else {
-                    rs = Post_CategoryDAO.createPostCategory(category);
-                    if (rs > 0) {
-                        post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content, "Created", imageUrl);
-                        PostDAO.createPost(post);
+                if (!validate) {
+                    if (existed != null) {
+                        post = new Post(title, existed.getId(), author_id, content, "Created", imageUrl);
+                        rs = PostDAO.createPost(post);
+                    } else {
+                        rs = Post_CategoryDAO.createPostCategory(category);
+                        if (rs > 0) {
+                            post = new Post(title, Post_CategoryDAO.getPostCategory(category).getId(), author_id, content, "Created", imageUrl);
+                            PostDAO.createPost(post);
+                        }
                     }
                 }
                 request.setAttribute("ERR_CONTENT", "Tạo Thành Công!");

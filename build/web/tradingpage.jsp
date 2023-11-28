@@ -1,9 +1,3 @@
-<%-- 
-    Document   : tradingpage
-    Created on : Oct 4, 2023, 2:16:48 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.MediaDAO" %>
@@ -192,13 +186,15 @@
                         <h5>Tình Trạng: ${trade.getCondition()}</h5>
                         <hr/>
                         <h5>Mô tả</h5>
-                        <p>${trade.content}</p>
+                        <div>
+                            <p style="text-align: justify; white-space: pre-line">${trade.content}</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <c:if test="${trade.status eq 'Done'}">
-                <div class="overlay-text">
-                    Bài này đã bán mất rồi :(
+                <div class="overlay-text" style="color: orange">
+                    <i class="fas fa-frown">Bài này đã bán mất rồi</i>
                 </div>
             </c:if>
         </div>

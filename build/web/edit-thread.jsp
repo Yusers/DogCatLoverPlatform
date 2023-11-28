@@ -1,9 +1,3 @@
-<%-- 
-    Document   : edit-thread
-    Created on : Nov 4, 2023, 8:49:56 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.CommentDAO" %>

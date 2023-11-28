@@ -1,9 +1,3 @@
-<%-- 
-    Document   : conversation
-    Created on : Nov 1, 2023, 3:15:04 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>

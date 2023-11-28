@@ -1,9 +1,3 @@
-<%-- 
-    Document   : create-post
-    Created on : Oct 28, 2023, 2:03:02 PM
-    Author     : overw
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="dbaccess.Post_CategoryDAO" %>
