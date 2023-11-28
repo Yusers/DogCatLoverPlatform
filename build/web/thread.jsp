@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="./assets/css/thread.css"/>
 
         <!-- Customized Bootstrap Stylesheet -->
+        <link rel="stylesheet" href="css/reset.css" />
         <link href="css/style.css" rel="stylesheet">
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=YOUR_APP_ID&autoLogAppEvents=1" nonce="YOUR_NONCE"></script>
     </head>

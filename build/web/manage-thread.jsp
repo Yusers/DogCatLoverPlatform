@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="./assets/css/thread.css"/>
 
     <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="css/reset.css" />
     <link href="css/style.css" rel="stylesheet">
 
     <body>
