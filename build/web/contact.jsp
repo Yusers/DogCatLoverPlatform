@@ -1,9 +1,3 @@
-<%-- 
-    Document   : contact
-    Created on : Oct 2, 2023, 9:36:12 AM
-    Author     : ADMIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -11,10 +5,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cat Dog Lover Website</title>
+        <title>Liên Hệ | Cat Dog Lover Website</title> 
 
         <!-- Favicon -->
-        <link href="icon/icons8-pet-lover-96.png" rel="icon">
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico"> 
 
         <!-- Google Web Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"> 
@@ -30,6 +24,7 @@
         <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
         <!-- Customized Bootstrap Stylesheet -->
+        <link rel="stylesheet" href="css/reset.css" />
         <link href="css/style.css" rel="stylesheet">
 
     </head>
@@ -52,7 +47,7 @@
                         <c:set var="us" value="${sessionScope.USER}" />
                         <c:choose>
                             <c:when test="${us == null}">
-                                <a style="text-align: center" class="text-white pl-3" href="login.jsp">
+                                <a style="text-align: center" class="text-white pl-3" href="DispatcherController?action=login-page">
                                     <i class="fa fa-user"></i> Log in
                                 </a>
                             </c:when>
@@ -62,8 +57,15 @@
                                         <i class="fa fa-user"></i> ${us.user_id}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="viewprofile.jsp">View Profile</a>
-                                        <a class="dropdown-item" href="#">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-profile">View Profile</a>
+                                        <c:if test="${us.role eq 'ADMIN'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=manage">Dashboard</a>
+                                        </c:if>
+                                        <c:if test="${us.role eq 'STAFF'}">
+                                            <a class="dropdown-item" href="DispatcherController?action=staff-manage">Dashboard</a>
+                                        </c:if>
+                                        <a class="dropdown-item" href="DispatcherController?action=my-post">My Posts</a>
+                                        <a class="dropdown-item" href="DispatcherController?action=conversation">Chat</a>
                                         <a class="dropdown-item" href="DispatcherController?action=logout">Log out</a>
                                     </div>
                                 </div>
@@ -109,21 +111,11 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index.jsp" class="nav-item nav-link">Home</a>
-                        <a href="about.jsp" class="nav-item nav-link">About</a>
-                        <a href="forums.jsp" class="nav-item nav-link">Forums</a>
-                        <a href="tradepage.jsp" class="nav-item nav-link">Trade</a>
-                        <!--                        
-                        <div class="nav-item dropdown">
-                            <a href="tradepage.jsp" class="nav-link dropdown-toggle" data-toggle="dropdown">Trade</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Dog</a>
-                                <a href="#" class="dropdown-item">Cat</a>
-                                <a href="#" class="dropdown-item">Items</a>
-                            </div>
-                        </div>
-                        -->
-                        <a href="contact.jsp" class="nav-item nav-link active">Contact</a>
+                        <a href="DispatcherController" class="nav-item nav-link">Home</a>
+                        <a href="DispatcherController?action=about-us" class="nav-item nav-link">About</a>
+                        <a href="DispatcherController?action=forums" class="nav-item nav-link">Forums</a>
+                        <a href="DispatcherController?action=trade" class="nav-item nav-link">Trade</a>
+                        <a href="DispatcherController?action=contact-us" class="nav-item nav-link active">Contact</a>
                     </div>
 
                 </div>
@@ -211,7 +203,6 @@
                 <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                     <p class="m-0 text-white">
                         &copy; <a class="text-white font-weight-bold" href="#"> 2023 DCLP</a>.All Rights Reserved.
-                        <a class="text-white font-weight-bold" href=""></a>
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-right">
